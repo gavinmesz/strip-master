@@ -1,0 +1,6 @@
+../Core/User/Config/DEV_Config.c:24:9:System_Init	1
+../Core/User/Config/DEV_Config.c:42:6:System_Exit	1
+../Core/User/Config/DEV_Config.c:52:9:SPI4W_Write_Byte	1
+../Core/User/Config/DEV_Config.c:59:6:I2C_Write_Byte	1
+../Core/User/Config/DEV_Config.c:70:6:Driver_Delay_ms	1
+../Core/User/Config/DEV_Config.c:75:6:Driver_Delay_us	2

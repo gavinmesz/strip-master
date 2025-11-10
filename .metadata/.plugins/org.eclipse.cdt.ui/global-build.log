@@ -1,0 +1,606 @@
+20:27:15 **** Build of configuration Debug for project CutStripDevice2 ****
+make -j16 all 
+arm-none-eabi-gcc "../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.d" -MT"Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o"
+arm-none-eabi-gcc "../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.d" -MT"Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o"
+arm-none-eabi-gcc "../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.d" -MT"Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o"
+arm-none-eabi-gcc "../Middlewares/Third_Party/FreeRTOS/Source/croutine.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Middlewares/Third_Party/FreeRTOS/Source/croutine.d" -MT"Middlewares/Third_Party/FreeRTOS/Source/croutine.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Middlewares/Third_Party/FreeRTOS/Source/croutine.o"
+arm-none-eabi-gcc "../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Middlewares/Third_Party/FreeRTOS/Source/event_groups.d" -MT"Middlewares/Third_Party/FreeRTOS/Source/event_groups.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Middlewares/Third_Party/FreeRTOS/Source/event_groups.o"
+arm-none-eabi-gcc "../Middlewares/Third_Party/FreeRTOS/Source/list.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Middlewares/Third_Party/FreeRTOS/Source/list.d" -MT"Middlewares/Third_Party/FreeRTOS/Source/list.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Middlewares/Third_Party/FreeRTOS/Source/list.o"
+arm-none-eabi-gcc "../Middlewares/Third_Party/FreeRTOS/Source/queue.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Middlewares/Third_Party/FreeRTOS/Source/queue.d" -MT"Middlewares/Third_Party/FreeRTOS/Source/queue.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Middlewares/Third_Party/FreeRTOS/Source/queue.o"
+arm-none-eabi-gcc "../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.d" -MT"Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.o"
+arm-none-eabi-gcc "../Middlewares/Third_Party/FreeRTOS/Source/tasks.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Middlewares/Third_Party/FreeRTOS/Source/tasks.d" -MT"Middlewares/Third_Party/FreeRTOS/Source/tasks.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Middlewares/Third_Party/FreeRTOS/Source/tasks.o"
+arm-none-eabi-gcc "../Middlewares/Third_Party/FreeRTOS/Source/timers.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Middlewares/Third_Party/FreeRTOS/Source/timers.d" -MT"Middlewares/Third_Party/FreeRTOS/Source/timers.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Middlewares/Third_Party/FreeRTOS/Source/timers.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o"
+arm-none-eabi-gcc "../Core/User/OLED/OLED_2in42.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/User/OLED/OLED_2in42.d" -MT"Core/User/OLED/OLED_2in42.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/User/OLED/OLED_2in42.o"
+arm-none-eabi-gcc "../Core/User/GUI/GUI_Paint.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/User/GUI/GUI_Paint.d" -MT"Core/User/GUI/GUI_Paint.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/User/GUI/GUI_Paint.o"
+arm-none-eabi-gcc "../Core/User/Fonts/font12.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/User/Fonts/font12.d" -MT"Core/User/Fonts/font12.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/User/Fonts/font12.o"
+arm-none-eabi-gcc "../Core/User/Fonts/font12CN.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/User/Fonts/font12CN.d" -MT"Core/User/Fonts/font12CN.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/User/Fonts/font12CN.o"
+arm-none-eabi-gcc "../Core/User/Fonts/font16.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/User/Fonts/font16.d" -MT"Core/User/Fonts/font16.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/User/Fonts/font16.o"
+arm-none-eabi-gcc "../Core/User/Fonts/font20.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/User/Fonts/font20.d" -MT"Core/User/Fonts/font20.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/User/Fonts/font20.o"
+arm-none-eabi-gcc "../Core/User/Fonts/font24.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/User/Fonts/font24.d" -MT"Core/User/Fonts/font24.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/User/Fonts/font24.o"
+arm-none-eabi-gcc "../Core/User/Fonts/font24CN.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/User/Fonts/font24CN.d" -MT"Core/User/Fonts/font24CN.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/User/Fonts/font24CN.o"
+arm-none-eabi-gcc "../Core/User/Fonts/font8.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/User/Fonts/font8.d" -MT"Core/User/Fonts/font8.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/User/Fonts/font8.o"
+arm-none-eabi-gcc "../Core/User/Example/ImageData.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/User/Example/ImageData.d" -MT"Core/User/Example/ImageData.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/User/Example/ImageData.o"
+../Core/User/Fonts/font12CN.c:50:2: warning: initializer-string for array of 'unsigned char' is too long
+   50 | {"你",
+      |  ^~~~
+../Core/User/Fonts/font12CN.c:50:2: note: (near initialization for 'Font12CN_Table[0].index')
+../Core/User/Fonts/font12CN.c:47:1: warning: missing braces around initializer [-Wmissing-braces]
+   47 | {
+      | ^
+......
+   51 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x1D,0xC0,0x1D,0x80,0x3B,0xFF,0x3B,0x07,
+      | {
+   52 | 0x3F,0x77,0x7E,0x76,0xF8,0x70,0xFB,0xFE,0xFB,0xFE,0x3F,0x77,0x3F,0x77,0x3E,0x73,
+   53 | 0x38,0x70,0x38,0x70,0x3B,0xE0,0x00,0x00,0x00,0x00},
+      |                                                  }
+../Core/User/Fonts/font12CN.c:57:2: warning: initializer-string for array of 'unsigned char' is too long
+   57 | {"好",
+      |  ^~~~
+../Core/User/Fonts/font12CN.c:57:2: note: (near initialization for 'Font12CN_Table[1].index')
+../Core/User/Fonts/font12CN.c:47:1: warning: missing braces around initializer [-Wmissing-braces]
+   47 | {
+      | ^
+......
+   51 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x1D,0xC0,0x1D,0x80,0x3B,0xFF,0x3B,0x07,
+      | {
+   52 | 0x3F,0x77,0x7E,0x76,0xF8,0x70,0xFB,0xFE,0xFB,0xFE,0x3F,0x77,0x3F,0x77,0x3E,0x73,
+   53 | 0x38,0x70,0x38,0x70,0x3B,0xE0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   58 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x00,0x73,0xFF,0x70,0x0F,0xFE,0x1E,
+      | {
+   59 | 0x7E,0x3C,0x6E,0x38,0xEE,0x30,0xEF,0xFF,0xFC,0x30,0x7C,0x30,0x38,0x30,0x3E,0x30,
+   60 | 0x7E,0x30,0xE0,0x30,0xC1,0xF0,0x00,0x00,0x00,0x00},
+      |                                                  }
+../Core/User/Fonts/font12CN.c:64:2: warning: initializer-string for array of 'unsigned char' is too long
+   64 | {"树",
+      |  ^~~~
+../Core/User/Fonts/font12CN.c:64:2: note: (near initialization for 'Font12CN_Table[2].index')
+../Core/User/Fonts/font12CN.c:47:1: warning: missing braces around initializer [-Wmissing-braces]
+   47 | {
+      | ^
+......
+   51 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x1D,0xC0,0x1D,0x80,0x3B,0xFF,0x3B,0x07,
+      | {
+   52 | 0x3F,0x77,0x7E,0x76,0xF8,0x70,0xFB,0xFE,0xFB,0xFE,0x3F,0x77,0x3F,0x77,0x3E,0x73,
+   53 | 0x38,0x70,0x38,0x70,0x3B,0xE0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   58 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x00,0x73,0xFF,0x70,0x0F,0xFE,0x1E,
+      | {
+   59 | 0x7E,0x3C,0x6E,0x38,0xEE,0x30,0xEF,0xFF,0xFC,0x30,0x7C,0x30,0x38,0x30,0x3E,0x30,
+   60 | 0x7E,0x30,0xE0,0x30,0xC1,0xF0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   65 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x0E,0x30,0x0E,0x3F,0xEE,0x30,0xEE,
+      | {
+   66 | 0xFC,0xFF,0x76,0xCE,0x77,0xFE,0x7B,0xFE,0xFF,0xFE,0xF3,0xDE,0xF3,0xCE,0x37,0xEE,
+   67 | 0x3E,0x6E,0x3C,0x0E,0x30,0x3E,0x00,0x00,0x00,0x00},
+      |                                                  }
+../Core/User/Fonts/font12CN.c:71:2: warning: initializer-string for array of 'unsigned char' is too long
+   71 | {"莓",
+      |  ^~~~
+../Core/User/Fonts/font12CN.c:71:2: note: (near initialization for 'Font12CN_Table[3].index')
+../Core/User/Fonts/font12CN.c:47:1: warning: missing braces around initializer [-Wmissing-braces]
+   47 | {
+      | ^
+......
+   51 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x1D,0xC0,0x1D,0x80,0x3B,0xFF,0x3B,0x07,
+      | {
+   52 | 0x3F,0x77,0x7E,0x76,0xF8,0x70,0xFB,0xFE,0xFB,0xFE,0x3F,0x77,0x3F,0x77,0x3E,0x73,
+   53 | 0x38,0x70,0x38,0x70,0x3B,0xE0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   58 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x00,0x73,0xFF,0x70,0x0F,0xFE,0x1E,
+      | {
+   59 | 0x7E,0x3C,0x6E,0x38,0xEE,0x30,0xEF,0xFF,0xFC,0x30,0x7C,0x30,0x38,0x30,0x3E,0x30,
+   60 | 0x7E,0x30,0xE0,0x30,0xC1,0xF0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   65 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x0E,0x30,0x0E,0x3F,0xEE,0x30,0xEE,
+      | {
+   66 | 0xFC,0xFF,0x76,0xCE,0x77,0xFE,0x7B,0xFE,0xFF,0xFE,0xF3,0xDE,0xF3,0xCE,0x37,0xEE,
+   67 | 0x3E,0x6E,0x3C,0x0E,0x30,0x3E,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   72 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x06,0x70,0xFF,0xFF,0x3E,0x70,0x38,0x00,
+      | {
+   73 | 0x7F,0xFF,0xE0,0x00,0xFF,0xFC,0x3B,0x8C,0x39,0xCC,0xFF,0xFF,0x73,0x9C,0x71,0xDC,
+   74 | 0x7F,0xFF,0x00,0x1C,0x01,0xF8,0x00,0x00,0x00,0x00},
+      |                                                  }
+../Core/User/Fonts/font12CN.c:78:2: warning: initializer-string for array of 'unsigned char' is too long
+   78 | {"派",
+      |  ^~~~
+../Core/User/Fonts/font12CN.c:78:2: note: (near initialization for 'Font12CN_Table[4].index')
+../Core/User/Fonts/font12CN.c:47:1: warning: missing braces around initializer [-Wmissing-braces]
+   47 | {
+      | ^
+......
+   51 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x1D,0xC0,0x1D,0x80,0x3B,0xFF,0x3B,0x07,
+      | {
+   52 | 0x3F,0x77,0x7E,0x76,0xF8,0x70,0xFB,0xFE,0xFB,0xFE,0x3F,0x77,0x3F,0x77,0x3E,0x73,
+   53 | 0x38,0x70,0x38,0x70,0x3B,0xE0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   58 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x00,0x73,0xFF,0x70,0x0F,0xFE,0x1E,
+      | {
+   59 | 0x7E,0x3C,0x6E,0x38,0xEE,0x30,0xEF,0xFF,0xFC,0x30,0x7C,0x30,0x38,0x30,0x3E,0x30,
+   60 | 0x7E,0x30,0xE0,0x30,0xC1,0xF0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   65 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x0E,0x30,0x0E,0x3F,0xEE,0x30,0xEE,
+      | {
+   66 | 0xFC,0xFF,0x76,0xCE,0x77,0xFE,0x7B,0xFE,0xFF,0xFE,0xF3,0xDE,0xF3,0xCE,0x37,0xEE,
+   67 | 0x3E,0x6E,0x3C,0x0E,0x30,0x3E,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   72 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x06,0x70,0xFF,0xFF,0x3E,0x70,0x38,0x00,
+      | {
+   73 | 0x7F,0xFF,0xE0,0x00,0xFF,0xFC,0x3B,0x8C,0x39,0xCC,0xFF,0xFF,0x73,0x9C,0x71,0xDC,
+   74 | 0x7F,0xFF,0x00,0x1C,0x01,0xF8,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   79 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xE0,0x1F,0xFF,0xF0,0x3E,0x00,0x0E,0x1F,
+      | {
+   80 | 0xCF,0xFB,0xFF,0xF8,0x3F,0xFF,0x0F,0xFF,0x7F,0xD8,0x7F,0xDC,0x6F,0xCE,0xED,0xFF,
+   81 | 0xFD,0xF7,0xF9,0xC0,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+../Core/User/Fonts/font12CN.c:47:1: warning: missing braces around initializer [-Wmissing-braces]
+   47 | {
+      | ^
+......
+   51 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x1D,0xC0,0x1D,0x80,0x3B,0xFF,0x3B,0x07,
+      | {
+   52 | 0x3F,0x77,0x7E,0x76,0xF8,0x70,0xFB,0xFE,0xFB,0xFE,0x3F,0x77,0x3F,0x77,0x3E,0x73,
+   53 | 0x38,0x70,0x38,0x70,0x3B,0xE0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   58 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x00,0x73,0xFF,0x70,0x0F,0xFE,0x1E,
+      | {
+   59 | 0x7E,0x3C,0x6E,0x38,0xEE,0x30,0xEF,0xFF,0xFC,0x30,0x7C,0x30,0x38,0x30,0x3E,0x30,
+   60 | 0x7E,0x30,0xE0,0x30,0xC1,0xF0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   65 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x0E,0x30,0x0E,0x3F,0xEE,0x30,0xEE,
+      | {
+   66 | 0xFC,0xFF,0x76,0xCE,0x77,0xFE,0x7B,0xFE,0xFF,0xFE,0xF3,0xDE,0xF3,0xCE,0x37,0xEE,
+   67 | 0x3E,0x6E,0x3C,0x0E,0x30,0x3E,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   72 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x06,0x70,0xFF,0xFF,0x3E,0x70,0x38,0x00,
+      | {
+   73 | 0x7F,0xFF,0xE0,0x00,0xFF,0xFC,0x3B,0x8C,0x39,0xCC,0xFF,0xFF,0x73,0x9C,0x71,0xDC,
+   74 | 0x7F,0xFF,0x00,0x1C,0x01,0xF8,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   79 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xE0,0x1F,0xFF,0xF0,0x3E,0x00,0x0E,0x1F,
+      | {
+   80 | 0xCF,0xFB,0xFF,0xF8,0x3F,0xFF,0x0F,0xFF,0x7F,0xD8,0x7F,0xDC,0x6F,0xCE,0xED,0xFF,
+   81 | 0xFD,0xF7,0xF9,0xC0,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   86 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+      | {
+   87 | 0x3E,0x00,0x67,0x00,0x07,0x80,0x0F,0x80,0x7F,0x80,0xE3,0x80,0xE7,0x80,0xE7,0x80,
+   88 | 0x7F,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+../Core/User/Fonts/font12CN.c:47:1: warning: missing braces around initializer [-Wmissing-braces]
+   47 | {
+      | ^
+......
+   51 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x1D,0xC0,0x1D,0x80,0x3B,0xFF,0x3B,0x07,
+      | {
+   52 | 0x3F,0x77,0x7E,0x76,0xF8,0x70,0xFB,0xFE,0xFB,0xFE,0x3F,0x77,0x3F,0x77,0x3E,0x73,
+   53 | 0x38,0x70,0x38,0x70,0x3B,0xE0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   58 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x00,0x73,0xFF,0x70,0x0F,0xFE,0x1E,
+      | {
+   59 | 0x7E,0x3C,0x6E,0x38,0xEE,0x30,0xEF,0xFF,0xFC,0x30,0x7C,0x30,0x38,0x30,0x3E,0x30,
+   60 | 0x7E,0x30,0xE0,0x30,0xC1,0xF0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   65 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x0E,0x30,0x0E,0x3F,0xEE,0x30,0xEE,
+      | {
+   66 | 0xFC,0xFF,0x76,0xCE,0x77,0xFE,0x7B,0xFE,0xFF,0xFE,0xF3,0xDE,0xF3,0xCE,0x37,0xEE,
+   67 | 0x3E,0x6E,0x3C,0x0E,0x30,0x3E,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   72 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x06,0x70,0xFF,0xFF,0x3E,0x70,0x38,0x00,
+      | {
+   73 | 0x7F,0xFF,0xE0,0x00,0xFF,0xFC,0x3B,0x8C,0x39,0xCC,0xFF,0xFF,0x73,0x9C,0x71,0xDC,
+   74 | 0x7F,0xFF,0x00,0x1C,0x01,0xF8,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   79 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xE0,0x1F,0xFF,0xF0,0x3E,0x00,0x0E,0x1F,
+      | {
+   80 | 0xCF,0xFB,0xFF,0xF8,0x3F,0xFF,0x0F,0xFF,0x7F,0xD8,0x7F,0xDC,0x6F,0xCE,0xED,0xFF,
+   81 | 0xFD,0xF7,0xF9,0xC0,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   86 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+      | {
+   87 | 0x3E,0x00,0x67,0x00,0x07,0x80,0x0F,0x80,0x7F,0x80,0xE3,0x80,0xE7,0x80,0xE7,0x80,
+   88 | 0x7F,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   93 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x70,0x00,0x70,0x00,0x70,0x00,0x70,0x00,
+      | {
+   94 | 0x7F,0x00,0x7B,0x80,0x71,0xC0,0x71,0xC0,0x71,0xC0,0x71,0xC0,0x71,0xC0,0x7B,0x80,
+   95 | 0x7F,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+../Core/User/Fonts/font12CN.c:47:1: warning: missing braces around initializer [-Wmissing-braces]
+   47 | {
+      | ^
+......
+   51 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x1D,0xC0,0x1D,0x80,0x3B,0xFF,0x3B,0x07,
+      | {
+   52 | 0x3F,0x77,0x7E,0x76,0xF8,0x70,0xFB,0xFE,0xFB,0xFE,0x3F,0x77,0x3F,0x77,0x3E,0x73,
+   53 | 0x38,0x70,0x38,0x70,0x3B,0xE0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   58 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x00,0x73,0xFF,0x70,0x0F,0xFE,0x1E,
+      | {
+   59 | 0x7E,0x3C,0x6E,0x38,0xEE,0x30,0xEF,0xFF,0xFC,0x30,0x7C,0x30,0x38,0x30,0x3E,0x30,
+   60 | 0x7E,0x30,0xE0,0x30,0xC1,0xF0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   65 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x0E,0x30,0x0E,0x3F,0xEE,0x30,0xEE,
+      | {
+   66 | 0xFC,0xFF,0x76,0xCE,0x77,0xFE,0x7B,0xFE,0xFF,0xFE,0xF3,0xDE,0xF3,0xCE,0x37,0xEE,
+   67 | 0x3E,0x6E,0x3C,0x0E,0x30,0x3E,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   72 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x06,0x70,0xFF,0xFF,0x3E,0x70,0x38,0x00,
+      | {
+   73 | 0x7F,0xFF,0xE0,0x00,0xFF,0xFC,0x3B,0x8C,0x39,0xCC,0xFF,0xFF,0x73,0x9C,0x71,0xDC,
+arm-none-eabi-gcc "../Core/User/Example/OLED_2in42_test.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/User/Example/OLED_2in42_test.d" -MT"Core/User/Example/OLED_2in42_test.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/User/Example/OLED_2in42_test.o"
+   74 | 0x7F,0xFF,0x00,0x1C,0x01,0xF8,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   79 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xE0,0x1F,0xFF,0xF0,0x3E,0x00,0x0E,0x1F,
+      | {
+   80 | 0xCF,0xFB,0xFF,0xF8,0x3F,0xFF,0x0F,0xFF,0x7F,0xD8,0x7F,0xDC,0x6F,0xCE,0xED,0xFF,
+   81 | 0xFD,0xF7,0xF9,0xC0,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   86 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+      | {
+   87 | 0x3E,0x00,0x67,0x00,0x07,0x80,0x0F,0x80,0x7F,0x80,0xE3,0x80,0xE7,0x80,0xE7,0x80,
+   88 | 0x7F,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   93 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x70,0x00,0x70,0x00,0x70,0x00,0x70,0x00,
+      | {
+   94 | 0x7F,0x00,0x7B,0x80,0x71,0xC0,0x71,0xC0,0x71,0xC0,0x71,0xC0,0x71,0xC0,0x7B,0x80,
+   95 | 0x7F,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+  100 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+      | {
+  101 | 0x3F,0x00,0x73,0x00,0xF0,0x00,0xE0,0x00,0xE0,0x00,0xE0,0x00,0xF0,0x00,0x73,0x00,
+  102 | 0x3F,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+../Core/User/Fonts/font12CN.c:47:1: warning: missing braces around initializer [-Wmissing-braces]
+   47 | {
+      | ^
+......
+   51 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x1D,0xC0,0x1D,0x80,0x3B,0xFF,0x3B,0x07,
+      | {
+   52 | 0x3F,0x77,0x7E,0x76,0xF8,0x70,0xFB,0xFE,0xFB,0xFE,0x3F,0x77,0x3F,0x77,0x3E,0x73,
+   53 | 0x38,0x70,0x38,0x70,0x3B,0xE0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   58 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x00,0x73,0xFF,0x70,0x0F,0xFE,0x1E,
+      | {
+   59 | 0x7E,0x3C,0x6E,0x38,0xEE,0x30,0xEF,0xFF,0xFC,0x30,0x7C,0x30,0x38,0x30,0x3E,0x30,
+   60 | 0x7E,0x30,0xE0,0x30,0xC1,0xF0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   65 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x0E,0x30,0x0E,0x3F,0xEE,0x30,0xEE,
+      | {
+   66 | 0xFC,0xFF,0x76,0xCE,0x77,0xFE,0x7B,0xFE,0xFF,0xFE,0xF3,0xDE,0xF3,0xCE,0x37,0xEE,
+   67 | 0x3E,0x6E,0x3C,0x0E,0x30,0x3E,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   72 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x06,0x70,0xFF,0xFF,0x3E,0x70,0x38,0x00,
+      | {
+   73 | 0x7F,0xFF,0xE0,0x00,0xFF,0xFC,0x3B,0x8C,0x39,0xCC,0xFF,0xFF,0x73,0x9C,0x71,0xDC,
+   74 | 0x7F,0xFF,0x00,0x1C,0x01,0xF8,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   79 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xE0,0x1F,0xFF,0xF0,0x3E,0x00,0x0E,0x1F,
+      | {
+   80 | 0xCF,0xFB,0xFF,0xF8,0x3F,0xFF,0x0F,0xFF,0x7F,0xD8,0x7F,0xDC,0x6F,0xCE,0xED,0xFF,
+   81 | 0xFD,0xF7,0xF9,0xC0,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   86 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+      | {
+   87 | 0x3E,0x00,0x67,0x00,0x07,0x80,0x0F,0x80,0x7F,0x80,0xE3,0x80,0xE7,0x80,0xE7,0x80,
+   88 | 0x7F,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   93 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x70,0x00,0x70,0x00,0x70,0x00,0x70,0x00,
+      | {
+   94 | 0x7F,0x00,0x7B,0x80,0x71,0xC0,0x71,0xC0,0x71,0xC0,0x71,0xC0,0x71,0xC0,0x7B,0x80,
+   95 | 0x7F,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+  100 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+      | {
+  101 | 0x3F,0x00,0x73,0x00,0xF0,0x00,0xE0,0x00,0xE0,0x00,0xE0,0x00,0xF0,0x00,0x73,0x00,
+  102 | 0x3F,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+  107 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0E,0x00,0x1F,0x00,0x1F,0x00,
+      | {
+  108 | 0x1F,0x00,0x3B,0x80,0x3B,0x80,0x71,0x80,0x7F,0xC0,0x71,0xC0,0xE0,0xE0,0xE0,0xE0,
+  109 | 0xE0,0xE0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+../Core/User/Fonts/font12CN.c:47:1: warning: missing braces around initializer [-Wmissing-braces]
+   47 | {
+      | ^
+......
+   51 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x1D,0xC0,0x1D,0x80,0x3B,0xFF,0x3B,0x07,
+      | {
+   52 | 0x3F,0x77,0x7E,0x76,0xF8,0x70,0xFB,0xFE,0xFB,0xFE,0x3F,0x77,0x3F,0x77,0x3E,0x73,
+   53 | 0x38,0x70,0x38,0x70,0x3B,0xE0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   58 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x00,0x73,0xFF,0x70,0x0F,0xFE,0x1E,
+      | {
+   59 | 0x7E,0x3C,0x6E,0x38,0xEE,0x30,0xEF,0xFF,0xFC,0x30,0x7C,0x30,0x38,0x30,0x3E,0x30,
+   60 | 0x7E,0x30,0xE0,0x30,0xC1,0xF0,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   65 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x0E,0x30,0x0E,0x3F,0xEE,0x30,0xEE,
+      | {
+   66 | 0xFC,0xFF,0x76,0xCE,0x77,0xFE,0x7B,0xFE,0xFF,0xFE,0xF3,0xDE,0xF3,0xCE,0x37,0xEE,
+   67 | 0x3E,0x6E,0x3C,0x0E,0x30,0x3E,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   72 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x06,0x70,0xFF,0xFF,0x3E,0x70,0x38,0x00,
+      | {
+   73 | 0x7F,0xFF,0xE0,0x00,0xFF,0xFC,0x3B,0x8C,0x39,0xCC,0xFF,0xFF,0x73,0x9C,0x71,0xDC,
+   74 | 0x7F,0xFF,0x00,0x1C,0x01,0xF8,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   79 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xE0,0x1F,0xFF,0xF0,0x3E,0x00,0x0E,0x1F,
+      | {
+   80 | 0xCF,0xFB,0xFF,0xF8,0x3F,0xFF,0x0F,0xFF,0x7F,0xD8,0x7F,0xDC,0x6F,0xCE,0xED,0xFF,
+   81 | 0xFD,0xF7,0xF9,0xC0,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   86 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+      | {
+   87 | 0x3E,0x00,0x67,0x00,0x07,0x80,0x0F,0x80,0x7F,0x80,0xE3,0x80,0xE7,0x80,0xE7,0x80,
+   88 | 0x7F,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+   93 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x70,0x00,0x70,0x00,0x70,0x00,0x70,0x00,
+      | {
+   94 | 0x7F,0x00,0x7B,0x80,0x71,0xC0,0x71,0xC0,0x71,0xC0,0x71,0xC0,0x71,0xC0,0x7B,0x80,
+   95 | 0x7F,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+  100 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+      | {
+  101 | 0x3F,0x00,0x73,0x00,0xF0,0x00,0xE0,0x00,0xE0,0x00,0xE0,0x00,0xF0,0x00,0x73,0x00,
+  102 | 0x3F,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+......
+  107 | 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0E,0x00,0x1F,0x00,0x1F,0x00,
+      | {
+  108 | 0x1F,0x00,0x3B,0x80,0x3B,0x80,0x71,0x80,0x7F,0xC0,0x71,0xC0,0xE0,0xE0,0xE0,0xE0,
+  109 | 0xE0,0xE0,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
+      |                                                  }
+arm-none-eabi-gcc "../Core/User/Config/DEV_Config.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/User/Config/DEV_Config.d" -MT"Core/User/Config/DEV_Config.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/User/Config/DEV_Config.o"
+../Core/User/Fonts/font24CN.c:52:2: warning: initializer-string for array of 'unsigned char' is too long
+   52 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:52:2: note: (near initialization for 'Font24CN_Table[0].index')
+../Core/User/Fonts/font24CN.c:67:2: warning: initializer-string for array of 'unsigned char' is too long
+   67 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:67:2: note: (near initialization for 'Font24CN_Table[1].index')
+../Core/User/Fonts/font24CN.c:97:2: warning: initializer-string for array of 'unsigned char' is too long
+   97 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:97:2: note: (near initialization for 'Font24CN_Table[3].index')
+../Core/User/Fonts/font24CN.c:112:2: warning: initializer-string for array of 'unsigned char' is too long
+  112 | {"��",
+      |  ^~~~
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Startup/startup_stm32f411retx.d" -MT"Core/Startup/startup_stm32f411retx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Startup/startup_stm32f411retx.o" "../Core/Startup/startup_stm32f411retx.s"
+../Core/User/Fonts/font24CN.c:112:2: note: (near initialization for 'Font24CN_Table[4].index')
+../Core/User/Fonts/font24CN.c:127:2: warning: initializer-string for array of 'unsigned char' is too long
+  127 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:127:2: note: (near initialization for 'Font24CN_Table[5].index')
+../Core/User/Fonts/font24CN.c:142:2: warning: initializer-string for array of 'unsigned char' is too long
+  142 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:142:2: note: (near initialization for 'Font24CN_Table[6].index')
+../Core/User/Fonts/font24CN.c:157:2: warning: initializer-string for array of 'unsigned char' is too long
+  157 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:157:2: note: (near initialization for 'Font24CN_Table[7].index')
+../Core/User/Fonts/font24CN.c:172:2: warning: initializer-string for array of 'unsigned char' is too long
+  172 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:172:2: note: (near initialization for 'Font24CN_Table[8].index')
+../Core/User/Fonts/font24CN.c:187:2: warning: initializer-string for array of 'unsigned char' is too long
+  187 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:187:2: note: (near initialization for 'Font24CN_Table[9].index')
+../Core/User/Fonts/font24CN.c:202:2: warning: initializer-string for array of 'unsigned char' is too long
+  202 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:202:2: note: (near initialization for 'Font24CN_Table[10].index')
+../Core/User/Fonts/font24CN.c:232:2: warning: initializer-string for array of 'unsigned char' is too long
+  232 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:232:2: note: (near initialization for 'Font24CN_Table[12].index')
+../Core/User/Fonts/font24CN.c:247:2: warning: initializer-string for array of 'unsigned char' is too long
+  247 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:247:2: note: (near initialization for 'Font24CN_Table[13].index')
+../Core/User/Fonts/font24CN.c:262:2: warning: initializer-string for array of 'unsigned char' is too long
+  262 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:262:2: note: (near initialization for 'Font24CN_Table[14].index')
+../Core/User/Fonts/font24CN.c:292:2: warning: initializer-string for array of 'unsigned char' is too long
+  292 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:292:2: note: (near initialization for 'Font24CN_Table[16].index')
+../Core/User/Fonts/font24CN.c:322:2: warning: initializer-string for array of 'unsigned char' is too long
+  322 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:322:2: note: (near initialization for 'Font24CN_Table[18].index')
+../Core/User/Fonts/font24CN.c:428:2: warning: initializer-string for array of 'unsigned char' is too long
+  428 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:428:2: note: (near initialization for 'Font24CN_Table[25].index')
+../Core/User/Fonts/font24CN.c:443:2: warning: initializer-string for array of 'unsigned char' is too long
+  443 | {"��",
+      |  ^~~~
+../Core/User/Fonts/font24CN.c:443:2: note: (near initialization for 'Font24CN_Table[26].index')
+../Core/User/GUI/GUI_Paint.c:882:1: warning: multi-line comment [-Wcomment]
+  882 | //                                                      Paint.Image[Addr] = \
+      | ^
+../Core/User/GUI/GUI_Paint.c:912:1: warning: multi-line comment [-Wcomment]
+  912 | //                                                      Paint.Image[Addr] = \
+      | ^
+../Core/User/GUI/GUI_Paint.c:920:1: warning: multi-line comment [-Wcomment]
+  920 | //                                                      Paint.Image[Addr] = \
+      | ^
+../Core/User/GUI/GUI_Paint.c:928:1: warning: multi-line comment [-Wcomment]
+  928 | //                                                      Paint.Image[Addr] = \
+      | ^
+arm-none-eabi-gcc "../Core/Src/freertos.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/freertos.d" -MT"Core/Src/freertos.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/freertos.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_hal_msp.d" -MT"Core/Src/stm32f4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_timebase_tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_hal_timebase_tim.d" -MT"Core/Src/stm32f4xx_hal_timebase_tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_timebase_tim.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_it.d" -MT"Core/Src/stm32f4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_it.o"
+arm-none-eabi-gcc "../Core/Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/syscalls.d" -MT"Core/Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/syscalls.o"
+arm-none-eabi-gcc "../Core/Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/sysmem.d" -MT"Core/Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/sysmem.o"
+arm-none-eabi-gcc "../Core/Src/system_stm32f4xx.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/system_stm32f4xx.d" -MT"Core/Src/system_stm32f4xx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/system_stm32f4xx.o"
+arm-none-eabi-gcc -o "CutStripDevice2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Admin\Desktop\4A\MTE 481\strip-master\CutStripDevice2\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CutStripDevice2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: CutStripDevice2.elf
+ 
+arm-none-eabi-size  CutStripDevice2.elf 
+arm-none-eabi-objdump -h -S CutStripDevice2.elf  > "CutStripDevice2.list"
+   text	   data	    bss	    dec	    hex	filename
+  25052	    108	  21068	  46228	   b494	CutStripDevice2.elf
+Finished building: default.size.stdout
+ 
+Finished building: CutStripDevice2.list
+ 
+20:27:27 **** Incremental Build of configuration Debug for project CutStripDevice2 ****
+make -j16 all 
+arm-none-eabi-size  CutStripDevice2.elf 
+   text	   data	    bss	    dec	    hex	filename
+  25052	    108	  21068	  46228	   b494	CutStripDevice2.elf
+Finished building: default.size.stdout
+ 
+20:27:59 **** Incremental Build of configuration Debug for project CutStripDevice2 ****
+make -j16 all 
+arm-none-eabi-size  CutStripDevice2.elf 
+   text	   data	    bss	    dec	    hex	filename
+  25052	    108	  21068	  46228	   b494	CutStripDevice2.elf
+Finished building: default.size.stdout
+ 
+20:28:32 **** Incremental Build of configuration Debug for project CutStripDevice2 ****
+make -j16 all 
+arm-none-eabi-size  CutStripDevice2.elf 
+   text	   data	    bss	    dec	    hex	filename
+  25052	    108	  21068	  46228	   b494	CutStripDevice2.elf
+Finished building: default.size.stdout
+ 
+20:35:09 **** Incremental Build of configuration Debug for project CutStripDevice2 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "CutStripDevice2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Admin\Desktop\4A\MTE 481\strip-master\CutStripDevice2\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CutStripDevice2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: CutStripDevice2.elf
+ 
+arm-none-eabi-size  CutStripDevice2.elf 
+arm-none-eabi-objdump -h -S CutStripDevice2.elf  > "CutStripDevice2.list"
+   text	   data	    bss	    dec	    hex	filename
+  25052	    108	  21068	  46228	   b494	CutStripDevice2.elf
+Finished building: default.size.stdout
+ 
+Finished building: CutStripDevice2.list
+ 
+20:36:25 **** Incremental Build of configuration Debug for project CutStripDevice2 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "CutStripDevice2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Admin\Desktop\4A\MTE 481\strip-master\CutStripDevice2\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CutStripDevice2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: CutStripDevice2.elf
+ 
+arm-none-eabi-size  CutStripDevice2.elf 
+arm-none-eabi-objdump -h -S CutStripDevice2.elf  > "CutStripDevice2.list"
+   text	   data	    bss	    dec	    hex	filename
+  26552	    108	  21068	  47728	   ba70	CutStripDevice2.elf
+Finished building: default.size.stdout
+ 
+Finished building: CutStripDevice2.list
+ 
+20:38:10 **** Incremental Build of configuration Debug for project CutStripDevice2 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "CutStripDevice2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Admin\Desktop\4A\MTE 481\strip-master\CutStripDevice2\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CutStripDevice2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: CutStripDevice2.elf
+ 
+arm-none-eabi-size  CutStripDevice2.elf 
+arm-none-eabi-objdump -h -S CutStripDevice2.elf  > "CutStripDevice2.list"
+   text	   data	    bss	    dec	    hex	filename
+  25056	    108	  21068	  46232	   b498	CutStripDevice2.elf
+Finished building: default.size.stdout
+ 
+Finished building: CutStripDevice2.list
+ 
+20:40:32 **** Incremental Build of configuration Debug for project CutStripDevice2 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "CutStripDevice2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Admin\Desktop\4A\MTE 481\strip-master\CutStripDevice2\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CutStripDevice2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: CutStripDevice2.elf
+ 
+arm-none-eabi-size  CutStripDevice2.elf 
+arm-none-eabi-objdump -h -S CutStripDevice2.elf  > "CutStripDevice2.list"
+   text	   data	    bss	    dec	    hex	filename
+  25060	    108	  21068	  46236	   b49c	CutStripDevice2.elf
+Finished building: default.size.stdout
+ 
+Finished building: CutStripDevice2.list
+ 
+20:41:14 **** Incremental Build of configuration Debug for project CutStripDevice2 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "CutStripDevice2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Admin\Desktop\4A\MTE 481\strip-master\CutStripDevice2\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CutStripDevice2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: CutStripDevice2.elf
+ 
+arm-none-eabi-size  CutStripDevice2.elf 
+arm-none-eabi-objdump -h -S CutStripDevice2.elf  > "CutStripDevice2.list"
+   text	   data	    bss	    dec	    hex	filename
+  25060	    108	  21068	  46236	   b49c	CutStripDevice2.elf
+Finished building: default.size.stdout
+ 
+Finished building: CutStripDevice2.list
+ 

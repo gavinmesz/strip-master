@@ -2,8 +2,9 @@
 CAD.formats=
 CAD.pinconfig=
 CAD.provider=
+FREERTOS.Events01=
 FREERTOS.FootprintOK=true
-FREERTOS.IPParameters=Tasks01,FootprintOK,configUSE_NEWLIB_REENTRANT
+FREERTOS.IPParameters=Tasks01,FootprintOK,configUSE_NEWLIB_REENTRANT,Events01
 FREERTOS.Tasks01=watchDog,48,128,StartDefaultTask,Default,NULL,Dynamic,NULL,NULL;display,8,128,StartTask02,Default,NULL,Dynamic,NULL,NULL;normal,40,128,StartTask03,Default,NULL,Dynamic,NULL,NULL
 FREERTOS.configUSE_NEWLIB_REENTRANT=1
 File.Version=6

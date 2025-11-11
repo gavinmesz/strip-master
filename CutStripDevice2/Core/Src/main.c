@@ -27,6 +27,8 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include "../User/OLED/OLED_2in42.h"
+#include "math.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,7 +38,9 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+int COUNTER_VAR=0;
+UBYTE *BlackImage;
+UWORD Imagesize = ((OLED_2IN42_WIDTH%8==0)? (OLED_2IN42_WIDTH/8): (OLED_2IN42_WIDTH/8+1)) * OLED_2IN42_HEIGHT;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -60,7 +64,7 @@ const osThreadAttr_t watchDog_attributes = {
 osThreadId_t displayHandle;
 const osThreadAttr_t display_attributes = {
   .name = "display",
-  .stack_size = 128 * 4,
+  .stack_size = 1024 * 2,
   .priority = (osPriority_t) osPriorityLow,
 };
 /* Definitions for normal */
@@ -109,7 +113,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -134,7 +137,25 @@ int main(void)
   MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
 //  // OLED display test
-//    OLED_2in42_test();
+  	  printf("2.42inch OLED test demo\n");
+  	if(System_Init() != 0) {
+  		return -1;
+  	}
+
+  	//Initialize the Display
+  	printf("OLED Init...\r\n");
+  	OLED_2in42_Init();
+  	Driver_Delay_ms(500);
+
+  	// 0.Create a new image cache
+  	if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
+  			printf("Failed to apply for black memory...\r\n");
+  			return -1;
+  	}
+  	Paint_NewImage(BlackImage, OLED_2IN42_WIDTH, OLED_2IN42_HEIGHT, 270, BLACK);
+	Paint_SelectImage(BlackImage);
+	Driver_Delay_ms(500);
+	Paint_Clear(BLACK);
 
   /* USER CODE END 2 */
 
@@ -377,7 +398,7 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
 	printf("Watchdog \r\n");
-    osDelay(100);
+    vTaskDelay(10/portTICK_PERIOD_MS);
   }
   /* USER CODE END 5 */
 }
@@ -395,8 +416,12 @@ void StartTask02(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	printf("Display \r\n");
-    osDelay(500);
+	Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
+	Paint_DrawString_EN(10, 17, "hello world", &Font8, WHITE, BLACK);
+	Paint_DrawNum(10, 30, COUNTER_VAR, &Font8, 4, WHITE, BLACK);
+	Paint_DrawNum(10, 43, 987654, &Font12, 5, WHITE, BLACK);
+	OLED_2in42_Display(BlackImage);
+	vTaskDelay(100/portTICK_PERIOD_MS);
   }
   /* USER CODE END StartTask02 */
 }
@@ -415,7 +440,7 @@ void StartTask03(void *argument)
   for(;;)
   {
 	printf("Normal \r\n");
-    osDelay(1000);
+    vTaskDelay(100/portTICK_PERIOD_MS);
   }
   /* USER CODE END StartTask03 */
 }
@@ -431,7 +456,7 @@ void StartTask03(void *argument)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
-
+	COUNTER_VAR++;
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM2) {
     HAL_IncTick();

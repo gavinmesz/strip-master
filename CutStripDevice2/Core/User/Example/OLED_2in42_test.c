@@ -28,101 +28,86 @@
 # THE SOFTWARE.
 #
 ******************************************************************************/
-#include "test.h"
-#include "../OLED/OLED_2in42.h"
-#include "math.h"
-
-int OLED_2in42_test(void)
-{
-	printf("2.42inch OLED test demo\n");
-	if(System_Init() != 0) {
-		return -1;
-	}
-	  
-	if(USE_IIC) {
-		printf("Only USE_SPI_4W or USE_IIC_SOFT, Please revise DEV_Config.h !!!\r\n");
-		return -1;
-	}
-	
-	printf("OLED Init...\r\n");
-	OLED_2in42_Init();
-	Driver_Delay_ms(500);	
-	// 0.Create a new image cache
-	UBYTE *BlackImage;
-	UWORD Imagesize = ((OLED_2IN42_WIDTH%8==0)? (OLED_2IN42_WIDTH/8): (OLED_2IN42_WIDTH/8+1)) * OLED_2IN42_HEIGHT;
-	if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
-			printf("Failed to apply for black memory...\r\n");
-			return -1;
-	}
-	printf("Paint_NewImage\r\n");
-	Paint_NewImage(BlackImage, OLED_2IN42_WIDTH, OLED_2IN42_HEIGHT, 270, BLACK);	
-
-	printf("Drawing\r\n");
-	//1.Select Image
-	Paint_SelectImage(BlackImage);
-	Driver_Delay_ms(500);
-	Paint_Clear(BLACK);
-	
-		// 2.Drawing on the image		
-		printf("Drawing:page 1\r\n");
-		Paint_DrawPoint(20, 10, WHITE, DOT_PIXEL_1X1, DOT_STYLE_DFT);
-		Paint_DrawPoint(30, 10, WHITE, DOT_PIXEL_2X2, DOT_STYLE_DFT);
-		Paint_DrawPoint(40, 10, WHITE, DOT_PIXEL_3X3, DOT_STYLE_DFT);
-		Paint_DrawLine(10, 10, 10, 20, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
-		Paint_DrawLine(20, 20, 20, 30, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
-		Paint_DrawLine(30, 30, 30, 40, WHITE, DOT_PIXEL_1X1, LINE_STYLE_DOTTED);
-		Paint_DrawLine(40, 40, 40, 50, WHITE, DOT_PIXEL_1X1, LINE_STYLE_DOTTED);
-		Paint_DrawCircle(60, 30, 15, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-		Paint_DrawCircle(100, 40, 20, WHITE, DOT_PIXEL_1X1, DRAW_FILL_FULL);			
-		Paint_DrawRectangle(50, 30, 60, 40, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-		Paint_DrawRectangle(90, 30, 110, 50, BLACK, DOT_PIXEL_1X1, DRAW_FILL_FULL);		
-		// 3.Show image on page1
-		OLED_2in42_Display(BlackImage);
-		Driver_Delay_ms(2000);			
-		Paint_Clear(BLACK);
-		
-		// Drawing on the image
-		printf("Drawing:page 2\r\n");
-		// Verify fonts are accessible
-		printf("Font12: ptr=%p, Width=%d, Height=%d\r\n", (void*)&Font12, Font12.Width, Font12.Height);
-		printf("Font8: ptr=%p, Width=%d, Height=%d\r\n", (void*)&Font8, Font8.Width, Font8.Height);
-		printf("Font12: ptr=%p, Width=%d, Height=%d\r\n", (void*)&Font12, Font12.Width, Font12.Height);
-		if(Font8.table == NULL || Font12.table == NULL) {
-			printf("ERROR: Font table is NULL! Fonts not linked!\r\n");
-		} else {
-			printf("Fonts OK, table addresses: Font8=%p, Font12=%p\r\n",
-					(void*)Font8.table, (void*)Font12.table);
-		}
-		// Use WHITE foreground on BLACK background for proper text visibility
-		Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
-		Paint_DrawString_EN(10, 17, "hello world", &Font8, WHITE, BLACK);
-		Paint_DrawNum(10, 30, 123.456789, &Font8, 4, WHITE, BLACK);
-		Paint_DrawNum(10, 43, 987654, &Font12, 5, WHITE, BLACK);
-		// Show image on page2
-		OLED_2in42_Display(BlackImage);
-		Driver_Delay_ms(2000);	
-		Paint_Clear(BLACK);		
-		
-		// Drawing on the image
-		printf("Drawing:page 3\r\n");
-		// Commented out Chinese characters as they may not display correctly without proper font data
-		// Paint_DrawString_CN(10, 0,"Abc", &Font12CN, WHITE, WHITE);
-		// Paint_DrawString_CN(0, 20, "΢ѩ", &Font24CN, WHITE, WHITE);
-		// Show image on page3
-		OLED_2in42_Display(BlackImage);
-		Driver_Delay_ms(2000);		
-		Paint_Clear(BLACK);	
-
-		// Drawing on the image - Display test pattern
-		printf("Drawing:page 4\r\n");
-		Paint_DrawString_EN(10, 0, "STM32F411RE", &Font12, WHITE, BLACK);
-		Paint_DrawString_EN(10, 17, "OLED 2.42 Test", &Font8, WHITE, BLACK);
-		Paint_DrawString_EN(10, 30, "Display OK!", &Font12, WHITE, BLACK);
-		OLED_2in42_Display(BlackImage);
-		Driver_Delay_ms(2000);		
-		Paint_Clear(BLACK);	
-		
-		free(BlackImage);
-		return 0;
-}
-
+//#include "test.h"
+//#include "../OLED/OLED_2in42.h"
+//#include "math.h"
+//
+////int COUNTER_VAR=0;
+//
+//int OLED_2in42_test(void)
+//{
+//
+////		printf("Drawing\r\n");
+////		//1.Select Image
+////		Paint_SelectImage(BlackImage);
+////		Driver_Delay_ms(500);
+////		Paint_Clear(BLACK);
+////
+////			// 2.Drawing on the image
+////			printf("Drawing:page 1\r\n");
+////			Paint_DrawPoint(20, 10, WHITE, DOT_PIXEL_1X1, DOT_STYLE_DFT);
+////			Paint_DrawPoint(30, 10, WHITE, DOT_PIXEL_2X2, DOT_STYLE_DFT);
+////			Paint_DrawPoint(40, 10, WHITE, DOT_PIXEL_3X3, DOT_STYLE_DFT);
+////			Paint_DrawLine(10, 10, 10, 20, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
+////			Paint_DrawLine(20, 20, 20, 30, WHITE, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
+////			Paint_DrawLine(30, 30, 30, 40, WHITE, DOT_PIXEL_1X1, LINE_STYLE_DOTTED);
+////			Paint_DrawLine(40, 40, 40, 50, WHITE, DOT_PIXEL_1X1, LINE_STYLE_DOTTED);
+////			Paint_DrawCircle(60, 30, 15, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
+////			Paint_DrawCircle(100, 40, 20, WHITE, DOT_PIXEL_1X1, DRAW_FILL_FULL);
+////			Paint_DrawRectangle(50, 30, 60, 40, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
+////			Paint_DrawRectangle(90, 30, 110, 50, BLACK, DOT_PIXEL_1X1, DRAW_FILL_FULL);
+////			// 3.Show image on page1
+////			OLED_2in42_Display(BlackImage);
+////			Driver_Delay_ms(2000);
+////			Paint_Clear(BLACK);
+////
+////			// Drawing on the image
+////			printf("Drawing:page 2\r\n");
+////			// Verify fonts are accessible
+////			printf("Font12: ptr=%p, Width=%d, Height=%d\r\n", (void*)&Font12, Font12.Width, Font12.Height);
+////			printf("Font8: ptr=%p, Width=%d, Height=%d\r\n", (void*)&Font8, Font8.Width, Font8.Height);
+////			printf("Font12: ptr=%p, Width=%d, Height=%d\r\n", (void*)&Font12, Font12.Width, Font12.Height);
+////			if(Font8.table == NULL || Font12.table == NULL) {
+////				printf("ERROR: Font table is NULL! Fonts not linked!\r\n");
+////			} else {
+////				printf("Fonts OK, table addresses: Font8=%p, Font12=%p\r\n",
+////						(void*)Font8.table, (void*)Font12.table);
+////			}
+//			// Use WHITE foreground on BLACK background for proper text visibility
+//			Paint_SelectImage(BlackImage);
+//			Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
+//			Paint_DrawString_EN(10, 17, "hello world", &Font8, WHITE, BLACK);
+//			Paint_DrawNum(10, 30, COUNTER_VAR, &Font8, 4, WHITE, BLACK);
+//			Paint_DrawNum(10, 43, 987654, &Font12, 5, WHITE, BLACK);
+//			OLED_2in42_Display(BlackImage);
+//			Driver_Delay_ms(2000);
+//			Paint_Clear(BLACK);
+//			// Show image on page2
+////			OLED_2in42_Display(BlackImage);
+////			Driver_Delay_ms(2000);
+////			Paint_Clear(BLACK);
+//
+//			// Drawing on the image
+////			printf("Drawing:page 3\r\n");
+//			// Commented out Chinese characters as they may not display correctly without proper font data
+//			// Paint_DrawString_CN(10, 0,"Abc", &Font12CN, WHITE, WHITE);
+//			// Paint_DrawString_CN(0, 20, "΢ѩ", &Font24CN, WHITE, WHITE);
+//			// Show image on page3
+////			OLED_2in42_Display(BlackImage);
+////			Driver_Delay_ms(2000);
+////			Paint_Clear(BLACK);
+//
+//			// Drawing on the image - Display test pattern
+////			printf("Drawing:page 4\r\n");
+////			Paint_DrawString_EN(10, 0, "STM32F411RE", &Font12, WHITE, BLACK);
+////			Paint_DrawString_EN(10, 17, "OLED 2.42 Test", &Font8, WHITE, BLACK);
+////			Paint_DrawString_EN(10, 30, "Display OK!", &Font12, WHITE, BLACK);
+////			OLED_2in42_Display(BlackImage);
+////			Driver_Delay_ms(2000);
+////			Paint_Clear(BLACK);
+////
+////			free(BlackImage);
+//
+//		return 0;
+//}
+//

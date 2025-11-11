@@ -47,7 +47,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Src/../User/Example/ImageData.h \
  ../Core/Src/../User/Example/../Config/Debug.h \
  ../Core/Src/../User/Example/../OLED/OLED_2in42.h \
- ../Core/Src/../User/Example/../OLED/../Config/DEV_Config.h
+ ../Core/Src/../User/Example/../OLED/../Config/DEV_Config.h \
+ ../Core/Src/../User/OLED/OLED_2in42.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -98,3 +99,4 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Src/../User/Example/../Config/Debug.h:
 ../Core/Src/../User/Example/../OLED/OLED_2in42.h:
 ../Core/Src/../User/Example/../OLED/../Config/DEV_Config.h:
+../Core/Src/../User/OLED/OLED_2in42.h:

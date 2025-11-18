@@ -1,0 +1,24 @@
+#include "displayOutput.h"
+#include "test.h"
+#include "../OLED/OLED_2in42.h"
+//#include "math.h"
+
+printf("2.42inch OLED test demo\n");
+if(System_Init() != 0) {
+	return -1;
+}
+
+//Initialize the Display
+printf("OLED Init...\r\n");
+OLED_2in42_Init();
+Driver_Delay_ms(500);
+
+// 0.Create a new image cache
+if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
+		printf("Failed to apply for black memory...\r\n");
+		return -1;
+}
+Paint_NewImage(BlackImage, OLED_2IN42_WIDTH, OLED_2IN42_HEIGHT, 270, BLACK);
+Paint_SelectImage(BlackImage);
+Driver_Delay_ms(500);
+Paint_Clear(BLACK);

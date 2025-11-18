@@ -22,6 +22,7 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+Application/Src/Tasks \
 Core/Src \
 Core/Startup \
 Core/User/Config \
@@ -30,8 +31,12 @@ Core/User/Fonts \
 Core/User/GUI \
 Core/User/OLED \
 Drivers/STM32F4xx_HAL_Driver/Src \
+Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src \
+Middlewares/ST/STM32_USB_Device_Library/Core/Src \
 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 \
 Middlewares/Third_Party/FreeRTOS/Source \
 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F \
 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang \
+USB_DEVICE/App \
+USB_DEVICE/Target \
 

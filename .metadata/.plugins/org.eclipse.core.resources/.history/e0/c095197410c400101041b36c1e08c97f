@@ -1,0 +1,35 @@
+#include "task_manager.h"
+#include "task_display.h"
+#include "task_watchdog.h"
+
+TaskHandle_t xSensorTaskHandle = NULL;
+TaskHandle_t xCommTaskHandle = NULL;
+
+void TaskManager_CreateAllTasks(void)
+{
+    BaseType_t xReturned;
+
+    // Create Sensor Task
+    xReturned = xTaskCreate(
+        vSensorTask,
+        "Sensor",
+        256,
+        NULL,
+        3,
+        &xSensorTaskHandle
+    );
+
+    configASSERT(xReturned == pdPASS);
+
+    // Create Communication Task
+    xReturned = xTaskCreate(
+        vCommTask,
+        "Comm",
+        512,
+        NULL,
+        2,
+        &xCommTaskHandle
+    );
+
+    configASSERT(xReturned == pdPASS);
+}

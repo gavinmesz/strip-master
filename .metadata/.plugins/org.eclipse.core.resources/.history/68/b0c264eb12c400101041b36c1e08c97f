@@ -1,0 +1,15 @@
+#ifndef TASK_DISPLAY_H
+#define TASK_DISPLAY_H
+
+#include "FreeRTOS.h"
+#include "task.h"
+#include "main.h"
+
+extern int COUNTER_VAR;
+extern UWORD Imagesize;
+extern UBYTE *BlackImage;
+
+void initDisplay();
+void vDisplayTask();
+
+#endif

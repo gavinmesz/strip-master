@@ -1,0 +1,15 @@
+//main includes
+#include "FreeRTOS.h"
+#include "task.h"
+#include "main.h"
+#include "task_watchdog.h"
+
+//specific includes
+#include <stdio.h>
+
+void vWatchdogTask(){
+	for(;;){
+		printf("Watchdog\r\n");
+		vTaskDelay(pdMS_TO_TICKS(10));
+	}
+}

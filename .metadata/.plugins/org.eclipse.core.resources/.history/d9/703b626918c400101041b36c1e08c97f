@@ -1,0 +1,26 @@
+#include "task_manager.h"
+#include "task_display.h"
+#include "task_watchdog.h"
+
+TaskHandle_t xDisplayTaskHandle = NULL;
+TaskHandle_t xWatchdogTaskHandle = NULL;
+
+void TaskManager_InitTasks(void){
+	initDisplay();
+}
+
+void TaskManager_CreateAllTasks(void)
+{
+    BaseType_t xReturned;
+
+    //Display Task: stack should be >1024 due to display buffer size
+	xReturned = xTaskCreate(vWatchdogTask, "Watchdog", 2*1024, NULL, 32, &xDisplayTaskHandle);
+
+	configASSERT(xReturned == pdPASS);
+
+    //Display Task: stack should be >1024 due to display buffer size
+    xReturned = xTaskCreate(vDisplayTask, "Display", 256, NULL, 3, &xWatchdogTaskHandle);
+
+    configASSERT(xReturned == pdPASS);
+
+}

@@ -1,8 +1,8 @@
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:357:19:HAL_UART_Init	3
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:435:19:HAL_HalfDuplex_Init	3
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:509:19:HAL_LIN_Init	3
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:591:19:HAL_MultiProcessor_Init	3
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:669:19:HAL_UART_DeInit	2
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:357:19:HAL_UART_Init	18
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:435:19:HAL_HalfDuplex_Init	10
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:509:19:HAL_LIN_Init	10
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:591:19:HAL_MultiProcessor_Init	13
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:669:19:HAL_UART_DeInit	5
 ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:715:13:HAL_UART_MspInit	1
 ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:730:13:HAL_UART_MspDeInit	1
 ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:1135:19:HAL_UART_Transmit	10
@@ -34,9 +34,9 @@
 ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:2708:13:HAL_UART_AbortTransmitCpltCallback	1
 ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:2723:13:HAL_UART_AbortReceiveCpltCallback	1
 ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:2740:13:HAL_UARTEx_RxEventCallback	1
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:2780:19:HAL_LIN_SendBreak	3
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:2807:19:HAL_MultiProcessor_EnterMuteMode	3
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:2835:19:HAL_MultiProcessor_ExitMuteMode	3
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:2780:19:HAL_LIN_SendBreak	6
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:2807:19:HAL_MultiProcessor_EnterMuteMode	6
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:2835:19:HAL_MultiProcessor_ExitMuteMode	6
 ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:2863:19:HAL_HalfDuplex_EnableTransmitter	2
 ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:2898:19:HAL_HalfDuplex_EnableReceiver	2
 ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:2955:23:HAL_UART_GetState	1
@@ -59,4 +59,4 @@
 ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:3563:26:UART_Transmit_IT	5
 ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:3603:26:UART_EndTransmit_IT	1
 ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:3628:26:UART_Receive_IT	11
-../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:3731:13:UART_SetConfig	4
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:3731:13:UART_SetConfig	12

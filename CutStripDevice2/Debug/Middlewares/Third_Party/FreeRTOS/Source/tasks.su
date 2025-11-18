@@ -24,7 +24,7 @@
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:2505:14:uxTaskGetSystemState	32	static
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:2609:12:xTaskCatchUpTicks	24	static,ignoring_inline_asm
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:2707:12:xTaskIncrementTick	32	static,ignoring_inline_asm
-../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:2989:6:vTaskSwitchContext	24	static,ignoring_inline_asm
+../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:2989:6:vTaskSwitchContext	32	static,ignoring_inline_asm
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:3064:6:vTaskPlaceOnEventList	24	static,ignoring_inline_asm
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:3081:6:vTaskPlaceOnUnorderedEventList	32	static,ignoring_inline_asm
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:3107:7:vTaskPlaceOnEventListRestricted	32	static,ignoring_inline_asm
@@ -50,6 +50,9 @@
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:4014:13:xTaskPriorityInherit	24	static
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:4104:13:xTaskPriorityDisinherit	32	static,ignoring_inline_asm
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:4184:7:vTaskPriorityDisinheritAfterTimeout	40	static,ignoring_inline_asm
+../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:4352:15:prvWriteNameToBuffer	24	static
+../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:4378:7:vTaskList	48	static
+../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:4477:7:vTaskGetRunTimeStats	40	static
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:4602:12:uxTaskResetEventItemValue	16	static
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:4618:15:pvTaskIncrementMutexHeldCount	4	static
 ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c:4635:11:ulTaskNotifyTake	24	static,ignoring_inline_asm

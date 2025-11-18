@@ -1,0 +1,43 @@
+#include "displayOutput.h"
+
+UBYTE *BlackImage;
+UWORD Imagesize = ((OLED_2IN42_WIDTH%8==0)? (OLED_2IN42_WIDTH/8): (OLED_2IN42_WIDTH/8+1)) * OLED_2IN42_HEIGHT;
+
+void initDisplay(){
+
+}
+printf("2.42inch OLED test demo\n");
+if(System_Init() != 0) {
+	return -1;
+}
+
+//Initialize the Display
+printf("OLED Init...\r\n");
+OLED_2in42_Init();
+Driver_Delay_ms(500);
+
+// 0.Create a new image cache
+if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
+		printf("Failed to apply for black memory...\r\n");
+		return -1;
+}
+Paint_NewImage(BlackImage, OLED_2IN42_WIDTH, OLED_2IN42_HEIGHT, 270, BLACK);
+Paint_SelectImage(BlackImage);
+Driver_Delay_ms(500);
+Paint_Clear(BLACK);
+
+void StartTask02(void *argument)
+{
+  /* USER CODE BEGIN StartTask02 */
+  /* Infinite loop */
+  for(;;)
+  {
+	Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
+	Paint_DrawString_EN(10, 17, "hello world", &Font8, WHITE, BLACK);
+	Paint_DrawNum(10, 30, COUNTER_VAR, &Font8, 4, WHITE, BLACK);
+	Paint_DrawNum(10, 43, 987654, &Font12, 5, WHITE, BLACK);
+	OLED_2in42_Display(BlackImage);
+	vTaskDelay(100/portTICK_PERIOD_MS);
+  }
+  /* USER CODE END StartTask02 */
+}

@@ -1,0 +1,9 @@
+#include "task_watchdog.h"
+#include <stdio.h>
+
+void vWatchdogTask(){
+	for(;;){
+		printf("Watchdog\r\n");
+		vTaskDelay(100);
+	}
+}

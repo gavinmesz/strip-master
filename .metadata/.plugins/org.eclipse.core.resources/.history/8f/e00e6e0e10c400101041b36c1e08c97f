@@ -1,0 +1,6 @@
+#include "FreeRTOS.h"
+#include "task.h"
+
+extern TaskHandle_t xDisplayTaskHandle
+
+void TaskManager_CreateAllTasks(void);

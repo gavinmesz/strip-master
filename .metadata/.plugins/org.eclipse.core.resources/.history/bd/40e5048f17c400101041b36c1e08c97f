@@ -1,0 +1,11 @@
+#ifndef TASK_DISPLAY_H
+#define TASK_DISPLAY_H
+
+extern int COUNTER_VAR;
+extern UWORD Imagesize;
+extern UBYTE *BlackImage;
+
+void initDisplay();
+void vDisplayTask();
+
+#endif

@@ -1,17 +1,17 @@
-16:45:49 **** Incremental Build of configuration Debug for project CutStripDevice2 ****
+19:53:43 **** Incremental Build of configuration Debug for project CutStripDevice2 ****
 make -j16 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Application/Src/Tasks/task_display.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I../Application/Inc -I../Application/Inc/Tasks -I../Application/Inc/Services -I../Application/Inc/Config -I../BSP/Inc -I../Components/Inc -I../Utils/Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Application/Src/Tasks/task_display.d" -MT"Application/Src/Tasks/task_display.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Application/Src/Tasks/task_display.o"
 arm-none-eabi-gcc -o "CutStripDevice2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Admin\Desktop\4A\MTE 481\strip-master\CutStripDevice2\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CutStripDevice2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: CutStripDevice2.elf
  
 arm-none-eabi-size  CutStripDevice2.elf 
 arm-none-eabi-objdump -h -S CutStripDevice2.elf  > "CutStripDevice2.list"
    text	   data	    bss	    dec	    hex	filename
-  36596	    136	  21104	  57836	   e1ec	CutStripDevice2.elf
+  74440	    376	  28632	 103448	  19418	CutStripDevice2.elf
 Finished building: default.size.stdout
  
 Finished building: CutStripDevice2.list
  
 
-16:45:51 Build Finished. 0 errors, 0 warnings. (took 2s.134ms)
+19:53:46 Build Finished. 0 errors, 0 warnings. (took 2s.910ms)
 

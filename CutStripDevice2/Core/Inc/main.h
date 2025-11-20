@@ -55,24 +55,28 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define M2_DIR_Pin GPIO_PIN_13
+#define M2_DIR_GPIO_Port GPIOC
 #define BMS_ALERT_Pin GPIO_PIN_1
 #define BMS_ALERT_GPIO_Port GPIOC
-#define LIGHT_IN_Pin GPIO_PIN_0
+#define UX_KNOB2_A_Pin GPIO_PIN_0
+#define UX_KNOB2_A_GPIO_Port GPIOA
+#define UX_KNOB2_B_Pin GPIO_PIN_1
+#define UX_KNOB2_B_GPIO_Port GPIOA
+#define LIGHT_IN_Pin GPIO_PIN_2
 #define LIGHT_IN_GPIO_Port GPIOA
-#define GAUGE_IN_Pin GPIO_PIN_1
+#define GAUGE_IN_Pin GPIO_PIN_3
 #define GAUGE_IN_GPIO_Port GPIOA
-#define USART_TX_Pin GPIO_PIN_2
-#define USART_TX_GPIO_Port GPIOA
-#define USART_RX_Pin GPIO_PIN_3
-#define USART_RX_GPIO_Port GPIOA
-#define BUCK5_PG_Pin GPIO_PIN_4
+#define UX_POT_Pin GPIO_PIN_4
+#define UX_POT_GPIO_Port GPIOA
+#define BUCK5_PG_Pin GPIO_PIN_5
 #define BUCK5_PG_GPIO_Port GPIOA
-#define BUCK5_EN_Pin GPIO_PIN_5
-#define BUCK5_EN_GPIO_Port GPIOA
 #define ENC1_A_Pin GPIO_PIN_6
 #define ENC1_A_GPIO_Port GPIOA
 #define ENC1_B_Pin GPIO_PIN_7
 #define ENC1_B_GPIO_Port GPIOA
+#define BUCK5_EN_Pin GPIO_PIN_4
+#define BUCK5_EN_GPIO_Port GPIOC
 #define BUCK12_PG_Pin GPIO_PIN_5
 #define BUCK12_PG_GPIO_Port GPIOC
 #define BUCK12_EN_Pin GPIO_PIN_0
@@ -107,8 +111,8 @@ void Error_Handler(void);
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin GPIO_PIN_14
 #define TCK_GPIO_Port GPIOA
-#define M2_DIR_Pin GPIO_PIN_15
-#define M2_DIR_GPIO_Port GPIOA
+#define UX_KNOB1_A_Pin GPIO_PIN_15
+#define UX_KNOB1_A_GPIO_Port GPIOA
 #define M1_SLP_Pin GPIO_PIN_10
 #define M1_SLP_GPIO_Port GPIOC
 #define M1_EN_Pin GPIO_PIN_11
@@ -117,8 +121,8 @@ void Error_Handler(void);
 #define M1_MS2_GPIO_Port GPIOC
 #define M1_MS1_Pin GPIO_PIN_2
 #define M1_MS1_GPIO_Port GPIOD
-#define SWO_Pin GPIO_PIN_3
-#define SWO_GPIO_Port GPIOB
+#define UX_KNOB1_B_Pin GPIO_PIN_3
+#define UX_KNOB1_B_GPIO_Port GPIOB
 #define M1_FLT_Pin GPIO_PIN_4
 #define M1_FLT_GPIO_Port GPIOB
 #define M1_DIR_Pin GPIO_PIN_5

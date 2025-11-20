@@ -1,0 +1,2 @@
+../Application/Src/Services/task_manager.c:10:6:TaskManager_InitTasks	8	static
+../Application/Src/Services/task_manager.c:16:6:TaskManager_CreateAllTasks	32	static,ignoring_inline_asm

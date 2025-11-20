@@ -23,7 +23,6 @@
 #include "i2c.h"
 #include "spi.h"
 #include "tim.h"
-#include "usart.h"
 #include "usb_device.h"
 #include "gpio.h"
 
@@ -53,7 +52,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+extern USBD_HandleTypeDef hUsbDeviceFS;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,11 +68,11 @@ void MX_FREERTOS_Init(void);
 #ifdef __GNUC__
 /* With GCC, small printf (option LD Linker->Libraries->Small printf
    set to 'Yes') calls __io_putchar() */
-int __io_putchar(int ch)
-{
-  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
-  return ch;
-}
+//int __io_putchar(int ch)
+//{
+//  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
+//  return ch;
+//}
 #endif /* __GNUC__ */
 /* USER CODE END 0 */
 
@@ -104,14 +103,26 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USART2_UART_Init();
   MX_SPI2_Init();
   MX_TIM1_Init();
   MX_I2C1_Init();
   MX_ADC1_Init();
   MX_TIM3_Init();
   MX_TIM4_Init();
+  MX_TIM2_Init();
+  MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
+
+//  // USB INITIALIZATION
+//  MX_USB_DEVICE_Init();
+//  HAL_Delay(2000);
+//  uint32_t timeout = HAL_GetTick() + 10000;
+//  while(hUsbDeviceFS.dev_state != USBD_STATE_CONFIGURED)
+//  {
+//      HAL_Delay(100);
+//      if(HAL_GetTick() > timeout)
+//          break;  // Give up after 10 more seconds
+//  }
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -188,7 +199,7 @@ void SystemClock_Config(void)
 
 /**
   * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM2 interrupt took place, inside
+  * @note   This function is called  when TIM9 interrupt took place, inside
   * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
   * a global variable "uwTick" used as application time base.
   * @param  htim : TIM handle
@@ -198,7 +209,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM2) {
+  if (htim->Instance == TIM9) {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */

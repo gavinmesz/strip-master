@@ -6,17 +6,14 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Application/Src/Tasks/task_display.c \
-../Application/Src/Tasks/task_manager.c \
 ../Application/Src/Tasks/task_watchdog.c 
 
 OBJS += \
 ./Application/Src/Tasks/task_display.o \
-./Application/Src/Tasks/task_manager.o \
 ./Application/Src/Tasks/task_watchdog.o 
 
 C_DEPS += \
 ./Application/Src/Tasks/task_display.d \
-./Application/Src/Tasks/task_manager.d \
 ./Application/Src/Tasks/task_watchdog.d 
 
 
@@ -27,7 +24,7 @@ Application/Src/Tasks/%.o Application/Src/Tasks/%.su Application/Src/Tasks/%.cyc
 clean: clean-Application-2f-Src-2f-Tasks
 
 clean-Application-2f-Src-2f-Tasks:
-	-$(RM) ./Application/Src/Tasks/task_display.cyclo ./Application/Src/Tasks/task_display.d ./Application/Src/Tasks/task_display.o ./Application/Src/Tasks/task_display.su ./Application/Src/Tasks/task_manager.cyclo ./Application/Src/Tasks/task_manager.d ./Application/Src/Tasks/task_manager.o ./Application/Src/Tasks/task_manager.su ./Application/Src/Tasks/task_watchdog.cyclo ./Application/Src/Tasks/task_watchdog.d ./Application/Src/Tasks/task_watchdog.o ./Application/Src/Tasks/task_watchdog.su
+	-$(RM) ./Application/Src/Tasks/task_display.cyclo ./Application/Src/Tasks/task_display.d ./Application/Src/Tasks/task_display.o ./Application/Src/Tasks/task_display.su ./Application/Src/Tasks/task_watchdog.cyclo ./Application/Src/Tasks/task_watchdog.d ./Application/Src/Tasks/task_watchdog.o ./Application/Src/Tasks/task_watchdog.su
 
 .PHONY: clean-Application-2f-Src-2f-Tasks
 

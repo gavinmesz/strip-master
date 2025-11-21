@@ -32,7 +32,46 @@ message("Build type: " ${CMAKE_BUILD_TYPE})
 enable_language(C ASM)
 
 # Create the executable target FIRST
-add_executable(${CMAKE_PROJECT_NAME})
+add_executable(${CMAKE_PROJECT_NAME}
+        Application/Inc/Services/task_manager.h
+        Application/Inc/Tasks/task_display.h
+        Application/Inc/Tasks/task_watchdog.h
+        Application/Src/Services/task_manager.c
+        Application/Src/Tasks/task_display.c
+        Application/Src/Tasks/task_watchdog.c
+        Core/User/Config/DEV_Config.c
+        Core/User/Example/ImageData.c
+        Core/User/Example/OLED_2in42_test.c
+        Core/User/Fonts/font8.c
+        Core/User/Fonts/font12.c
+        Core/User/Fonts/font12CN.c
+        Core/User/Fonts/font16.c
+        Core/User/Fonts/font20.c
+        Core/User/Fonts/font24.c
+        Core/User/Fonts/font24CN.c
+        Core/User/GUI/GUI_Paint.c
+        Core/User/OLED/OLED_2in42.c
+)
+
+# Add include paths
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+        # Add user defined include paths
+        Application/Inc
+        Application/Inc/Services
+        Application/Inc/Tasks
+        BSP/Inc
+        Components/Inc
+        Utils/Inc
+        Core/User/Config
+        Core/User/Example
+        Core/User/Fonts
+        Core/User/GUI
+        Core/User/OLED
+        Core/Inc
+        Drivers/CMSIS/Device/ST/STM32F4xx/Include
+        Drivers/CMSIS/Include
+        Drivers/STM32F4xx_HAL_Driver/Inc
+)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
@@ -45,11 +84,6 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
-)
-
-# Add include paths
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined include paths
 )
 
 # Add project symbols (macros)

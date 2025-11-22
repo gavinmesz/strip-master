@@ -13,9 +13,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-// External SPI handle declaration
-extern SPI_HandleTypeDef hspi2;
-
 /********************************************************************************
 function:	System Init
 note:
@@ -52,7 +49,7 @@ note:
 uint8_t SPI4W_Write_Byte(uint8_t value)
 {
 	// Use HAL_SPI_Transmit for STM32F4xx (SPI2)
-	HAL_SPI_Transmit(&hspi2, &value, 1, 500);
+	HAL_SPI_Transmit(&hspi1, &value, 1, 500);
 	return 0;
 }
 

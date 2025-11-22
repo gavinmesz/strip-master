@@ -1,38 +1,19 @@
 cmake_minimum_required(VERSION 3.22)
 
-#
-# This file is generated only once,
-# and is not re-generated if converter is called multiple times.
-#
-# User is free to modify the file as much as necessary
-#
-
-# Setup compiler settings
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
 
-
-# Define the build type
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
-# Set the project name
-set(CMAKE_PROJECT_NAME WireStripper)
+project(WireStripper C ASM)
+message("Build type: ${CMAKE_BUILD_TYPE}")
 
-# Enable compile command to ease indexing with e.g. clangd
-set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
-
-# Core project settings
-project(${CMAKE_PROJECT_NAME})
-message("Build type: " ${CMAKE_BUILD_TYPE})
-
-# Enable CMake support for ASM and C languages
 enable_language(C ASM)
 
-# Create the executable target FIRST
-add_executable(${CMAKE_PROJECT_NAME}
+add_executable(${PROJECT_NAME}
         Application/Inc/Services/task_manager.h
         Application/Inc/Tasks/task_display.h
         Application/Inc/Tasks/task_watchdog.h
@@ -41,7 +22,7 @@ add_executable(${CMAKE_PROJECT_NAME}
         Application/Src/Tasks/task_watchdog.c
         Core/User/Config/DEV_Config.c
         Core/User/Example/ImageData.c
-        Core/User/Example/OLED_2in42_test.c
+#        Core/User/Example/OLED_2in42_test.c
         Core/User/Fonts/font8.c
         Core/User/Fonts/font12.c
         Core/User/Fonts/font12CN.c
@@ -51,11 +32,22 @@ add_executable(${CMAKE_PROJECT_NAME}
         Core/User/Fonts/font24CN.c
         Core/User/GUI/GUI_Paint.c
         Core/User/OLED/OLED_2in42.c
+        Core/Src/main.c
+        Core/Src/gpio.c
+        Core/Src/adc.c
+        Core/Src/i2c.c
+        Core/Src/spi.c
+        Core/Src/tim.c
+        Core/Src/usart.c
+        Core/Src/freertos.c
+        Core/Src/stm32f4xx_hal_msp.c
+        Core/Src/stm32f4xx_it.c
+        Core/Src/stm32f4xx_hal_timebase_tim.c
+        Core/Src/syscalls.c
+        Core/Src/sysmem.c
 )
 
-# Add include paths
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
-        # Add user defined include paths
+target_include_directories(${PROJECT_NAME} PRIVATE
         Application/Inc
         Application/Inc/Services
         Application/Inc/Tasks
@@ -73,30 +65,70 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         Drivers/STM32F4xx_HAL_Driver/Inc
 )
 
-# Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
 
-# Link directories setup
-target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined library search paths
+# Ensure ALL CubeMX targets use Cortex-M4 floating-point ABI
+foreach(tgt
+        STM32_Drivers
+        FreeRTOS
+        USB_DEVICE
+        USB_DEVICE_Library
+        USB_Device_Library
+)
+    if (TARGET ${tgt})
+        message(STATUS "Applying Cortex-M4 options to target: ${tgt}")
+
+        target_compile_options(${tgt} PRIVATE
+                -mcpu=cortex-m4
+                -mthumb
+                -mfpu=fpv4-sp-d16
+                -mfloat-abi=hard
+                -O2
+                -ffunction-sections
+                -fdata-sections
+        )
+
+        target_link_options(${tgt} PRIVATE
+                -mcpu=cortex-m4
+                -mthumb
+                -mfpu=fpv4-sp-d16
+                -mfloat-abi=hard
+                -Wl,--gc-sections
+        )
+    endif()
+endforeach()
+
+target_compile_options(${PROJECT_NAME} PRIVATE
+        -mcpu=cortex-m4
+        -mthumb
+        -mfpu=fpv4-sp-d16
+        -mfloat-abi=hard
+        -O2
+        -ffunction-sections
+        -fdata-sections
 )
 
-# Add sources to executable
-target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user sources here
+target_compile_options(STM32_Drivers PRIVATE
+        -mcpu=cortex-m4
+        -mthumb
+        -mfpu=fpv4-sp-d16
+        -mfloat-abi=hard
+        -O2
+        -ffunction-sections
+        -fdata-sections
 )
 
-# Add project symbols (macros)
-target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined symbols
+target_link_options(${PROJECT_NAME} PRIVATE
+        -mcpu=cortex-m4
+        -mthumb
+        -mfpu=fpv4-sp-d16
+        -mfloat-abi=hard
+        -Wl,--gc-sections
+        -T${CMAKE_SOURCE_DIR}/STM32F446xx_FLASH.ld
 )
 
-# Remove wrong libob.a library dependency when using cpp files
 list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
 
-# Add linked libraries
-target_link_libraries(${CMAKE_PROJECT_NAME}
-    stm32cubemx
-
-    # Add user defined libraries
+target_link_libraries(${PROJECT_NAME}
+        stm32cubemx
 )

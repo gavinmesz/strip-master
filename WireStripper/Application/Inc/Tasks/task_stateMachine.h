@@ -1,0 +1,10 @@
+//
+// Created by Admin on 11/22/2025.
+//
+
+#ifndef WIRESTRIPPER_TASK_STATEMACHINE_H
+#define WIRESTRIPPER_TASK_STATEMACHINE_H
+
+void vStateMachineTask();
+
+#endif //WIRESTRIPPER_TASK_STATEMACHINE_H

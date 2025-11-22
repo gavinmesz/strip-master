@@ -1,15 +1,18 @@
 //main includes
 #include "FreeRTOS.h"
 #include "task.h"
-#include "task_watchdog.h"
+#include "main.h"
 
 //specific includes
+#include "task_actuatorControl.h"
 #include <stdio.h>
 #include "task_display.h"
 
-void vWatchdogTask(){
+void vActuatorTask(){
+
+
     for(;;){
-        printf("Watchdog\r\n");
+        printf("Actuator Control\r\n");
         COUNTER_VAR++;
         vTaskDelay(pdMS_TO_TICKS(10));
     }

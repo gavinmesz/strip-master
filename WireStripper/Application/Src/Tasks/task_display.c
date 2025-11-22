@@ -1,10 +1,10 @@
 //main includes
-#include "task_display.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "main.h"
 
 //specific includes
+#include "task_display.h"
 #include "../User/OLED/OLED_2in42.h"
 #include "../User/Example/test.h"
 #include <stdio.h>
@@ -38,6 +38,8 @@ int initDisplay(){
 
 void vDisplayTask(void *argument)
 {
+    //Streets saying we should have SPI running with DMA
+
     /* USER CODE BEGIN StartTask02 */
     /* Infinite loop */
     for(;;)
@@ -48,7 +50,7 @@ void vDisplayTask(void *argument)
         Paint_DrawNum(10, 30, COUNTER_VAR, &Font8, 4, WHITE, BLACK);
         Paint_DrawNum(10, 43, 987654, &Font12, 5, WHITE, BLACK);
         OLED_2in42_Display(BlackImage);
-        vTaskDelay(100/portTICK_PERIOD_MS);
+        vTaskDelay(pdMS_TO_TICKS(10));
     }
     /* USER CODE END StartTask02 */
 }

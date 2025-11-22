@@ -5,7 +5,8 @@
 #include "task.h"
 
 extern TaskHandle_t xDisplayTaskHandle;
-extern TaskHandle_t xwatchDogTaskHandle;
+extern TaskHandle_t xActuatorTaskHandle;
+extern TaskHandle_t xSafetyTaskHandle;
 
 void TaskManager_InitTasks(void);
 void TaskManager_CreateAllTasks(void);

@@ -14,12 +14,9 @@ message("Build type: ${CMAKE_BUILD_TYPE}")
 enable_language(C ASM)
 
 add_executable(${PROJECT_NAME}
-        Application/Inc/Services/task_manager.h
-        Application/Inc/Tasks/task_display.h
-        Application/Inc/Tasks/task_watchdog.h
         Application/Src/Services/task_manager.c
         Application/Src/Tasks/task_display.c
-        Application/Src/Tasks/task_watchdog.c
+        Application/Src/Tasks/task_actuatorControl.c
         Core/User/Config/DEV_Config.c
         Core/User/Example/ImageData.c
 #        Core/User/Example/OLED_2in42_test.c
@@ -45,6 +42,10 @@ add_executable(${PROJECT_NAME}
         Core/Src/stm32f4xx_hal_timebase_tim.c
         Core/Src/syscalls.c
         Core/Src/sysmem.c
+        Application/Src/Tasks/task_safety.c
+        Application/Inc/Tasks/task_safety.h
+        Application/Src/Tasks/task_stateMachine.c
+        Application/Inc/Tasks/task_stateMachine.h
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

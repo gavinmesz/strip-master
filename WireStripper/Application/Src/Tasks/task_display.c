@@ -10,8 +10,6 @@
 #include <stdio.h>
 
 int COUNTER_VAR = 0;
-UBYTE *BlackImage;
-UWORD Imagesize = ((OLED_2IN42_WIDTH%8==0)? (OLED_2IN42_WIDTH/8): (OLED_2IN42_WIDTH/8+1)) * OLED_2IN42_HEIGHT;
 
 int initDisplay(){
     printf("2.42inch OLED test demo\n");

@@ -28,6 +28,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
+#include "../User/OLED/OLED_2in42.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -41,7 +42,8 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
+  extern UWORD Imagesize;
+  extern UBYTE *BlackImage;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

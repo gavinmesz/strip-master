@@ -4,8 +4,6 @@
 #include "../User/Config/DEV_Config.h"
 
 extern int COUNTER_VAR;
-extern UWORD Imagesize;
-extern UBYTE *BlackImage;
 
 int initDisplay();
 void vDisplayTask();

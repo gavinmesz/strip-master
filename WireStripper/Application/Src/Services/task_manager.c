@@ -28,7 +28,7 @@ void TaskManager_CreateAllTasks(void)
     configASSERT(xReturned == pdPASS);
 
     //Display Task: stack should be >1024 due to display buffer size
-    xReturned = xTaskCreate(vDisplayTask, "Display",  2*1024, NULL, 3, &xDisplayTaskHandle);
+    xReturned = xTaskCreate(vDisplayTask, "Display",  256, NULL, 3, &xDisplayTaskHandle);
 
     configASSERT(xReturned == pdPASS);
 

@@ -17,6 +17,6 @@ void vSafetyTask() {
     //Poll for power good across bucks
     for (;;) {
         printf("Safety");
-        vTaskDelay(pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
 }

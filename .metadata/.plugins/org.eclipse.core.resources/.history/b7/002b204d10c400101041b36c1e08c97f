@@ -1,8 +1,0 @@
-#include "FreeRTOS.h"
-#include "task.h"
-
-extern TaskHandle_t xDisplayTaskHandle;
-extern TaskHandle_t xwatchDogTaskHandle;
-extern TaskHandle_t xIdleTaskHandle;
-
-void TaskManager_CreateAllTasks(void);

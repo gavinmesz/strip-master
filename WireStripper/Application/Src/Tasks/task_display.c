@@ -6,7 +6,7 @@
 //specific includes
 #include "task_display.h"
 #include "../User/OLED/OLED_2in42.h"
-#include "../User/Example/test.h"
+#include "../GUI/GUI_Paint.h"
 #include <stdio.h>
 
 int COUNTER_VAR = 0;
@@ -48,7 +48,7 @@ void vDisplayTask(void *argument)
         Paint_DrawNum(10, 30, COUNTER_VAR, &Font8, 4, WHITE, BLACK);
         Paint_DrawNum(10, 43, 987654, &Font12, 5, WHITE, BLACK);
         OLED_2in42_Display(BlackImage);
-        vTaskDelay(pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
     /* USER CODE END StartTask02 */
 }

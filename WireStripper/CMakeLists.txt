@@ -18,8 +18,6 @@ add_executable(${PROJECT_NAME}
         Application/Src/Tasks/task_display.c
         Application/Src/Tasks/task_actuatorControl.c
         Core/User/Config/DEV_Config.c
-        Core/User/Example/ImageData.c
-#        Core/User/Example/OLED_2in42_test.c
         Core/User/Fonts/font8.c
         Core/User/Fonts/font12.c
         Core/User/Fonts/font12CN.c
@@ -56,7 +54,6 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         Components/Inc
         Utils/Inc
         Core/User/Config
-        Core/User/Example
         Core/User/Fonts
         Core/User/GUI
         Core/User/OLED
@@ -132,4 +129,23 @@ list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
 
 target_link_libraries(${PROJECT_NAME}
         stm32cubemx
+)
+
+# --- Flash target (OpenOCD + ST-LINK) ---
+add_custom_target(flash
+        COMMAND openocd
+        -f interface/stlink.cfg
+        -f target/stm32f4x.cfg
+        -c "program {$<TARGET_FILE:${PROJECT_NAME}>} verify reset exit"
+        DEPENDS ${PROJECT_NAME}
+        USES_TERMINAL
+)
+
+# --- OpenOCD server (for debugging) ---
+add_custom_target(openocd
+        COMMAND openocd
+        -f interface/stlink.cfg
+        -f target/stm32f4x.cfg
+        -c "transport select swd; adapter speed 1800; init; reset halt"
+        USES_TERMINAL
 )

@@ -10,7 +10,6 @@
 
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_hal_gpio.h"
-#include "main.h"
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -29,6 +28,8 @@
 
 #define IIC_CMD		0X00
 #define IIC_RAM		0X40
+
+#include "main.h" //Suspicious but it works
 
 //OLED GPIO - Note: These pins need to be defined in main.h
 #define OLED_CS_0		HAL_GPIO_WritePin(OLED_CS_GPIO_Port, OLED_CS_Pin, GPIO_PIN_RESET)

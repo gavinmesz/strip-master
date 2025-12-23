@@ -1,5 +1,0 @@
-#include "test.h"
-#include "../Core/User/OLED/OLED_2in42.h"
-#include "math.h"
-
-extern COUNTER_VAR;

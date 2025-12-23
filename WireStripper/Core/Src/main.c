@@ -26,10 +26,11 @@
 #include "usart.h"
 #include "usb_device.h"
 #include "gpio.h"
+#include <unistd.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "../User/OLED/OLED_2in42.h"
 /* USER CODE END Includes */
 
 // /* Private typedef -----------------------------------------------------------*/
@@ -41,6 +42,15 @@
 /* USER CODE BEGIN PD */
 UWORD Imagesize = ((OLED_2IN42_WIDTH%8==0)? (OLED_2IN42_WIDTH/8): (OLED_2IN42_WIDTH/8+1)) * OLED_2IN42_HEIGHT;
 UBYTE *BlackImage;
+
+int _write(int file, char *ptr, int len)
+{
+  if (file == STDOUT_FILENO || file == STDERR_FILENO) {
+    HAL_UART_Transmit(&huart3, (uint8_t*)ptr, len, HAL_MAX_DELAY);
+    return len;
+  }
+  return -1;
+}
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/

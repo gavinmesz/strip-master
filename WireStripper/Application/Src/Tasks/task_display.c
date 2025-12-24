@@ -13,6 +13,7 @@ int COUNTER_VAR = 0;
 
 int initDisplay(){
     // printf("2.42inch OLED test demo\n");
+
     if(System_Init() != 0) {
         return -1;
     }
@@ -20,7 +21,7 @@ int initDisplay(){
     //Initialize the Display
     // printf("OLED Init...\r\n");
     OLED_2in42_Init();
-    Driver_Delay_ms(500);
+    HAL_Delay(pdMS_TO_TICKS(500));
 
     // 0.Create a new image cache
     if((BlackImage = (UBYTE *)pvPortMalloc(Imagesize)) == NULL) {
@@ -29,7 +30,7 @@ int initDisplay(){
     }
     Paint_NewImage(BlackImage, OLED_2IN42_WIDTH, OLED_2IN42_HEIGHT, 270, BLACK);
     Paint_SelectImage(BlackImage);
-    Driver_Delay_ms(500);
+    HAL_Delay(pdMS_TO_TICKS(500));
     Paint_Clear(BLACK);
     return 1;
 }
@@ -39,6 +40,7 @@ void vDisplayTask(void *argument)
     //Streets saying we should have SPI running with DMA
 
     /* USER CODE BEGIN StartTask02 */
+
     uint8_t dispMsg[] = {1};
     /* Infinite loop */
     for(;;)

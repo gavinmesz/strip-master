@@ -37,7 +37,6 @@
 #include "../Config/Debug.h"
 #include "../OLED/OLED_2in42.h"
 
-#include <stdlib.h> // malloc() free()
 #include <math.h>
 
 int OLED_2in42_test(void);

@@ -52,7 +52,7 @@
 osThreadId_t idleHandle;
 const osThreadAttr_t idle_attributes = {
   .name = "idle",
-  .stack_size = 2048 * 4,
+  .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
 
@@ -76,11 +76,12 @@ void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
    /* Run time stack overflow checking is performed if
    configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2. This hook function is
    called if a stack overflow is detected. */
-  uint8_t overflow[] = {99};
-  HAL_UART_Transmit(&huart3, overflow, 1, 1000);
-  (void)xTask; (void)pcTaskName;
-  taskDISABLE_INTERRUPTS();
-  for(;;) {}
+  // uint8_t overflow[] = {99};
+  // HAL_UART_Transmit(&huart3, overflow, 1, 1000);
+  // (void)xTask; (void)pcTaskName;
+  // taskDISABLE_INTERRUPTS();
+  // for(;;) {}
+  int x = 1;
 }
 /* USER CODE END 4 */
 
@@ -97,8 +98,7 @@ void vApplicationMallocFailedHook(void)
    FreeRTOSConfig.h, and the xPortGetFreeHeapSize() API function can be used
    to query the size of free heap space that remains (although it does not
    provide information on how the remaining heap might be fragmented). */
-  // taskDISABLE_INTERRUPTS();
-  for(;;) {}
+  int x = 1;
 }
 /* USER CODE END 5 */
 
@@ -135,6 +135,8 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   TaskManager_CreateAllTasks();
+  size_t freeNow = xPortGetFreeHeapSize();
+  size_t minEver = xPortGetMinimumEverFreeHeapSize();
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -156,10 +158,7 @@ void idleTask(void *argument)
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN idleTask */
   /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
+  vTaskDelete(NULL);
   /* USER CODE END idleTask */
 }
 

@@ -5,7 +5,7 @@
 #include "task_safety.h"
 #include "task_stateMachine.h"
 
-#include <stdio.h>
+#include "usart.h"
 
 TaskHandle_t xDisplayTaskHandle = NULL;
 TaskHandle_t xActuatorTaskHandle = NULL;
@@ -13,13 +13,16 @@ TaskHandle_t xSafetyTaskHandle = NULL;
 TaskHandle_t xStateMachineTaskHandle = NULL;
 
 void TaskManager_InitTasks(void){
-    if(initDisplay()==-1){
-        printf("Failed to Initialize Display\r\n");
+    uint8_t errMsg[] = {98};
+    if(initDisplay()==-1) {
+        // printf("Failed to Initialize Display\r\n");
+        HAL_UART_Transmit(&huart3, errMsg, 1, 1000);
     }
 }
 
 void TaskManager_CreateAllTasks(void)
 {
+
     BaseType_t xReturned;
 
     //Actuator Task: stack should be >1024 due to display buffer size
@@ -28,7 +31,7 @@ void TaskManager_CreateAllTasks(void)
     configASSERT(xReturned == pdPASS);
 
     //Display Task: stack should be >1024 due to display buffer size
-    xReturned = xTaskCreate(vDisplayTask, "Display",  1280, NULL, 3, &xDisplayTaskHandle);
+    xReturned = xTaskCreate(vDisplayTask, "Display",  1024, NULL, 3, &xDisplayTaskHandle);
 
     configASSERT(xReturned == pdPASS);
 

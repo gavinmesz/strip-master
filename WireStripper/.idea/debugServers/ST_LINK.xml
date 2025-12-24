@@ -1,0 +1,13 @@
+<component name="DebugServers">
+  <stlink-debug-target name="ST-LINK" uniqueID="a66644cb-333a-43c5-b5b5-a186bee0d6d1" selected="true">
+    <debugger version="1">
+      <debugger kind="GDB">C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\14.3 rel1\bin\arm-none-eabi-gdb.exe</debugger>
+      <env />
+    </debugger>
+    <gdbserver exe="C:\ST\STM32CubeCLT1200\STLink-gdb-server\bin\ST-LINK_gdbserver.exe" programmer="C:\ST\STM32CubeCLT1200\STM32CubeProgrammer\bin" />
+    <st-link />
+    <device interface="SWD" />
+    <connection extended-remote="false" port="61234" warmup-ms="500" />
+    <swo enabled="false" port="61235" />
+  </stlink-debug-target>
+</component>

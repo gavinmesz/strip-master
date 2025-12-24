@@ -21,7 +21,7 @@ note:
 uint8_t System_Init(void)
 {
 #if USE_SPI_4W
-	printf("USE_SPI_4W\r\n");
+	// printf("USE_SPI_4W\r\n");
 #elif USE_IIC
 	printf("USE_IIC\r\n");
 	OLED_CS_0;

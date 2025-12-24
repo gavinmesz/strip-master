@@ -9,14 +9,15 @@
 
 //task specific includes
 #include "../../Inc/Tasks/task_safety.h"
-#include <stdio.h>
-
-#include "task.h"
+#include "usart.h"
 
 void vSafetyTask() {
     //Poll for power good across bucks
+    uint8_t safetyMsg[] = {3};
+
     for (;;) {
-        printf("Safety");
+        HAL_UART_Transmit(&huart3, safetyMsg, 1, 1000);
+        // printf("Safety\r\n");
         vTaskDelay(pdMS_TO_TICKS(100));
     }
 }

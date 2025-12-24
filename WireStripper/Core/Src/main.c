@@ -26,31 +26,22 @@
 #include "usart.h"
 #include "usb_device.h"
 #include "gpio.h"
-#include <unistd.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "../User/OLED/OLED_2in42.h"
+#include <unistd.h>
 /* USER CODE END Includes */
 
-// /* Private typedef -----------------------------------------------------------*/
-// /* USER CODE BEGIN PTD */
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-UWORD Imagesize = ((OLED_2IN42_WIDTH%8==0)? (OLED_2IN42_WIDTH/8): (OLED_2IN42_WIDTH/8+1)) * OLED_2IN42_HEIGHT;
+UWORD Imagesize = ((OLED_2IN42_WIDTH + 7) / 8) * OLED_2IN42_HEIGHT;
 UBYTE *BlackImage;
-
-int _write(int file, char *ptr, int len)
-{
-  if (file == STDOUT_FILENO || file == STDERR_FILENO) {
-    HAL_UART_Transmit(&huart3, (uint8_t*)ptr, len, HAL_MAX_DELAY);
-    return len;
-  }
-  return -1;
-}
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -84,7 +75,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+  Imagesize = ((OLED_2IN42_WIDTH + 7) / 8) * OLED_2IN42_HEIGHT;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -190,7 +181,7 @@ void SystemClock_Config(void)
 
 /**
   * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM10 interrupt took place, inside
+  * @note   This function is called  when TIM13 interrupt took place, inside
   * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
   * a global variable "uwTick" used as application time base.
   * @param  htim : TIM handle
@@ -201,7 +192,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM10)
+  if (htim->Instance == TIM13)
   {
     HAL_IncTick();
   }

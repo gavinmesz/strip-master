@@ -130,22 +130,3 @@ list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
 target_link_libraries(${PROJECT_NAME}
         stm32cubemx
 )
-
-# --- Flash target (OpenOCD + ST-LINK) ---
-add_custom_target(flash
-        COMMAND openocd
-        -f interface/stlink.cfg
-        -f target/stm32f4x.cfg
-        -c "program {$<TARGET_FILE:${PROJECT_NAME}>} verify reset exit"
-        DEPENDS ${PROJECT_NAME}
-        USES_TERMINAL
-)
-
-# --- OpenOCD server (for debugging) ---
-add_custom_target(openocd
-        COMMAND openocd
-        -f interface/stlink.cfg
-        -f target/stm32f4x.cfg
-        -c "transport select swd; adapter speed 1800; init; reset halt"
-        USES_TERMINAL
-)

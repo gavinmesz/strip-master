@@ -65,10 +65,10 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LD1_Pin|BUCK12_EN_Pin|M2_DIR_Pin|LD3_Pin
-                          |LA_IN1_Pin|DISP_RST_Pin|DISP_DC_Pin|LD2_Pin, GPIO_PIN_RESET);
+                          |LA_IN1_Pin|OLED_RSTB4_Pin|OLED_DCB6_Pin|LD2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOG, M1_MS2_Pin|M1_MS1_Pin|GPIO_PIN_6|DISP_CS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOG, M1_MS2_Pin|M1_MS1_Pin|GPIO_PIN_6|OLED_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, M1_nFLT_Pin|M1_DIR_Pin|M2_EN_Pin|M2_MS2_Pin
@@ -126,9 +126,9 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(LDO_EN_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LD1_Pin BUCK12_EN_Pin M2_DIR_Pin LD3_Pin
-                           LA_IN1_Pin DISP_RST_Pin DISP_DC_Pin LD2_Pin */
+                           LA_IN1_Pin OLED_RSTB4_Pin OLED_DCB6_Pin LD2_Pin */
   GPIO_InitStruct.Pin = LD1_Pin|BUCK12_EN_Pin|M2_DIR_Pin|LD3_Pin
-                          |LA_IN1_Pin|DISP_RST_Pin|DISP_DC_Pin|LD2_Pin;
+                          |LA_IN1_Pin|OLED_RSTB4_Pin|OLED_DCB6_Pin|LD2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -146,8 +146,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BUCK5_PG_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : M1_MS2_Pin M1_MS1_Pin PG6 DISP_CS_Pin */
-  GPIO_InitStruct.Pin = M1_MS2_Pin|M1_MS1_Pin|GPIO_PIN_6|DISP_CS_Pin;
+  /*Configure GPIO pins : M1_MS2_Pin M1_MS1_Pin PG6 OLED_CS_Pin */
+  GPIO_InitStruct.Pin = M1_MS2_Pin|M1_MS1_Pin|GPIO_PIN_6|OLED_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

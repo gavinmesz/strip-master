@@ -9,12 +9,14 @@
 #include "../../Inc/Tasks/task_stateMachine.h"
 #include <stdio.h>
 #include "usart.h"
+#include "task_manager.h"
 
 void vStateMachineTask() {
     uint8_t smMsg[] = {4};
     for (;;) {
-        HAL_UART_Transmit(&huart3, smMsg, 1, 1000);
+        *x = 3;
+        // HAL_UART_Transmit(&huart3, smMsg, 1, 1000);
         // printf("State Machine\r\n");
-        vTaskDelay(pdMS_TO_TICKS(100));
+        vTaskDelay(100);
     }
 }

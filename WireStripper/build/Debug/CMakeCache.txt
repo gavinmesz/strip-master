@@ -200,7 +200,7 @@ CMAKE_STRIP:FILEPATH=C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3
 //Path to a program.
 CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 
-//No help, variable specified on the command line.
+//The CMake toolchain file
 CMAKE_TOOLCHAIN_FILE:FILEPATH=C:/Users/Admin/Desktop/4A/MTE481/strip-master/WireStripper/cmake/gcc-arm-none-eabi.cmake
 
 //If this value is on, makefiles will be generated without the

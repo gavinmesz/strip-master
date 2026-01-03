@@ -77,7 +77,7 @@ set(MCU_FLAGS
 
 # Debug vs Release optimization/debug info
 set(DEBUG_FLAGS   -Og -g3 -fno-omit-frame-pointer)
-set(RELEASE_FLAGS -O2)
+set(RELEASE_FLAGS -O0)
 
 # Code/data sectioning helps reduce size
 set(SECTION_FLAGS -ffunction-sections -fdata-sections)

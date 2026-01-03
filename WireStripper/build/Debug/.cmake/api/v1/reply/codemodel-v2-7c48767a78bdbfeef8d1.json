@@ -64,28 +64,28 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "FreeRTOS::@768a070a0fe75716b479",
-					"jsonFile" : "target-FreeRTOS-Debug-c80fb995cfad89ff770b.json",
+					"jsonFile" : "target-FreeRTOS-Debug-ce44d4a1aaf358f28988.json",
 					"name" : "FreeRTOS",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "STM32_Drivers::@768a070a0fe75716b479",
-					"jsonFile" : "target-STM32_Drivers-Debug-4f9c41d64f80cae77a0d.json",
+					"jsonFile" : "target-STM32_Drivers-Debug-96808ee1792dd25d8b77.json",
 					"name" : "STM32_Drivers",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "USB_Device_Library::@768a070a0fe75716b479",
-					"jsonFile" : "target-USB_Device_Library-Debug-4351e5fbf14b483a2ac9.json",
+					"jsonFile" : "target-USB_Device_Library-Debug-9b50d8a19744f6c9d359.json",
 					"name" : "USB_Device_Library",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "WireStripper::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-WireStripper-Debug-bfa78f6c85a8e67b8c01.json",
+					"jsonFile" : "target-WireStripper-Debug-5eb5a27d68ab7143ba21.json",
 					"name" : "WireStripper",
 					"projectIndex" : 0
 				}

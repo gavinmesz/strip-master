@@ -3,9 +3,7 @@
  * Includes PID control for all motors. Take information from encoders and state machine, perform jobs, report status.
  */
 
-//main includes
-#include "task_manager.h"
-#include "task.h"
+#include "task_manager.h" // Has FreeRTOS functions and globals defined
 
 //specific includes
 #include "task_actuatorControl.h"

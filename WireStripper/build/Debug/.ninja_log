@@ -217,3 +217,8 @@
 42	685	7893524999765551	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj	8d430ecdea5d0da8
 114	728	7893525000482652	CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj	e07bd2e39c12f3d4
 729	1552	7893525006638557	WireStripper.elf	40ef089739baf081
+46	213	7893531783648112	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj	4008ff76f8e5c4a7
+33	215	7893531783528158	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj	81fe6a5b8168b601
+58	223	7893531783768127	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj	9caaf6b29f13c12a
+14	576	7893531783329950	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj	8d430ecdea5d0da8
+576	1285	7893531788950094	WireStripper.elf	40ef089739baf081

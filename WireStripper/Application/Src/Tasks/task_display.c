@@ -3,9 +3,7 @@
  * Manipulates outgoing frame buffer with UI Inputs.
  */
 
-//main includes
-#include "task_manager.h"
-#include "task.h"
+#include "task_manager.h" // Has FreeRTOS functions and globals defined
 
 //specific includes
 #include "task_display.h"
@@ -45,8 +43,7 @@ int initDisplay(){
 
 void vDisplayTask(void *argument)
 {
-    for(;;)
-    {
+    for(;;){
         counterVar++;
         vTaskDelay(100);
     }

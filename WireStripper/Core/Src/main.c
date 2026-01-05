@@ -40,8 +40,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-UWORD Imagesize = ((OLED_2IN42_WIDTH + 7) / 8) * OLED_2IN42_HEIGHT;
-UBYTE *BlackImage;
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -75,7 +74,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  Imagesize = ((OLED_2IN42_WIDTH + 7) / 8) * OLED_2IN42_HEIGHT;
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/

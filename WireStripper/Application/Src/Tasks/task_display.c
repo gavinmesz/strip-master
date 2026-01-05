@@ -1,24 +1,28 @@
+/*
+ * Display Task:
+ * Manipulates outgoing frame buffer with UI Inputs.
+ */
+
 //main includes
-#include "FreeRTOS.h"
+#include "task_manager.h"
 #include "task.h"
-#include "main.h"
 
 //specific includes
 #include "task_display.h"
 #include "../User/OLED/OLED_2in42.h"
 #include "../GUI/GUI_Paint.h"
-#include "usart.h"
-#include "task_manager.h"
 
-int COUNTER_VAR = 0;
+volatile int basepri;
+UWORD Imagesize;
+UBYTE *BlackImage;
 
 int initDisplay(){
+    Imagesize = ((OLED_2IN42_WIDTH + 7) / 8) * OLED_2IN42_HEIGHT;
     // printf("2.42inch OLED test demo\n");
     vTaskSuspendAll();
     if(System_Init() != 0) {
         return -1;
     }
-    volatile int x = __get_BASEPRI();
 
     //Initialize the Display
     // printf("OLED Init...\r\n");
@@ -41,28 +45,9 @@ int initDisplay(){
 
 void vDisplayTask(void *argument)
 {
-    //Streets saying we should have SPI running with DMA
-
-    /* USER CODE BEGIN StartTask02 */
-    uint8_t errMsg[] = {98};
-    if(initDisplay()==-1) {
-        // printf("Failed to Initialize Display\r\n");
-        HAL_UART_Transmit(&huart3, errMsg, 1, 1000);
-    }
-
-    uint8_t dispMsg[] = {1};
-    /* Infinite loop */
     for(;;)
     {
-        *x = 1;
-        // HAL_UART_Transmit(&huart3, dispMsg, 1, 1000);
-        // printf("Display: %d\r\n", COUNTER_VAR);
-        // Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
-        // Paint_DrawString_EN(10, 17, "hello world", &Font8, WHITE, BLACK);
-        // Paint_DrawNum(10, 30, COUNTER_VAR, &Font8, 4, WHITE, BLACK);
-        // Paint_DrawNum(10, 43, 987654, &Font12, 5, WHITE, BLACK);
-        // OLED_2in42_Display(BlackImage);
+        counterVar++;
         vTaskDelay(100);
     }
-    /* USER CODE END StartTask02 */
 }

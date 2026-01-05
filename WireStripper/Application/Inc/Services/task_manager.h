@@ -11,6 +11,6 @@ extern TaskHandle_t xSafetyTaskHandle;
 void TaskManager_InitTasks(void);
 void TaskManager_CreateAllTasks(void);
 
-extern int * x;
+extern int counterVar;
 
 #endif

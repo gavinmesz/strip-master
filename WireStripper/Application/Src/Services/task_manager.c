@@ -5,17 +5,16 @@
 #include "task_safety.h"
 #include "task_stateMachine.h"
 
-#include "usart.h"
 #include "FreeRTOSConfig.h"
 
 TaskHandle_t xDisplayTaskHandle = NULL;
 TaskHandle_t xActuatorTaskHandle = NULL;
 TaskHandle_t xSafetyTaskHandle = NULL;
 TaskHandle_t xStateMachineTaskHandle = NULL;
-int * x = 0;
+int counterVar;
 
 void TaskManager_InitTasks(void){
-    vTaskDelete(NULL);
+    counterVar = 0;
 }
 
 void TaskManager_CreateAllTasks(void)
@@ -23,7 +22,7 @@ void TaskManager_CreateAllTasks(void)
 
     BaseType_t xReturned;
 
-    //Actuator Task: stack should be >1024 due to display buffer size
+    //Actuator Task
     xReturned = xTaskCreate(vActuatorTask, "Actuator", 512, NULL, configMAX_PRIORITIES-3, &xActuatorTaskHandle);
 
     configASSERT(xReturned == pdPASS);

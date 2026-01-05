@@ -11,6 +11,6 @@
 void vSafetyTask() {
     for (;;) {
         counterVar++;
-        vTaskDelay(100);
+        vTaskDelay(1000);
     }
 }

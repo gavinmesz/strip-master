@@ -14,7 +14,9 @@ TaskHandle_t xStateMachineTaskHandle = NULL;
 int counterVar;
 
 void TaskManager_InitTasks(void){
-    counterVar = 0;
+    if (initDisplay() != 1) {
+        configASSERT(0);
+    }
 }
 
 void TaskManager_CreateAllTasks(void)

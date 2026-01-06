@@ -9,7 +9,6 @@
 #include "stm32f4xx_hal_spi.h"
 #include "spi.h"
 #include "Debug.h"
-#include <stdio.h>		//printf()
 #include <string.h>
 #include <stdlib.h>
 
@@ -21,14 +20,11 @@ note:
 uint8_t System_Init(void)
 {
 #if USE_SPI_4W
-	// printf("USE_SPI_4W\r\n");
 #elif USE_IIC
-	printf("USE_IIC\r\n");
 	OLED_CS_0;
 	OLED_DC_1;
 	//DC = 0,1 >> Address = 0x3c,0x3d 
 #elif USE_IIC_SOFT
-	printf("USEI_IIC_SOFT\r\n");
 	OLED_CS_0;
 	OLED_DC_1;
 	// iic_init(); - Not needed for SPI mode

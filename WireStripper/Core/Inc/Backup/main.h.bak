@@ -41,8 +41,6 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-  extern UWORD Imagesize;
-  extern UBYTE *BlackImage;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

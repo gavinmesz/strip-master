@@ -31,6 +31,7 @@ add_executable(${PROJECT_NAME}
         Core/User/OLED/OLED_2in42.c
 
         Core/Src/main.c
+        Core/Src/dma.c
         Core/Src/gpio.c
         Core/Src/adc.c
         Core/Src/i2c.c

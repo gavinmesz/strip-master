@@ -10,7 +10,6 @@
 #include "../User/OLED/OLED_2in42.h"
 #include "../GUI/GUI_Paint.h"
 
-volatile int basepri;
 UWORD Imagesize;
 UBYTE *BlackImage;
 
@@ -36,7 +35,7 @@ int initDisplay(){
     return 1;
 }
 
-void vDisplayTask(void *argument)
+void vDisplayTask()
 {
     for(;;){
         counterVar++;

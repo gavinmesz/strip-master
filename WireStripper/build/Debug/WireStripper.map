@@ -5390,7 +5390,6 @@ Discarded input sections
  .text          0x00000000        0x0 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
  .data          0x00000000        0x0 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
  .bss           0x00000000        0x0 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
- .bss.basepri   0x00000000        0x4 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
  .debug_macro   0x00000000      0xad8 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
  .debug_macro   0x00000000      0x190 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
  .debug_macro   0x00000000       0x22 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
@@ -9266,7 +9265,7 @@ LOAD C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb
                 0x08000000                g_pfnVectors
                 0x080001c4                        . = ALIGN (0x4)
 
-.text           0x080001d0     0x8eb4
+.text           0x080001d0     0x8eb0
                 0x080001d0                        . = ALIGN (0x4)
  *(.text)
  .text          0x080001d0       0x30 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
@@ -9981,489 +9980,489 @@ LOAD C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb
                 0x080075a4       0x18 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
                 0x080075a4                vActuatorTask
  .text.vSafetyTask
-                0x080075bc       0x1c CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj
+                0x080075bc       0x18 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj
                 0x080075bc                vSafetyTask
  .text.vStateMachineTask
-                0x080075d8       0x18 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
-                0x080075d8                vStateMachineTask
+                0x080075d4       0x18 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
+                0x080075d4                vStateMachineTask
  .text.System_Init
-                0x080075f0        0xe CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
-                0x080075f0                System_Init
- *fill*         0x080075fe        0x2 
+                0x080075ec        0xe CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
+                0x080075ec                System_Init
+ *fill*         0x080075fa        0x2 
  .text.SPI4W_Write_Byte
-                0x08007600       0x24 CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
-                0x08007600                SPI4W_Write_Byte
+                0x080075fc       0x24 CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
+                0x080075fc                SPI4W_Write_Byte
  .text.Driver_Delay_ms
-                0x08007624        0xa CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
-                0x08007624                Driver_Delay_ms
- *fill*         0x0800762e        0x2 
+                0x08007620        0xa CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
+                0x08007620                Driver_Delay_ms
+ *fill*         0x0800762a        0x2 
  .text.Paint_NewImage
-                0x08007630       0x50 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
-                0x08007630                Paint_NewImage
+                0x0800762c       0x50 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
+                0x0800762c                Paint_NewImage
  .text.Paint_SelectImage
-                0x08007680       0x14 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
-                0x08007680                Paint_SelectImage
+                0x0800767c       0x14 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
+                0x0800767c                Paint_SelectImage
  .text.Paint_Clear
-                0x08007694       0xd8 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
-                0x08007694                Paint_Clear
+                0x08007690       0xd8 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
+                0x08007690                Paint_Clear
  .text.OLED_2in42_Reset
-                0x0800776c       0x3c CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
+                0x08007768       0x3c CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
  .text.OLED_2in42_WriteReg
-                0x080077a8       0x3c CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
+                0x080077a4       0x3c CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
  .text.OLED_2in42_InitReg
-                0x080077e4       0x78 CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
+                0x080077e0       0x78 CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
  .text.OLED_2in42_Init
-                0x0800785c       0x1a CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
-                0x0800785c                OLED_2in42_Init
- *fill*         0x08007876        0x2 
+                0x08007858       0x1a CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
+                0x08007858                OLED_2in42_Init
+ *fill*         0x08007872        0x2 
  .text.HAL_TIM_PeriodElapsedCallback
-                0x08007878       0x18 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
-                0x08007878                HAL_TIM_PeriodElapsedCallback
+                0x08007874       0x18 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+                0x08007874                HAL_TIM_PeriodElapsedCallback
  .text.Error_Handler
-                0x08007890        0x8 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
-                0x08007890                Error_Handler
+                0x0800788c        0x8 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+                0x0800788c                Error_Handler
  .text.SystemClock_Config
-                0x08007898       0xb4 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
-                0x08007898                SystemClock_Config
- .text.main     0x0800794c       0x46 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
-                0x0800794c                main
- *fill*         0x08007992        0x2 
+                0x08007894       0xb4 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+                0x08007894                SystemClock_Config
+ .text.main     0x08007948       0x46 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+                0x08007948                main
+ *fill*         0x0800798e        0x2 
  .text.MX_DMA_Init
-                0x08007994       0x38 CMakeFiles/WireStripper.dir/Core/Src/dma.c.obj
-                0x08007994                MX_DMA_Init
+                0x08007990       0x38 CMakeFiles/WireStripper.dir/Core/Src/dma.c.obj
+                0x08007990                MX_DMA_Init
  .text.MX_GPIO_Init
-                0x080079cc      0x2a8 CMakeFiles/WireStripper.dir/Core/Src/gpio.c.obj
-                0x080079cc                MX_GPIO_Init
+                0x080079c8      0x2a8 CMakeFiles/WireStripper.dir/Core/Src/gpio.c.obj
+                0x080079c8                MX_GPIO_Init
  .text.MX_ADC1_Init
-                0x08007c74       0x74 CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
-                0x08007c74                MX_ADC1_Init
+                0x08007c70       0x74 CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
+                0x08007c70                MX_ADC1_Init
  .text.HAL_ADC_MspInit
-                0x08007ce8       0x6c CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
-                0x08007ce8                HAL_ADC_MspInit
+                0x08007ce4       0x6c CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
+                0x08007ce4                HAL_ADC_MspInit
  .text.MX_I2C2_SMBUS_Init
-                0x08007d54       0x50 CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
-                0x08007d54                MX_I2C2_SMBUS_Init
+                0x08007d50       0x50 CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
+                0x08007d50                MX_I2C2_SMBUS_Init
  .text.HAL_SMBUS_MspInit
-                0x08007da4       0x78 CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
-                0x08007da4                HAL_SMBUS_MspInit
+                0x08007da0       0x78 CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
+                0x08007da0                HAL_SMBUS_MspInit
  .text.MX_SPI1_Init
-                0x08007e1c       0x48 CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
-                0x08007e1c                MX_SPI1_Init
+                0x08007e18       0x48 CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
+                0x08007e18                MX_SPI1_Init
  .text.HAL_SPI_MspInit
-                0x08007e64      0x104 CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
-                0x08007e64                HAL_SPI_MspInit
+                0x08007e60      0x104 CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
+                0x08007e60                HAL_SPI_MspInit
  .text.MX_TIM2_Init
-                0x08007f68       0x68 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
-                0x08007f68                MX_TIM2_Init
+                0x08007f64       0x68 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+                0x08007f64                MX_TIM2_Init
  .text.MX_TIM3_Init
-                0x08007fd0       0x68 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
-                0x08007fd0                MX_TIM3_Init
+                0x08007fcc       0x68 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+                0x08007fcc                MX_TIM3_Init
  .text.MX_TIM4_Init
-                0x08008038       0x68 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
-                0x08008038                MX_TIM4_Init
+                0x08008034       0x68 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+                0x08008034                MX_TIM4_Init
  .text.MX_TIM5_Init
-                0x080080a0       0x68 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
-                0x080080a0                MX_TIM5_Init
+                0x0800809c       0x68 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+                0x0800809c                MX_TIM5_Init
  .text.HAL_TIM_PWM_MspInit
-                0x08008108       0x44 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
-                0x08008108                HAL_TIM_PWM_MspInit
+                0x08008104       0x44 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+                0x08008104                HAL_TIM_PWM_MspInit
  .text.HAL_TIM_Encoder_MspInit
-                0x0800814c      0x1c4 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
-                0x0800814c                HAL_TIM_Encoder_MspInit
+                0x08008148      0x1c4 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+                0x08008148                HAL_TIM_Encoder_MspInit
  .text.HAL_TIM_MspPostInit
-                0x08008310       0x5c CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
-                0x08008310                HAL_TIM_MspPostInit
+                0x0800830c       0x5c CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+                0x0800830c                HAL_TIM_MspPostInit
  .text.MX_TIM1_Init
-                0x0800836c       0xec CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
-                0x0800836c                MX_TIM1_Init
+                0x08008368       0xec CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+                0x08008368                MX_TIM1_Init
  .text.MX_USART3_UART_Init
-                0x08008458       0x38 CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
-                0x08008458                MX_USART3_UART_Init
+                0x08008454       0x38 CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
+                0x08008454                MX_USART3_UART_Init
  .text.HAL_UART_MspInit
-                0x08008490       0x74 CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
-                0x08008490                HAL_UART_MspInit
+                0x0800848c       0x74 CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
+                0x0800848c                HAL_UART_MspInit
  .text.idleTask
-                0x08008504       0x10 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
-                0x08008504                idleTask
+                0x08008500       0x10 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
+                0x08008500                idleTask
  .text.vApplicationStackOverflowHook
-                0x08008514        0xc CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
-                0x08008514                vApplicationStackOverflowHook
+                0x08008510        0xc CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
+                0x08008510                vApplicationStackOverflowHook
  .text.vApplicationMallocFailedHook
-                0x08008520        0xc CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
-                0x08008520                vApplicationMallocFailedHook
+                0x0800851c        0xc CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
+                0x0800851c                vApplicationMallocFailedHook
  .text.MX_FREERTOS_Init
-                0x0800852c       0x30 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
-                0x0800852c                MX_FREERTOS_Init
+                0x08008528       0x30 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
+                0x08008528                MX_FREERTOS_Init
  .text.HAL_MspInit
-                0x0800855c       0x48 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_msp.c.obj
-                0x0800855c                HAL_MspInit
+                0x08008558       0x48 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+                0x08008558                HAL_MspInit
  .text.NMI_Handler
-                0x080085a4        0x6 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
-                0x080085a4                NMI_Handler
+                0x080085a0        0x6 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+                0x080085a0                NMI_Handler
  .text.HardFault_Handler
-                0x080085aa        0x6 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
-                0x080085aa                HardFault_Handler
+                0x080085a6        0x6 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+                0x080085a6                HardFault_Handler
  .text.MemManage_Handler
-                0x080085b0        0x6 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
-                0x080085b0                MemManage_Handler
+                0x080085ac        0x6 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+                0x080085ac                MemManage_Handler
  .text.BusFault_Handler
-                0x080085b6        0x6 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
-                0x080085b6                BusFault_Handler
+                0x080085b2        0x6 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+                0x080085b2                BusFault_Handler
  .text.UsageFault_Handler
-                0x080085bc        0x6 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
-                0x080085bc                UsageFault_Handler
+                0x080085b8        0x6 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+                0x080085b8                UsageFault_Handler
  .text.DebugMon_Handler
-                0x080085c2        0xc CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
-                0x080085c2                DebugMon_Handler
- *fill*         0x080085ce        0x2 
+                0x080085be        0xc CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+                0x080085be                DebugMon_Handler
+ *fill*         0x080085ca        0x2 
  .text.TIM1_UP_TIM10_IRQHandler
-                0x080085d0       0x10 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
-                0x080085d0                TIM1_UP_TIM10_IRQHandler
+                0x080085cc       0x10 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+                0x080085cc                TIM1_UP_TIM10_IRQHandler
  .text.SPI1_IRQHandler
-                0x080085e0       0x10 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
-                0x080085e0                SPI1_IRQHandler
+                0x080085dc       0x10 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+                0x080085dc                SPI1_IRQHandler
  .text.TIM6_DAC_IRQHandler
-                0x080085f0       0x10 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
-                0x080085f0                TIM6_DAC_IRQHandler
+                0x080085ec       0x10 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+                0x080085ec                TIM6_DAC_IRQHandler
  .text.DMA2_Stream3_IRQHandler
-                0x08008600       0x10 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08008600                DMA2_Stream3_IRQHandler
+                0x080085fc       0x10 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+                0x080085fc                DMA2_Stream3_IRQHandler
  .text.OTG_FS_IRQHandler
-                0x08008610       0x10 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08008610                OTG_FS_IRQHandler
+                0x0800860c       0x10 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0800860c                OTG_FS_IRQHandler
  .text.HAL_InitTick
-                0x08008620       0xac CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
-                0x08008620                HAL_InitTick
+                0x0800861c       0xac CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+                0x0800861c                HAL_InitTick
  .text.Reset_Handler
-                0x080086cc       0x50 CMakeFiles/WireStripper.dir/startup_stm32f446xx.s.obj
-                0x080086cc                Reset_Handler
+                0x080086c8       0x50 CMakeFiles/WireStripper.dir/startup_stm32f446xx.s.obj
+                0x080086c8                Reset_Handler
  .text.Default_Handler
-                0x0800871c        0x2 CMakeFiles/WireStripper.dir/startup_stm32f446xx.s.obj
-                0x0800871c                RTC_Alarm_IRQHandler
-                0x0800871c                EXTI2_IRQHandler
-                0x0800871c                TIM8_CC_IRQHandler
-                0x0800871c                FMPI2C1_EV_IRQHandler
-                0x0800871c                SPI4_IRQHandler
-                0x0800871c                TIM1_CC_IRQHandler
-                0x0800871c                DMA2_Stream5_IRQHandler
-                0x0800871c                DMA1_Stream5_IRQHandler
-                0x0800871c                PVD_IRQHandler
-                0x0800871c                SDIO_IRQHandler
-                0x0800871c                TAMP_STAMP_IRQHandler
-                0x0800871c                CAN2_RX1_IRQHandler
-                0x0800871c                EXTI3_IRQHandler
-                0x0800871c                TIM8_TRG_COM_TIM14_IRQHandler
-                0x0800871c                TIM8_UP_TIM13_IRQHandler
-                0x0800871c                I2C3_ER_IRQHandler
-                0x0800871c                EXTI0_IRQHandler
-                0x0800871c                I2C2_EV_IRQHandler
-                0x0800871c                DMA1_Stream2_IRQHandler
-                0x0800871c                CAN1_RX0_IRQHandler
-                0x0800871c                FPU_IRQHandler
-                0x0800871c                OTG_HS_WKUP_IRQHandler
-                0x0800871c                CAN2_SCE_IRQHandler
-                0x0800871c                DMA2_Stream2_IRQHandler
-                0x0800871c                TIM1_BRK_TIM9_IRQHandler
-                0x0800871c                DCMI_IRQHandler
-                0x0800871c                CAN2_RX0_IRQHandler
-                0x0800871c                SAI2_IRQHandler
-                0x0800871c                USART6_IRQHandler
-                0x0800871c                USART3_IRQHandler
-                0x0800871c                CAN1_RX1_IRQHandler
-                0x0800871c                UART5_IRQHandler
-                0x0800871c                DMA2_Stream0_IRQHandler
-                0x0800871c                TIM4_IRQHandler
-                0x0800871c                QUADSPI_IRQHandler
-                0x0800871c                I2C1_EV_IRQHandler
-                0x0800871c                DMA1_Stream6_IRQHandler
-                0x0800871c                DMA1_Stream1_IRQHandler
-                0x0800871c                UART4_IRQHandler
-                0x0800871c                TIM3_IRQHandler
-                0x0800871c                RCC_IRQHandler
-                0x0800871c                TIM8_BRK_TIM12_IRQHandler
-                0x0800871c                Default_Handler
-                0x0800871c                CEC_IRQHandler
-                0x0800871c                EXTI15_10_IRQHandler
-                0x0800871c                ADC_IRQHandler
-                0x0800871c                DMA1_Stream7_IRQHandler
-                0x0800871c                TIM7_IRQHandler
-                0x0800871c                CAN2_TX_IRQHandler
-                0x0800871c                TIM5_IRQHandler
-                0x0800871c                DMA2_Stream7_IRQHandler
-                0x0800871c                I2C3_EV_IRQHandler
-                0x0800871c                EXTI9_5_IRQHandler
-                0x0800871c                RTC_WKUP_IRQHandler
-                0x0800871c                SPDIF_RX_IRQHandler
-                0x0800871c                SPI2_IRQHandler
-                0x0800871c                OTG_HS_EP1_IN_IRQHandler
-                0x0800871c                DMA1_Stream0_IRQHandler
-                0x0800871c                CAN1_TX_IRQHandler
-                0x0800871c                FMPI2C1_ER_IRQHandler
-                0x0800871c                EXTI4_IRQHandler
-                0x0800871c                OTG_HS_EP1_OUT_IRQHandler
-                0x0800871c                WWDG_IRQHandler
-                0x0800871c                TIM2_IRQHandler
-                0x0800871c                OTG_FS_WKUP_IRQHandler
-                0x0800871c                TIM1_TRG_COM_TIM11_IRQHandler
-                0x0800871c                OTG_HS_IRQHandler
-                0x0800871c                EXTI1_IRQHandler
-                0x0800871c                USART2_IRQHandler
-                0x0800871c                I2C2_ER_IRQHandler
-                0x0800871c                DMA2_Stream1_IRQHandler
-                0x0800871c                CAN1_SCE_IRQHandler
-                0x0800871c                FLASH_IRQHandler
-                0x0800871c                DMA2_Stream4_IRQHandler
-                0x0800871c                USART1_IRQHandler
-                0x0800871c                SPI3_IRQHandler
-                0x0800871c                DMA1_Stream4_IRQHandler
-                0x0800871c                I2C1_ER_IRQHandler
-                0x0800871c                FMC_IRQHandler
-                0x0800871c                DMA2_Stream6_IRQHandler
-                0x0800871c                SAI1_IRQHandler
-                0x0800871c                DMA1_Stream3_IRQHandler
- *fill*         0x0800871e        0x2 
+                0x08008718        0x2 CMakeFiles/WireStripper.dir/startup_stm32f446xx.s.obj
+                0x08008718                RTC_Alarm_IRQHandler
+                0x08008718                EXTI2_IRQHandler
+                0x08008718                TIM8_CC_IRQHandler
+                0x08008718                FMPI2C1_EV_IRQHandler
+                0x08008718                SPI4_IRQHandler
+                0x08008718                TIM1_CC_IRQHandler
+                0x08008718                DMA2_Stream5_IRQHandler
+                0x08008718                DMA1_Stream5_IRQHandler
+                0x08008718                PVD_IRQHandler
+                0x08008718                SDIO_IRQHandler
+                0x08008718                TAMP_STAMP_IRQHandler
+                0x08008718                CAN2_RX1_IRQHandler
+                0x08008718                EXTI3_IRQHandler
+                0x08008718                TIM8_TRG_COM_TIM14_IRQHandler
+                0x08008718                TIM8_UP_TIM13_IRQHandler
+                0x08008718                I2C3_ER_IRQHandler
+                0x08008718                EXTI0_IRQHandler
+                0x08008718                I2C2_EV_IRQHandler
+                0x08008718                DMA1_Stream2_IRQHandler
+                0x08008718                CAN1_RX0_IRQHandler
+                0x08008718                FPU_IRQHandler
+                0x08008718                OTG_HS_WKUP_IRQHandler
+                0x08008718                CAN2_SCE_IRQHandler
+                0x08008718                DMA2_Stream2_IRQHandler
+                0x08008718                TIM1_BRK_TIM9_IRQHandler
+                0x08008718                DCMI_IRQHandler
+                0x08008718                CAN2_RX0_IRQHandler
+                0x08008718                SAI2_IRQHandler
+                0x08008718                USART6_IRQHandler
+                0x08008718                USART3_IRQHandler
+                0x08008718                CAN1_RX1_IRQHandler
+                0x08008718                UART5_IRQHandler
+                0x08008718                DMA2_Stream0_IRQHandler
+                0x08008718                TIM4_IRQHandler
+                0x08008718                QUADSPI_IRQHandler
+                0x08008718                I2C1_EV_IRQHandler
+                0x08008718                DMA1_Stream6_IRQHandler
+                0x08008718                DMA1_Stream1_IRQHandler
+                0x08008718                UART4_IRQHandler
+                0x08008718                TIM3_IRQHandler
+                0x08008718                RCC_IRQHandler
+                0x08008718                TIM8_BRK_TIM12_IRQHandler
+                0x08008718                Default_Handler
+                0x08008718                CEC_IRQHandler
+                0x08008718                EXTI15_10_IRQHandler
+                0x08008718                ADC_IRQHandler
+                0x08008718                DMA1_Stream7_IRQHandler
+                0x08008718                TIM7_IRQHandler
+                0x08008718                CAN2_TX_IRQHandler
+                0x08008718                TIM5_IRQHandler
+                0x08008718                DMA2_Stream7_IRQHandler
+                0x08008718                I2C3_EV_IRQHandler
+                0x08008718                EXTI9_5_IRQHandler
+                0x08008718                RTC_WKUP_IRQHandler
+                0x08008718                SPDIF_RX_IRQHandler
+                0x08008718                SPI2_IRQHandler
+                0x08008718                OTG_HS_EP1_IN_IRQHandler
+                0x08008718                DMA1_Stream0_IRQHandler
+                0x08008718                CAN1_TX_IRQHandler
+                0x08008718                FMPI2C1_ER_IRQHandler
+                0x08008718                EXTI4_IRQHandler
+                0x08008718                OTG_HS_EP1_OUT_IRQHandler
+                0x08008718                WWDG_IRQHandler
+                0x08008718                TIM2_IRQHandler
+                0x08008718                OTG_FS_WKUP_IRQHandler
+                0x08008718                TIM1_TRG_COM_TIM11_IRQHandler
+                0x08008718                OTG_HS_IRQHandler
+                0x08008718                EXTI1_IRQHandler
+                0x08008718                USART2_IRQHandler
+                0x08008718                I2C2_ER_IRQHandler
+                0x08008718                DMA2_Stream1_IRQHandler
+                0x08008718                CAN1_SCE_IRQHandler
+                0x08008718                FLASH_IRQHandler
+                0x08008718                DMA2_Stream4_IRQHandler
+                0x08008718                USART1_IRQHandler
+                0x08008718                SPI3_IRQHandler
+                0x08008718                DMA1_Stream4_IRQHandler
+                0x08008718                I2C1_ER_IRQHandler
+                0x08008718                FMC_IRQHandler
+                0x08008718                DMA2_Stream6_IRQHandler
+                0x08008718                SAI1_IRQHandler
+                0x08008718                DMA1_Stream3_IRQHandler
+ *fill*         0x0800871a        0x2 
  .text.HAL_PCD_MspInit
-                0x08008720       0xcc CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008720                HAL_PCD_MspInit
+                0x0800871c       0xcc CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800871c                HAL_PCD_MspInit
  .text.HAL_PCD_SetupStageCallback
-                0x080087ec       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x080087ec                HAL_PCD_SetupStageCallback
+                0x080087e8       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x080087e8                HAL_PCD_SetupStageCallback
  .text.HAL_PCD_DataOutStageCallback
-                0x080087fe       0x1a CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x080087fe                HAL_PCD_DataOutStageCallback
+                0x080087fa       0x1a CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x080087fa                HAL_PCD_DataOutStageCallback
  .text.HAL_PCD_DataInStageCallback
-                0x08008818       0x18 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008818                HAL_PCD_DataInStageCallback
+                0x08008814       0x18 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008814                HAL_PCD_DataInStageCallback
  .text.HAL_PCD_SOFCallback
-                0x08008830        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008830                HAL_PCD_SOFCallback
+                0x0800882c        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800882c                HAL_PCD_SOFCallback
  .text.HAL_PCD_ResetCallback
-                0x0800883e       0x2a CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800883e                HAL_PCD_ResetCallback
+                0x0800883a       0x2a CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800883a                HAL_PCD_ResetCallback
  .text.HAL_PCD_SuspendCallback
-                0x08008868       0x30 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008868                HAL_PCD_SuspendCallback
+                0x08008864       0x30 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008864                HAL_PCD_SuspendCallback
  .text.HAL_PCD_ResumeCallback
-                0x08008898        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008898                HAL_PCD_ResumeCallback
+                0x08008894        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008894                HAL_PCD_ResumeCallback
  .text.HAL_PCD_ISOOUTIncompleteCallback
-                0x080088a6        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x080088a6                HAL_PCD_ISOOUTIncompleteCallback
+                0x080088a2        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x080088a2                HAL_PCD_ISOOUTIncompleteCallback
  .text.HAL_PCD_ISOINIncompleteCallback
-                0x080088b4        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x080088b4                HAL_PCD_ISOINIncompleteCallback
+                0x080088b0        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x080088b0                HAL_PCD_ISOINIncompleteCallback
  .text.HAL_PCD_ConnectCallback
-                0x080088c2        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x080088c2                HAL_PCD_ConnectCallback
+                0x080088be        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x080088be                HAL_PCD_ConnectCallback
  .text.HAL_PCD_DisconnectCallback
-                0x080088d0        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x080088d0                HAL_PCD_DisconnectCallback
- *fill*         0x080088de        0x2 
+                0x080088cc        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x080088cc                HAL_PCD_DisconnectCallback
+ *fill*         0x080088da        0x2 
  .text.USBD_LL_Init
-                0x080088e0       0x6c CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x080088e0                USBD_LL_Init
+                0x080088dc       0x6c CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x080088dc                USBD_LL_Init
  .text.USBD_LL_IsStallEP
-                0x0800894c       0x36 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800894c                USBD_LL_IsStallEP
+                0x08008948       0x36 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008948                USBD_LL_IsStallEP
  .text.USBD_LL_GetRxDataSize
-                0x08008982        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008982                USBD_LL_GetRxDataSize
+                0x0800897e        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800897e                USBD_LL_GetRxDataSize
  .text.HAL_PCDEx_LPM_Callback
-                0x08008990       0x64 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008990                HAL_PCDEx_LPM_Callback
+                0x0800898c       0x64 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800898c                HAL_PCDEx_LPM_Callback
  .text.USBD_static_malloc
-                0x080089f4       0x14 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x080089f4                USBD_static_malloc
+                0x080089f0       0x14 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x080089f0                USBD_static_malloc
  .text.USBD_static_free
-                0x08008a08        0xc CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008a08                USBD_static_free
+                0x08008a04        0xc CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008a04                USBD_static_free
  .text.USBD_Get_USB_Status
-                0x08008a14       0x1e CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008a14                USBD_Get_USB_Status
+                0x08008a10       0x1e CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008a10                USBD_Get_USB_Status
  .text.USBD_LL_Start
-                0x08008a32       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008a32                USBD_LL_Start
+                0x08008a2e       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008a2e                USBD_LL_Start
  .text.USBD_LL_OpenEP
-                0x08008a44       0x18 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008a44                USBD_LL_OpenEP
+                0x08008a40       0x18 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008a40                USBD_LL_OpenEP
  .text.USBD_LL_CloseEP
-                0x08008a5c       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008a5c                USBD_LL_CloseEP
+                0x08008a58       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008a58                USBD_LL_CloseEP
  .text.USBD_LL_StallEP
-                0x08008a6e       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008a6e                USBD_LL_StallEP
+                0x08008a6a       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008a6a                USBD_LL_StallEP
  .text.USBD_LL_ClearStallEP
-                0x08008a80       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008a80                USBD_LL_ClearStallEP
+                0x08008a7c       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008a7c                USBD_LL_ClearStallEP
  .text.USBD_LL_SetUSBAddress
-                0x08008a92       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008a92                USBD_LL_SetUSBAddress
+                0x08008a8e       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008a8e                USBD_LL_SetUSBAddress
  .text.USBD_LL_Transmit
-                0x08008aa4       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008aa4                USBD_LL_Transmit
+                0x08008aa0       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008aa0                USBD_LL_Transmit
  .text.USBD_LL_PrepareReceive
-                0x08008ab6       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x08008ab6                USBD_LL_PrepareReceive
+                0x08008ab2       0x12 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x08008ab2                USBD_LL_PrepareReceive
  .text.MX_USB_DEVICE_Init
-                0x08008ac8       0x58 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usb_device.c.obj
-                0x08008ac8                MX_USB_DEVICE_Init
+                0x08008ac4       0x58 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usb_device.c.obj
+                0x08008ac4                MX_USB_DEVICE_Init
  .text.USBD_FS_DeviceDescriptor
-                0x08008b20       0x18 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x08008b20                USBD_FS_DeviceDescriptor
+                0x08008b1c       0x18 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08008b1c                USBD_FS_DeviceDescriptor
  .text.USBD_FS_LangIDStrDescriptor
-                0x08008b38       0x18 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x08008b38                USBD_FS_LangIDStrDescriptor
+                0x08008b34       0x18 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08008b34                USBD_FS_LangIDStrDescriptor
  .text.USBD_FS_USR_BOSDescriptor
-                0x08008b50       0x18 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x08008b50                USBD_FS_USR_BOSDescriptor
+                0x08008b4c       0x18 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08008b4c                USBD_FS_USR_BOSDescriptor
  .text.IntToUnicode
-                0x08008b68       0x46 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
- *fill*         0x08008bae        0x2 
+                0x08008b64       0x46 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+ *fill*         0x08008baa        0x2 
  .text.Get_SerialNum
-                0x08008bb0       0x38 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08008bac       0x38 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
  .text.USBD_FS_SerialStrDescriptor
-                0x08008be8       0x14 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x08008be8                USBD_FS_SerialStrDescriptor
+                0x08008be4       0x14 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08008be4                USBD_FS_SerialStrDescriptor
  .text.USBD_FS_ProductStrDescriptor
-                0x08008bfc       0x28 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x08008bfc                USBD_FS_ProductStrDescriptor
+                0x08008bf8       0x28 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08008bf8                USBD_FS_ProductStrDescriptor
  .text.USBD_FS_ManufacturerStrDescriptor
-                0x08008c24       0x1c CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x08008c24                USBD_FS_ManufacturerStrDescriptor
+                0x08008c20       0x1c CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08008c20                USBD_FS_ManufacturerStrDescriptor
  .text.USBD_FS_ConfigStrDescriptor
-                0x08008c40       0x28 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x08008c40                USBD_FS_ConfigStrDescriptor
+                0x08008c3c       0x28 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08008c3c                USBD_FS_ConfigStrDescriptor
  .text.USBD_FS_InterfaceStrDescriptor
-                0x08008c68       0x28 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x08008c68                USBD_FS_InterfaceStrDescriptor
+                0x08008c64       0x28 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08008c64                USBD_FS_InterfaceStrDescriptor
  .text.CDC_DeInit_FS
-                0x08008c90        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+                0x08008c8c        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
  .text.CDC_Control_FS
-                0x08008c9e        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+                0x08008c9a        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
  .text.CDC_TransmitCplt_FS
-                0x08008cac        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
- *fill*         0x08008cba        0x2 
+                0x08008ca8        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+ *fill*         0x08008cb6        0x2 
  .text.CDC_Receive_FS
-                0x08008cbc       0x1c CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+                0x08008cb8       0x1c CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
  .text.CDC_Init_FS
-                0x08008cd8       0x28 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+                0x08008cd4       0x28 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
  .text.__udivmoddi4
-                0x08008d00      0x2f8 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
-                0x08008d00                __udivmoddi4
- .text.memset   0x08008ff8       0x10 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memset.o)
-                0x08008ff8                memset
+                0x08008cfc      0x2f8 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+                0x08008cfc                __udivmoddi4
+ .text.memset   0x08008ff4       0x10 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memset.o)
+                0x08008ff4                memset
  .text.__libc_init_array
-                0x08009008       0x48 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
-                0x08009008                __libc_init_array
- .text.memcpy   0x08009050       0x1c C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy-stub.o)
-                0x08009050                memcpy
+                0x08009004       0x48 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
+                0x08009004                __libc_init_array
+ .text.memcpy   0x0800904c       0x1c C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy-stub.o)
+                0x0800904c                memcpy
  *(.glue_7)
- .glue_7        0x0800906c        0x0 linker stubs
+ .glue_7        0x08009068        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x0800906c        0x0 linker stubs
+ .glue_7t       0x08009068        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x0800906c        0x0 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .eh_frame      0x08009068        0x0 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtbegin.o
  *(.init)
- .init          0x0800906c        0x4 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crti.o
-                0x0800906c                _init
- .init          0x08009070        0x8 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtn.o
+ .init          0x08009068        0x4 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crti.o
+                0x08009068                _init
+ .init          0x0800906c        0x8 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtn.o
  *(.fini)
- .fini          0x08009078        0x4 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crti.o
-                0x08009078                _fini
- .fini          0x0800907c        0x8 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtn.o
-                0x08009084                        . = ALIGN (0x4)
-                0x08009084                        _etext = .
+ .fini          0x08009074        0x4 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crti.o
+                0x08009074                _fini
+ .fini          0x08009078        0x8 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtn.o
+                0x08009080                        . = ALIGN (0x4)
+                0x08009080                        _etext = .
 
-.vfp11_veneer   0x08009084        0x0
- .vfp11_veneer  0x08009084        0x0 linker stubs
+.vfp11_veneer   0x08009080        0x0
+ .vfp11_veneer  0x08009080        0x0 linker stubs
 
-.v4_bx          0x08009084        0x0
- .v4_bx         0x08009084        0x0 linker stubs
+.v4_bx          0x08009080        0x0
+ .v4_bx         0x08009080        0x0 linker stubs
 
-.iplt           0x08009084        0x0
- .iplt          0x08009084        0x0 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+.iplt           0x08009080        0x0
+ .iplt          0x08009080        0x0 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.rodata         0x08009084       0xd8
-                0x08009084                        . = ALIGN (0x4)
+.rodata         0x08009080       0xd8
+                0x08009080                        . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
  .rodata.APBPrescTable
-                0x08009084        0x8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
-                0x08009084                APBPrescTable
+                0x08009080        0x8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
+                0x08009080                APBPrescTable
  .rodata.AHBPrescTable
-                0x0800908c       0x10 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
-                0x0800908c                AHBPrescTable
+                0x08009088       0x10 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
+                0x08009088                AHBPrescTable
  .rodata.flagBitshiftOffset.0
-                0x0800909c        0x8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
+                0x08009098        0x8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
  .rodata.vTaskStartScheduler.str1.4
-                0x080090a4       0x92 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+                0x080090a0       0x92 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
                                   0x5 (size before relaxing)
  .rodata.prvCheckForValidListAndQueue.str1.4
-                0x08009136        0x5 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+                0x08009132        0x5 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
  .rodata.xTimerCreateTimerTask.str1.4
-                0x08009136        0x8 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+                0x08009132        0x8 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
  .rodata.TaskManager_CreateAllTasks.str1.4
-                0x08009136       0x29 CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj
+                0x08009132       0x29 CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj
  .rodata.str1.4
-                0x08009136        0x5 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
- *fill*         0x08009136        0x2 
+                0x08009132        0x5 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
+ *fill*         0x08009132        0x2 
  .rodata.idle_attributes
-                0x08009138       0x24 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
-                0x08009138                idle_attributes
+                0x08009134       0x24 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
+                0x08009134                idle_attributes
  .rodata.USBD_FS_ProductStrDescriptor.str1.4
-                0x0800915c       0x16 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08009158       0x16 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
  .rodata.USBD_FS_ManufacturerStrDescriptor.str1.4
-                0x0800915c       0x13 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08009158       0x13 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
  .rodata.USBD_FS_ConfigStrDescriptor.str1.4
-                0x0800915c        0xb CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08009158        0xb CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
  .rodata.USBD_FS_InterfaceStrDescriptor.str1.4
-                0x0800915c        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x08009174                        . = ALIGN (0x4)
+                0x08009158        0xe CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08009170                        . = ALIGN (0x4)
 
-.ARM.extab      0x0800915c        0x0
-                0x0800915c                        . = ALIGN (0x4)
+.ARM.extab      0x08009158        0x0
+                0x08009158                        . = ALIGN (0x4)
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x0800915c                        . = ALIGN (0x4)
+                0x08009158                        . = ALIGN (0x4)
 
-.ARM            0x0800915c        0x8
-                0x0800915c                        . = ALIGN (0x4)
-                0x0800915c                        __exidx_start = .
+.ARM            0x08009158        0x8
+                0x08009158                        . = ALIGN (0x4)
+                0x08009158                        __exidx_start = .
  *(.ARM.exidx*)
  .ARM.exidx.text.__udivmoddi4
-                0x0800915c        0x8 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
-                0x08009164                        __exidx_end = .
-                0x08009164                        . = ALIGN (0x4)
+                0x08009158        0x8 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+                0x08009160                        __exidx_end = .
+                0x08009160                        . = ALIGN (0x4)
 
-.preinit_array  0x08009164        0x0
-                0x08009164                        . = ALIGN (0x4)
-                0x08009164                        PROVIDE (__preinit_array_start = .)
+.preinit_array  0x08009160        0x0
+                0x08009160                        . = ALIGN (0x4)
+                0x08009160                        PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x08009164                        PROVIDE (__preinit_array_end = .)
-                0x08009164                        . = ALIGN (0x4)
+                0x08009160                        PROVIDE (__preinit_array_end = .)
+                0x08009160                        . = ALIGN (0x4)
 
-.init_array     0x08009164        0x4
-                0x08009164                        . = ALIGN (0x4)
-                0x08009164                        PROVIDE (__init_array_start = .)
+.init_array     0x08009160        0x4
+                0x08009160                        . = ALIGN (0x4)
+                0x08009160                        PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x08009164        0x4 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtbegin.o
-                0x08009168                        PROVIDE (__init_array_end = .)
-                0x08009168                        . = ALIGN (0x4)
+ .init_array    0x08009160        0x4 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x08009164                        PROVIDE (__init_array_end = .)
+                0x08009164                        . = ALIGN (0x4)
 
-.fini_array     0x08009168        0x4
-                0x08009168                        . = ALIGN (0x4)
+.fini_array     0x08009164        0x4
+                0x08009164                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x08009168        0x4 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .fini_array    0x08009164        0x4 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x0800916c                        . = ALIGN (0x4)
-                0x0800916c                        _sidata = LOADADDR (.data)
+                0x08009168                        . = ALIGN (0x4)
+                0x08009168                        _sidata = LOADADDR (.data)
 
-.rel.dyn        0x0800916c        0x0
- .rel.iplt      0x0800916c        0x0 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+.rel.dyn        0x08009168        0x0
+ .rel.iplt      0x08009168        0x0 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.data           0x20000000      0x10c load address 0x0800916c
+.data           0x20000000      0x10c load address 0x08009168
                 0x20000000                        . = ALIGN (0x4)
                 0x20000000                        _sdata = .
  *(.data)
@@ -10513,16 +10512,16 @@ LOAD C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb
                 0x2000010c                        . = ALIGN (0x4)
 
 .tm_clone_table
-                0x2000010c        0x0 load address 0x08009278
+                0x2000010c        0x0 load address 0x08009274
  .tm_clone_table
                 0x2000010c        0x0 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtbegin.o
  .tm_clone_table
                 0x2000010c        0x0 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtend.o
 
-.igot.plt       0x2000010c        0x0 load address 0x08009278
+.igot.plt       0x2000010c        0x0 load address 0x08009274
  .igot.plt      0x2000010c        0x0 C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.tdata          0x2000010c        0x0 load address 0x08009278
+.tdata          0x2000010c        0x0 load address 0x08009274
  *(.tdata .tdata.* .gnu.linkonce.td.*)
                 0x2000010c                        . = ALIGN (0x4)
                 0x2000010c                        _edata = .
@@ -10539,7 +10538,7 @@ LOAD C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb
                 [!provide]                        PROVIDE (__data_source_end = __tdata_source_end)
                 [!provide]                        PROVIDE (__data_source_size = (__data_source_end - __data_source))
 
-.tbss           0x2000010c        0x0 load address 0x08009278
+.tbss           0x2000010c        0x0 load address 0x08009274
                 0x2000010c                        _sbss = .
                 0x2000010c                        __bss_start__ = _sbss
  *(.tbss .tbss.*)
@@ -10556,7 +10555,7 @@ LOAD C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb
                 [!provide]                        PROVIDE (__arm32_tls_tcb_offset = MAX (0x8, __tls_align))
                 [!provide]                        PROVIDE (__arm64_tls_tcb_offset = MAX (0x10, __tls_align))
 
-.bss            0x2000010c     0xf62c load address 0x08009278
+.bss            0x2000010c     0xf62c load address 0x08009274
  *(.bss)
  *(.bss*)
  .bss.completed.1
@@ -10735,7 +10734,7 @@ LOAD C:/PROGRA~2/ARMGNU~1/142BCE~1.3RE/bin/../lib/gcc/arm-none-eabi/14.3.1/thumb
                 [!provide]                        PROVIDE (__bss_size = (__bss_end - __bss_start))
 
 ._user_heap_stack
-                0x2000f738     0x2000 load address 0x08009278
+                0x2000f738     0x2000 load address 0x08009274
                 0x2000f738                        . = ALIGN (0x8)
                 [!provide]                        PROVIDE (end = .)
                 0x2000f738                        PROVIDE (_end = .)
@@ -10933,7 +10932,7 @@ LOAD linker stubs
  .comment       0x00000046       0x47 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
  .comment       0x00000046       0x47 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
 
-.debug_info     0x00000000    0x36b3b
+.debug_info     0x00000000    0x36b10
  .debug_info    0x00000000      0x563 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_info    0x00000563     0x3c3e cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
  .debug_info    0x000041a1     0x1ae2 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
@@ -10962,32 +10961,32 @@ LOAD linker stubs
  .debug_info    0x0002715a      0x5e6 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
  .debug_info    0x00027740      0x55e cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
  .debug_info    0x00027c9e      0x3c2 CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj
- .debug_info    0x00028060      0x289 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
- .debug_info    0x000282e9       0xea CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
- .debug_info    0x000283d3       0xeb CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj
- .debug_info    0x000284be       0xea CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
- .debug_info    0x000285a8      0x748 CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
- .debug_info    0x00028cf0     0x1aeb CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
- .debug_info    0x0002a7db      0x6ab CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
- .debug_info    0x0002ae86      0xcc6 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_info    0x0002bb4c      0x534 CMakeFiles/WireStripper.dir/Core/Src/dma.c.obj
- .debug_info    0x0002c080      0x7ab CMakeFiles/WireStripper.dir/Core/Src/gpio.c.obj
- .debug_info    0x0002c82b      0xa52 CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
- .debug_info    0x0002d27d      0x825 CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
- .debug_info    0x0002daa2      0xd7d CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
- .debug_info    0x0002e81f     0x16e7 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
- .debug_info    0x0002ff06      0x9b6 CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
- .debug_info    0x000308bc      0x46f CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
- .debug_info    0x00030d2b      0x52a CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_info    0x00031255      0xf30 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_info    0x00032185      0xcea CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_info    0x00032e6f       0x30 CMakeFiles/WireStripper.dir/startup_stm32f446xx.s.obj
- .debug_info    0x00032e9f     0x24e0 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
- .debug_info    0x0003537f      0x7a1 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usb_device.c.obj
- .debug_info    0x00035b20      0x649 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
- .debug_info    0x00036169      0x9d2 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+ .debug_info    0x00028060      0x25f CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
+ .debug_info    0x000282bf       0xea CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
+ .debug_info    0x000283a9       0xea CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj
+ .debug_info    0x00028493       0xea CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
+ .debug_info    0x0002857d      0x748 CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
+ .debug_info    0x00028cc5     0x1aeb CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
+ .debug_info    0x0002a7b0      0x6ab CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
+ .debug_info    0x0002ae5b      0xcc6 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_info    0x0002bb21      0x534 CMakeFiles/WireStripper.dir/Core/Src/dma.c.obj
+ .debug_info    0x0002c055      0x7ab CMakeFiles/WireStripper.dir/Core/Src/gpio.c.obj
+ .debug_info    0x0002c800      0xa52 CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
+ .debug_info    0x0002d252      0x825 CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
+ .debug_info    0x0002da77      0xd7d CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
+ .debug_info    0x0002e7f4     0x16e7 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+ .debug_info    0x0002fedb      0x9b6 CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
+ .debug_info    0x00030891      0x46f CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
+ .debug_info    0x00030d00      0x52a CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_info    0x0003122a      0xf30 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_info    0x0003215a      0xcea CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_info    0x00032e44       0x30 CMakeFiles/WireStripper.dir/startup_stm32f446xx.s.obj
+ .debug_info    0x00032e74     0x24e0 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+ .debug_info    0x00035354      0x7a1 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usb_device.c.obj
+ .debug_info    0x00035af5      0x649 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+ .debug_info    0x0003613e      0x9d2 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
 
-.debug_abbrev   0x00000000     0x7681
+.debug_abbrev   0x00000000     0x7664
  .debug_abbrev  0x00000000      0x120 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_abbrev  0x00000120      0x273 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
  .debug_abbrev  0x00000393      0x271 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
@@ -11016,33 +11015,33 @@ LOAD linker stubs
  .debug_abbrev  0x000045c1      0x26e cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
  .debug_abbrev  0x0000482f      0x295 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
  .debug_abbrev  0x00004ac4      0x18d CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj
- .debug_abbrev  0x00004c51      0x160 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
- .debug_abbrev  0x00004db1       0x9a CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
- .debug_abbrev  0x00004e4b       0x9a CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj
- .debug_abbrev  0x00004ee5       0x9a CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
- .debug_abbrev  0x00004f7f      0x234 CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
- .debug_abbrev  0x000051b3      0x257 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
- .debug_abbrev  0x0000540a      0x1c3 CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
- .debug_abbrev  0x000055cd      0x261 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_abbrev  0x0000582e      0x12d CMakeFiles/WireStripper.dir/Core/Src/dma.c.obj
- .debug_abbrev  0x0000595b      0x166 CMakeFiles/WireStripper.dir/Core/Src/gpio.c.obj
- .debug_abbrev  0x00005ac1      0x213 CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
- .debug_abbrev  0x00005cd4      0x204 CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
- .debug_abbrev  0x00005ed8      0x24d CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
- .debug_abbrev  0x00006125      0x275 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
- .debug_abbrev  0x0000639a      0x219 CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
- .debug_abbrev  0x000065b3      0x1b3 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
- .debug_abbrev  0x00006766      0x122 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_abbrev  0x00006888      0x1e8 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_abbrev  0x00006a70      0x234 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_abbrev  0x00006ca4       0x24 CMakeFiles/WireStripper.dir/startup_stm32f446xx.s.obj
- .debug_abbrev  0x00006cc8      0x34d CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
- .debug_abbrev  0x00007015      0x1b2 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usb_device.c.obj
- .debug_abbrev  0x000071c7      0x1ee CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
- .debug_abbrev  0x000073b5      0x2cc CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+ .debug_abbrev  0x00004c51      0x143 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
+ .debug_abbrev  0x00004d94       0x9a CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
+ .debug_abbrev  0x00004e2e       0x9a CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj
+ .debug_abbrev  0x00004ec8       0x9a CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
+ .debug_abbrev  0x00004f62      0x234 CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
+ .debug_abbrev  0x00005196      0x257 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
+ .debug_abbrev  0x000053ed      0x1c3 CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
+ .debug_abbrev  0x000055b0      0x261 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_abbrev  0x00005811      0x12d CMakeFiles/WireStripper.dir/Core/Src/dma.c.obj
+ .debug_abbrev  0x0000593e      0x166 CMakeFiles/WireStripper.dir/Core/Src/gpio.c.obj
+ .debug_abbrev  0x00005aa4      0x213 CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
+ .debug_abbrev  0x00005cb7      0x204 CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
+ .debug_abbrev  0x00005ebb      0x24d CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
+ .debug_abbrev  0x00006108      0x275 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+ .debug_abbrev  0x0000637d      0x219 CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
+ .debug_abbrev  0x00006596      0x1b3 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
+ .debug_abbrev  0x00006749      0x122 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_abbrev  0x0000686b      0x1e8 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_abbrev  0x00006a53      0x234 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_abbrev  0x00006c87       0x24 CMakeFiles/WireStripper.dir/startup_stm32f446xx.s.obj
+ .debug_abbrev  0x00006cab      0x34d CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+ .debug_abbrev  0x00006ff8      0x1b2 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usb_device.c.obj
+ .debug_abbrev  0x000071aa      0x1ee CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+ .debug_abbrev  0x00007398      0x2cc CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
 
 .debug_loclists
-                0x00000000    0x1a705
+                0x00000000    0x1a6dc
  .debug_loclists
                 0x00000000       0x72 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_loclists
@@ -11100,35 +11099,33 @@ LOAD linker stubs
  .debug_loclists
                 0x00018281       0x31 CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj
  .debug_loclists
-                0x000182b2       0x29 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
+                0x000182b2       0x7d CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
  .debug_loclists
-                0x000182db       0x7d CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
+                0x0001832f     0x1179 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
  .debug_loclists
-                0x00018358     0x1179 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
+                0x000194a8      0x111 CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
  .debug_loclists
-                0x000194d1      0x111 CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
+                0x000195b9       0x29 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
  .debug_loclists
-                0x000195e2       0x29 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+                0x000195e2       0x5d CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
  .debug_loclists
-                0x0001960b       0x5d CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
+                0x0001963f       0x74 CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
  .debug_loclists
-                0x00019668       0x74 CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
+                0x000196b3       0x65 CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
  .debug_loclists
-                0x000196dc       0x65 CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
+                0x00019718      0x17e CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
  .debug_loclists
-                0x00019741      0x17e CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+                0x00019896       0x5d CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
  .debug_loclists
-                0x000198bf       0x5d CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
+                0x000198f3       0x29 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
  .debug_loclists
-                0x0001991c       0x29 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
+                0x0001991c       0xa7 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
  .debug_loclists
-                0x00019945       0xa7 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+                0x000199c3      0x93a CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
  .debug_loclists
-                0x000199ec      0x93a CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0001a2fd      0x2b6 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
  .debug_loclists
-                0x0001a326      0x2b6 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
- .debug_loclists
-                0x0001a5dc      0x129 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+                0x0001a5b3      0x129 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
 
 .debug_aranges  0x00000000     0x23a0
  .debug_aranges
@@ -11512,7 +11509,7 @@ LOAD linker stubs
  .debug_macro   0x0002bf75      0x3d5 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
  .debug_macro   0x0002c34a       0x10 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
 
-.debug_line     0x00000000    0x385be
+.debug_line     0x00000000    0x385ba
  .debug_line    0x00000000      0x7b7 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_line    0x000007b7     0x4c21 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
  .debug_line    0x000053d8     0x1f29 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
@@ -11541,85 +11538,85 @@ LOAD linker stubs
  .debug_line    0x0002845a      0x986 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
  .debug_line    0x00028de0      0x77a cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
  .debug_line    0x0002955a      0x5b6 CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj
- .debug_line    0x00029b10      0xb97 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
- .debug_line    0x0002a6a7      0x4a6 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
- .debug_line    0x0002ab4d      0x494 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj
- .debug_line    0x0002afe1      0x4a0 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
- .debug_line    0x0002b481      0x89e CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
- .debug_line    0x0002bd1f     0x1950 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
- .debug_line    0x0002d66f      0x96c CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
- .debug_line    0x0002dfdb      0xdd6 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_line    0x0002edb1      0x7e2 CMakeFiles/WireStripper.dir/Core/Src/dma.c.obj
- .debug_line    0x0002f593      0xa1e CMakeFiles/WireStripper.dir/Core/Src/gpio.c.obj
- .debug_line    0x0002ffb1      0x906 CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
- .debug_line    0x000308b7      0x8eb CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
- .debug_line    0x000311a2      0x987 CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
- .debug_line    0x00031b29      0xe41 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
- .debug_line    0x0003296a      0x8c1 CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
- .debug_line    0x0003322b      0xabe CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
- .debug_line    0x00033ce9      0x7ec CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_line    0x000344d5      0x8e4 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_line    0x00034db9      0x7e3 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_line    0x0003559c       0x7a CMakeFiles/WireStripper.dir/startup_stm32f446xx.s.obj
- .debug_line    0x00035616      0xfb0 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
- .debug_line    0x000365c6      0xa2d CMakeFiles/WireStripper.dir/USB_DEVICE/App/usb_device.c.obj
- .debug_line    0x00036ff3      0xb3a CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
- .debug_line    0x00037b2d      0xa91 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+ .debug_line    0x00029b10      0xb94 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
+ .debug_line    0x0002a6a4      0x4a6 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
+ .debug_line    0x0002ab4a      0x494 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj
+ .debug_line    0x0002afde      0x4a0 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
+ .debug_line    0x0002b47e      0x89d CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
+ .debug_line    0x0002bd1b     0x1950 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
+ .debug_line    0x0002d66b      0x96c CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
+ .debug_line    0x0002dfd7      0xdd6 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_line    0x0002edad      0x7e2 CMakeFiles/WireStripper.dir/Core/Src/dma.c.obj
+ .debug_line    0x0002f58f      0xa1e CMakeFiles/WireStripper.dir/Core/Src/gpio.c.obj
+ .debug_line    0x0002ffad      0x906 CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
+ .debug_line    0x000308b3      0x8eb CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
+ .debug_line    0x0003119e      0x987 CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
+ .debug_line    0x00031b25      0xe41 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+ .debug_line    0x00032966      0x8c1 CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
+ .debug_line    0x00033227      0xabe CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
+ .debug_line    0x00033ce5      0x7ec CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_line    0x000344d1      0x8e4 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_line    0x00034db5      0x7e3 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_line    0x00035598       0x7a CMakeFiles/WireStripper.dir/startup_stm32f446xx.s.obj
+ .debug_line    0x00035612      0xfb0 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+ .debug_line    0x000365c2      0xa2d CMakeFiles/WireStripper.dir/USB_DEVICE/App/usb_device.c.obj
+ .debug_line    0x00036fef      0xb3a CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+ .debug_line    0x00037b29      0xa91 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
 
-.debug_str      0x00000000    0xf4052
- .debug_str     0x00000000    0xf4052 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
+.debug_str      0x00000000    0xf404a
+ .debug_str     0x00000000    0xf404a cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
                               0xd9dc7 (size before relaxing)
- .debug_str     0x000f4052    0xdb12c cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
- .debug_str     0x000f4052    0xda938 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
- .debug_str     0x000f4052    0xda8d8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c.obj
- .debug_str     0x000f4052    0xda1da cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.c.obj
- .debug_str     0x000f4052    0xda794 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c.obj
- .debug_str     0x000f4052    0xda211 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj
- .debug_str     0x000f4052    0xda244 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj
- .debug_str     0x000f4052    0xd9f42 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj
- .debug_str     0x000f4052    0xda1bc cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
- .debug_str     0x000f4052    0xda6e3 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj
- .debug_str     0x000f4052    0xda98c cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj
- .debug_str     0x000f4052    0xda38f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c.obj
- .debug_str     0x000f4052    0xda80b cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_smbus.c.obj
- .debug_str     0x000f4052    0xda660 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c.obj
- .debug_str     0x000f4052    0xda7c8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj
- .debug_str     0x000f4052    0xdedd1 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c.obj
- .debug_str     0x000f4052    0xdebfc cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c.obj
- .debug_str     0x000f4052    0xdead1 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c.obj
- .debug_str     0x000f4052    0xdf4b9 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c.obj
- .debug_str     0x000f4052     0xa61b cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
- .debug_str     0x000f4052     0xc11c cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
- .debug_str     0x000f4052     0xcd89 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
- .debug_str     0x000f4052     0xc696 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
- .debug_str     0x000f4052    0xe4469 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
- .debug_str     0x000f4052     0xaf7a cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
- .debug_str     0x000f4052     0x8817 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
- .debug_str     0x000f4052     0x80f3 CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj
- .debug_str     0x000f4052    0xe1529 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
- .debug_str     0x000f4052     0x7f77 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
- .debug_str     0x000f4052     0x7f77 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj
- .debug_str     0x000f4052     0x7f89 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
- .debug_str     0x000f4052    0xde092 CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
- .debug_str     0x000f4052    0xdeafd CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
- .debug_str     0x000f4052    0xddc88 CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
- .debug_str     0x000f4052    0xe51e8 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_str     0x000f4052    0xddacb CMakeFiles/WireStripper.dir/Core/Src/dma.c.obj
- .debug_str     0x000f4052    0xdd638 CMakeFiles/WireStripper.dir/Core/Src/gpio.c.obj
- .debug_str     0x000f4052    0xddaaa CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
- .debug_str     0x000f4052    0xdd9cd CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
- .debug_str     0x000f4052    0xde062 CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
- .debug_str     0x000f4052    0xde453 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
- .debug_str     0x000f4052    0xddaf5 CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
- .debug_str     0x000f4052    0xe2353 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
- .debug_str     0x000f4052    0xddabb CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_str     0x000f4052    0xde060 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_str     0x000f4052    0xda8ff CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_str     0x000f4052       0xb4 CMakeFiles/WireStripper.dir/startup_stm32f446xx.s.obj
- .debug_str     0x000f4052    0xdffa8 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
- .debug_str     0x000f4052    0xdee84 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usb_device.c.obj
- .debug_str     0x000f4052    0xde9f3 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
- .debug_str     0x000f4052    0xdeec4 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+ .debug_str     0x000f404a    0xdb12c cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
+ .debug_str     0x000f404a    0xda938 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
+ .debug_str     0x000f404a    0xda8d8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c.obj
+ .debug_str     0x000f404a    0xda1da cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.c.obj
+ .debug_str     0x000f404a    0xda794 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c.obj
+ .debug_str     0x000f404a    0xda211 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj
+ .debug_str     0x000f404a    0xda244 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj
+ .debug_str     0x000f404a    0xd9f42 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj
+ .debug_str     0x000f404a    0xda1bc cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
+ .debug_str     0x000f404a    0xda6e3 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj
+ .debug_str     0x000f404a    0xda98c cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj
+ .debug_str     0x000f404a    0xda38f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c.obj
+ .debug_str     0x000f404a    0xda80b cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_smbus.c.obj
+ .debug_str     0x000f404a    0xda660 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c.obj
+ .debug_str     0x000f404a    0xda7c8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj
+ .debug_str     0x000f404a    0xdedd1 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c.obj
+ .debug_str     0x000f404a    0xdebfc cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c.obj
+ .debug_str     0x000f404a    0xdead1 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c.obj
+ .debug_str     0x000f404a    0xdf4b9 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c.obj
+ .debug_str     0x000f404a     0xa61b cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
+ .debug_str     0x000f404a     0xc11c cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
+ .debug_str     0x000f404a     0xcd89 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+ .debug_str     0x000f404a     0xc696 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+ .debug_str     0x000f404a    0xe4469 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
+ .debug_str     0x000f404a     0xaf7a cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
+ .debug_str     0x000f404a     0x8817 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
+ .debug_str     0x000f404a     0x80f3 CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj
+ .debug_str     0x000f404a    0xe1518 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
+ .debug_str     0x000f404a     0x7f77 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
+ .debug_str     0x000f404a     0x7f77 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj
+ .debug_str     0x000f404a     0x7f89 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
+ .debug_str     0x000f404a    0xde092 CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
+ .debug_str     0x000f404a    0xdeafd CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
+ .debug_str     0x000f404a    0xddc88 CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
+ .debug_str     0x000f404a    0xe51e8 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_str     0x000f404a    0xddacb CMakeFiles/WireStripper.dir/Core/Src/dma.c.obj
+ .debug_str     0x000f404a    0xdd638 CMakeFiles/WireStripper.dir/Core/Src/gpio.c.obj
+ .debug_str     0x000f404a    0xddaaa CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
+ .debug_str     0x000f404a    0xdd9cd CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
+ .debug_str     0x000f404a    0xde062 CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
+ .debug_str     0x000f404a    0xde453 CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+ .debug_str     0x000f404a    0xddaf5 CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
+ .debug_str     0x000f404a    0xe2353 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
+ .debug_str     0x000f404a    0xddabb CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_str     0x000f404a    0xde060 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_str     0x000f404a    0xda8ff CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_str     0x000f404a       0xb4 CMakeFiles/WireStripper.dir/startup_stm32f446xx.s.obj
+ .debug_str     0x000f404a    0xdffa8 CMakeFiles/WireStripper.dir/USB_DEVICE/Target/usbd_conf.c.obj
+ .debug_str     0x000f404a    0xdee84 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usb_device.c.obj
+ .debug_str     0x000f404a    0xde9f3 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_desc.c.obj
+ .debug_str     0x000f404a    0xdeec4 CMakeFiles/WireStripper.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
 
 .debug_frame    0x00000000     0x8ac4
  .debug_frame   0x00000000       0x54 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj

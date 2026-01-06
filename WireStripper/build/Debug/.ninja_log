@@ -80,3 +80,11 @@
 72	1110	7893625395126686	CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj	7450c4b5cf8babdc
 17	1118	7893625394577638	CMakeFiles/WireStripper.dir/Core/Src/main.c.obj	5c854595931555c9
 1119	3328	7893625405591914	WireStripper.elf	e77233b0644aba63
+17	573	7893640233339377	CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj	28a7fd4106616e39
+574	1406	7893640238914340	WireStripper.elf	e77233b0644aba63
+14	168	7893640427950392	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj	4008ff76f8e5c4a7
+169	846	7893640429496693	WireStripper.elf	e77233b0644aba63
+14	498	7893641106655150	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj	8d430ecdea5d0da8
+499	1138	7893641111512673	WireStripper.elf	e77233b0644aba63
+17	494	7893644587239186	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj	8d430ecdea5d0da8
+496	1112	7893644592015867	WireStripper.elf	e77233b0644aba63

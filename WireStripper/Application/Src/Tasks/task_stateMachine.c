@@ -12,5 +12,6 @@ void vStateMachineTask() {
     for (;;) {
         counterVar++;
         vTaskDelay(100);
+        vTaskDelay(100);
     }
 }

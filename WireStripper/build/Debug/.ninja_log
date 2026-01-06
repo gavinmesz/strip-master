@@ -88,3 +88,12 @@
 499	1138	7893641111512673	WireStripper.elf	e77233b0644aba63
 17	494	7893644587239186	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj	8d430ecdea5d0da8
 496	1112	7893644592015867	WireStripper.elf	e77233b0644aba63
+483	1822	7893713885847657	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj	9caaf6b29f13c12a
+522	1968	7893713886228202	CMakeFiles/WireStripper.dir/Core/Src/dma.c.obj	84c756a88e81f359
+497	1974	7893713885967759	CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj	28a7fd4106616e39
+536	1975	7893713886363422	CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj	7450c4b5cf8babdc
+510	1996	7893713886108249	CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj	b639eb5446ac6b0d
+15	487	7893713985145137	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj	8d430ecdea5d0da8
+488	1964	7893713989874730	WireStripper.elf	e77233b0644aba63
+29	1782	7893750400338274	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj	8d430ecdea5d0da8
+1783	2789	7893750417881534	WireStripper.elf	e77233b0644aba63

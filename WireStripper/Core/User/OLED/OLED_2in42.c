@@ -83,29 +83,29 @@ static void OLED_2in42_InitReg(void)
     OLED_2in42_WriteReg(0x00);//---set low column address
     OLED_2in42_WriteReg(0x10);//---set high column address
 
-	  OLED_2in42_WriteReg(0x20);
-    OLED_2in42_WriteReg(0x00);
+    OLED_2in42_WriteReg(0x20); // Setting the memory addressing mode. mfg code uses page addressing but .
+    OLED_2in42_WriteReg(0x01); //A[1:0] = 01b for vertical addressing
         
-    OLED_2in42_WriteReg(0xFF);
+    OLED_2in42_WriteReg(0xFF); // Unknown
     
-    OLED_2in42_WriteReg(0xA6);
+    OLED_2in42_WriteReg(0xA6); // Normal Display, 1 = ON
     
-    OLED_2in42_WriteReg(0xA8); 
+    OLED_2in42_WriteReg(0xA8); // Multiplex ratio to 63
     OLED_2in42_WriteReg(0x3F);
     
-    OLED_2in42_WriteReg(0xD3);
+    OLED_2in42_WriteReg(0xD3); // Display offset to 0
     OLED_2in42_WriteReg(0x00);
     
-    OLED_2in42_WriteReg(0xD5);
-    OLED_2in42_WriteReg(0x80);
+    OLED_2in42_WriteReg(0xD5); // Display Clock divide ratio/oscillator freq.
+    OLED_2in42_WriteReg(0x80); // A[7:4] = 1000b, A[3:0] = 0000b, no divide, default oscillator freq
     
-    OLED_2in42_WriteReg(0xD9);
+    OLED_2in42_WriteReg(0xD9); // Pre-charge period
     OLED_2in42_WriteReg(0x22);
 
-    OLED_2in42_WriteReg(0xDA);
+    OLED_2in42_WriteReg(0xDA); //COM pin hardware config
     OLED_2in42_WriteReg(0x12);
     
-    OLED_2in42_WriteReg(0xDB);
+    OLED_2in42_WriteReg(0xDB); // Vcomh deselect level
     OLED_2in42_WriteReg(0x40);
 
 }

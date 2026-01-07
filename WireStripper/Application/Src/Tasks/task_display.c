@@ -18,53 +18,7 @@ UWORD Imagesize;
 UBYTE *ImgBuffer;
 int spiFlag;
 
-int initDisplay(){
-    Imagesize = ((OLED_2IN42_WIDTH + 7) / 8) * OLED_2IN42_HEIGHT;
-    if(System_Init() != 0) {
-        return -1;
-    }
-
-    //Initialize the Display
-    OLED_2in42_Init();
-    vTaskDelay(500);
-
-    // 0.Create a new image cache
-    if((ImgBuffer = (UBYTE *)pvPortMalloc(Imagesize)) == NULL) {
-        return -1;
-    }
-
-    Paint_NewImage(ImgBuffer, OLED_2IN42_WIDTH, OLED_2IN42_HEIGHT, 270, BLACK);
-    Paint_SelectImage(ImgBuffer);
-    vTaskDelay(500);
-    Paint_Clear(BLACK);
-    return 1;
-}
-
-void vDisplayTask()
-{
-    for(;;){
-        //Interrupt flag from new data. Encoder, state machine, or
-
-        //Paint new data on image
-
-        //Update buffer, start SPI transfer using wrappers below
-
-        counterVar++;
-        vTaskDelay(100);
-    }
-}
-
-void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
-{
-    /* Prevent unused argument(s) compilation warning */
-    UNUSED(hspi);
-
-    //Callback when the SPI DMA transfer is finished
-    HAL_GPIO_WritePin(OLED_CS_GPIO_Port, OLED_CS_Pin, GPIO_PIN_RESET);
-    spiFlag=0;
-}
-
-int OLED_Update(uint8_t * Image) {
+int OLED_Update(const UBYTE * Img) {
     int status = 1;
 
     if (!spiFlag) {
@@ -75,7 +29,7 @@ int OLED_Update(uint8_t * Image) {
         //Convert Image to array (vertical addressing as setup in register init)
         UBYTE frameBuf[Imagesize];
         for (int index=0; index<Imagesize; index++) {
-            frameBuf[index] = Image[index+7-(index-8*((index)>>3))*(2)]; //Rearranging the buffer to array.
+            frameBuf[index] = Img[index+7-(index-8*((index)>>3))*(2)]; //Rearranging the buffer to array.
         }
 
         HAL_GPIO_WritePin(OLED_DC_GPIO_Port, OLED_DC_Pin, GPIO_PIN_SET);
@@ -107,4 +61,50 @@ int OLED_Clear() {
     }
 
     return status;
+}
+
+int initDisplay(){
+    Imagesize = ((OLED_2IN42_WIDTH + 7) / 8) * OLED_2IN42_HEIGHT;
+    if(System_Init() != 0) {
+        return -1;
+    }
+
+    //Initialize the Display
+    OLED_2in42_Init();
+    vTaskDelay(500);
+
+    // 0.Create a new image cache
+    if((ImgBuffer = (UBYTE *)pvPortMalloc(Imagesize)) == NULL) {
+        return -1;
+    }
+
+    Paint_NewImage(ImgBuffer, OLED_2IN42_WIDTH, OLED_2IN42_HEIGHT, 270, BLACK);
+    vTaskDelay(500);
+    Paint_SelectImage(ImgBuffer);
+    vTaskDelay(500);
+    Paint_Clear(BLACK);
+    return 1;
+}
+
+void vDisplayTask()
+{
+    for(;;){
+        //Interrupt flag from new data. Encoder, state machine, or
+        OLED_Clear();
+        //Paint new data on image
+
+        //Update buffer, start SPI transfer using wrappers below
+
+        vTaskDelay(100);
+    }
+}
+
+void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(hspi);
+
+    //Callback when the SPI DMA transfer is finished
+    HAL_GPIO_WritePin(OLED_CS_GPIO_Port, OLED_CS_Pin, GPIO_PIN_RESET);
+    spiFlag=0;
 }

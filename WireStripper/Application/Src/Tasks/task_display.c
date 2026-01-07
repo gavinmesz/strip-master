@@ -83,6 +83,9 @@ int initDisplay(){
     Paint_SelectImage(ImgBuffer);
     vTaskDelay(500);
     Paint_Clear(BLACK);
+    vTaskDelay(500);
+    OLED_2in42_Display(ImgBuffer);
+    vTaskDelay(5000);
     return 1;
 }
 

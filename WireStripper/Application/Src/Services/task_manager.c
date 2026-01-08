@@ -17,6 +17,12 @@ void TaskManager_InitTasks(void){
     if (initDisplay() != 1) {
         configASSERT(0);
     }
+
+    //Assign nonsense values to user config variables to begin
+    quantity = -1;
+    length = -1;
+    stripLength = -1;
+    stripCut = -1;
 }
 
 void TaskManager_CreateAllTasks(void)

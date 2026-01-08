@@ -30,6 +30,8 @@
 ******************************************************************************/
 #include "OLED_2in42.h"
 #include <stdio.h>
+#include "FreeRTOS.h"
+#include "task.h"
 
 
 /*******************************************************************************
@@ -84,7 +86,7 @@ static void OLED_2in42_InitReg(void)
     OLED_2in42_WriteReg(0x10);//---set high column address
 
     OLED_2in42_WriteReg(0x20); // Setting the memory addressing mode. mfg code uses page addressing but .
-    OLED_2in42_WriteReg(0x01); //A[1:0] = 01b for vertical addressing
+    OLED_2in42_WriteReg(0x00); //A[1:0] = 01b for vertical addressing
         
     OLED_2in42_WriteReg(0xFF); // Unknown
     
@@ -124,7 +126,7 @@ void OLED_2in42_Init()
     Driver_Delay_ms(200);
 
     //Turn on the OLED display
-    OLED_2in42_WriteReg(0xaf);
+    OLED_2in42_WriteReg(0xAF);
 }
 
 /********************************************************************************
@@ -173,4 +175,3 @@ void OLED_2in42_Display(const UBYTE *Image)
         }       
     }
 }
-

@@ -32,6 +32,7 @@
 /* USER CODE BEGIN Includes */
 #include "../User/OLED/OLED_2in42.h"
 #include <unistd.h>
+#include "task_display.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -108,6 +109,7 @@ int main(void)
   MX_I2C2_SMBUS_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
+  HAL_ADC_Start_DMA(&hadc1, adcVals, 4);
   /* USER CODE END 2 */
 
   /* Init scheduler */

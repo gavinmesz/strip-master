@@ -10,6 +10,8 @@
 #include "task_display.h"
 #include "task_stateMachine.h"
 #include <string.h>
+
+#include "adc.h"
 #include "spi.h"
 #include "tim.h"
 #include "../User/OLED/OLED_2in42.h"
@@ -25,6 +27,7 @@ int quantity;
 int length;
 int stripLength;
 int stripCut; //Strip or strip and cut (1=Strip and cut)
+uint32_t adcVals[4];
 
 /*
  * OLED_Update:
@@ -129,7 +132,7 @@ void vDisplayTask()
         //Paint functions from GUIPaint.c if the values are different
         Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
         Paint_DrawString_EN(10, 17, "hello world", &Font8, WHITE, BLACK);
-        Paint_DrawNum(10, 30, colour, &Font8, 4, WHITE, BLACK);
+        Paint_DrawNum(10, 30, adcVals[1], &Font8, 4, WHITE, BLACK);
         Paint_DrawNum(10, 43, quantity, &Font12, 2, BLACK, WHITE);
 
         //Update OLED.

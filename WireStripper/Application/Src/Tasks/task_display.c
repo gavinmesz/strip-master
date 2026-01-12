@@ -11,6 +11,7 @@
 #include "task_stateMachine.h"
 #include <string.h>
 #include "spi.h"
+#include "tim.h"
 #include "../User/OLED/OLED_2in42.h"
 #include "../GUI/GUI_Paint.h"
 
@@ -20,6 +21,10 @@ UBYTE *ImgBuffer;
 //frameBuf will hold the image array but in an order that the display is expecting. Needs to be global otherwise it goes out of scope.
 UBYTE *frameBuf;
 int spiFlag;
+int quantity;
+int length;
+int stripLength;
+int stripCut; //Strip or strip and cut (1=Strip and cut)
 
 /*
  * OLED_Update:
@@ -113,18 +118,19 @@ void vDisplayTask()
 {
     //Colour is just a number for what I was testing, it's not a colour.
     int colour = 0;
+    quantity = 10;
     Paint_SelectImage(ImgBuffer);
     Paint_Clear(BLACK);
 
     for(;;){
         //Global config variables held in task_stateMachine.c
         //High priority is to save time for other tasks as much as possible. Be mindful of unnecessary tasks (ie don't Update the OLED if ADC/encoder values have not changed).
-
+        quantity = __HAL_TIM_GET_COUNTER(&htim2);
         //Paint functions from GUIPaint.c if the values are different
         Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
         Paint_DrawString_EN(10, 17, "hello world", &Font8, WHITE, BLACK);
         Paint_DrawNum(10, 30, colour, &Font8, 4, WHITE, BLACK);
-        Paint_DrawNum(10, 43, 987654, &Font12, 5, WHITE, BLACK);
+        Paint_DrawNum(10, 43, quantity, &Font12, 2, BLACK, WHITE);
 
         //Update OLED.
         if (!OLED_Update(ImgBuffer)) {
@@ -132,7 +138,7 @@ void vDisplayTask()
         }
 
         //Give up task. Have not setup preemption so this can starve all tasks.
-        vTaskDelay(10);
+        vTaskDelay(100);
     }
 }
 

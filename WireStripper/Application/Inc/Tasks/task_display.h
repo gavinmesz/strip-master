@@ -3,5 +3,9 @@
 
 int initDisplay();
 void vDisplayTask();
+extern int quantity;
+extern int length;
+extern int stripLength;
+extern int stripCut; //Strip or strip and cut (1=Strip and cut)
 
 #endif

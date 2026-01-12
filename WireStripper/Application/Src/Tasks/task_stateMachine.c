@@ -8,11 +8,6 @@
 //task specific includes
 #include "task_stateMachine.h"
 
-int quantity;
-int length;
-int stripLength;
-int stripCut; //Strip or strip and cut (1=Strip and cut)
-
 void vStateMachineTask() {
     for (;;) {
         counterVar++;

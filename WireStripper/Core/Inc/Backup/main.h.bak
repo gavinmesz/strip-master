@@ -58,10 +58,6 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define USER_Btn_Pin GPIO_PIN_13
 #define USER_Btn_GPIO_Port GPIOC
-#define OLED_DC_Pin GPIO_PIN_1
-#define OLED_DC_GPIO_Port GPIOF
-#define OLED_RST_Pin GPIO_PIN_2
-#define OLED_RST_GPIO_Port GPIOF
 #define MCO_Pin GPIO_PIN_0
 #define MCO_GPIO_Port GPIOH
 #define UX_KNOB2_A_Pin GPIO_PIN_0
@@ -156,10 +152,10 @@ void Error_Handler(void);
 #define UX_KNOB1_A_GPIO_Port GPIOA
 #define OLED_CS_Pin GPIO_PIN_15
 #define OLED_CS_GPIO_Port GPIOG
-#define OLED_RSTB4_Pin GPIO_PIN_4
-#define OLED_RSTB4_GPIO_Port GPIOB
-#define OLED_DCB6_Pin GPIO_PIN_6
-#define OLED_DCB6_GPIO_Port GPIOB
+#define OLED_RST_Pin GPIO_PIN_4
+#define OLED_RST_GPIO_Port GPIOB
+#define OLED_DC_Pin GPIO_PIN_6
+#define OLED_DC_GPIO_Port GPIOB
 #define LD2_Pin GPIO_PIN_7
 #define LD2_GPIO_Port GPIOB
 #define UX_KNOB1_B_Pin GPIO_PIN_9

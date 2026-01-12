@@ -107,7 +107,7 @@ int main(void)
   MX_TIM5_Init();
   MX_I2C2_SMBUS_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   /* USER CODE END 2 */
 
   /* Init scheduler */

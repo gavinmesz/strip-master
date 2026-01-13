@@ -144,6 +144,12 @@ void Error_Handler(void);
 #define M3_DIR_GPIO_Port GPIOG
 #define ENC1_A_Pin GPIO_PIN_6
 #define ENC1_A_GPIO_Port GPIOC
+#define OLED_CS_Pin GPIO_PIN_8
+#define OLED_CS_GPIO_Port GPIOC
+#define OLED_RST_Pin GPIO_PIN_9
+#define OLED_RST_GPIO_Port GPIOC
+#define OLED_DC_Pin GPIO_PIN_8
+#define OLED_DC_GPIO_Port GPIOA
 #define USB_DM_Pin GPIO_PIN_11
 #define USB_DM_GPIO_Port GPIOA
 #define USB_DP_Pin GPIO_PIN_12
@@ -164,12 +170,6 @@ void Error_Handler(void);
 #define LED2_GPIO_Port GPIOD
 #define LED1_Pin GPIO_PIN_9
 #define LED1_GPIO_Port GPIOG
-#define OLED_CS_Pin GPIO_PIN_15
-#define OLED_CS_GPIO_Port GPIOG
-#define OLED_RST_Pin GPIO_PIN_4
-#define OLED_RST_GPIO_Port GPIOB
-#define OLED_DC_Pin GPIO_PIN_6
-#define OLED_DC_GPIO_Port GPIOB
 #define LD2_Pin GPIO_PIN_7
 #define LD2_GPIO_Port GPIOB
 #define UX_KNOB1_B_Pin GPIO_PIN_9

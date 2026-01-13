@@ -63,7 +63,6 @@ const osThreadAttr_t idle_attributes = {
 
 void idleTask(void *argument);
 
-extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* Hook prototypes */
@@ -154,8 +153,6 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_idleTask */
 void idleTask(void *argument)
 {
-  /* init code for USB_DEVICE */
-  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN idleTask */
   /* Infinite loop */
   vTaskDelete(NULL);

@@ -57,7 +57,7 @@ int OLED_Update(const UBYTE * Img) {
 
         HAL_GPIO_WritePin(OLED_DC_GPIO_Port, OLED_DC_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(OLED_CS_GPIO_Port, OLED_CS_Pin, GPIO_PIN_RESET);
-        HAL_SPI_Transmit_DMA(&hspi1, frameBuf, Imagesize); //Send whole frame buffer in one shot
+        HAL_SPI_Transmit_DMA(&hspi2, frameBuf, Imagesize); //Send whole frame buffer in one shot
 
         status = 0;
     }
@@ -78,7 +78,7 @@ int OLED_Clear() {
 
         HAL_GPIO_WritePin(OLED_DC_GPIO_Port, OLED_DC_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(OLED_CS_GPIO_Port, OLED_CS_Pin, GPIO_PIN_RESET);
-        HAL_SPI_Transmit_DMA(&hspi1, frameBuf, Imagesize); //Send whole frame buffer in one shot
+        HAL_SPI_Transmit_DMA(&hspi2, frameBuf, Imagesize); //Send whole frame buffer in one shot
 
         status = 0;
     }

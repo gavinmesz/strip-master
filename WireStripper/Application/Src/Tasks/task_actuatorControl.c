@@ -11,6 +11,7 @@
 #include "main.h"
 #include "stm32f4xx_hal_gpio.h"
 #include "tim.h"
+#include "stm32f4xx_ll_tim.h"
 
 #define FEED_SPEED 100; //pulse/sec
 #define MICROSTEP 1;
@@ -35,9 +36,20 @@ int goalReached;
 int encoder1;
 int encoder2;
 
-void stepMove(int step) {
+void stepMove(int const step) {
     //Configure PWM for one shot step move with fixed frequency.
     //Initiate one shot pulse train.
+    TIM1->CR1 |= TIM_CR1_OPM; //One pulse mode
+    // TIM1->CR2 &= ~TIM_CR2_OIS1; //Idle is off
+
+    TIM1->RCR = step-1; //Set the repetition counter to some step count
+
+    TIM1->EGR = TIM_EGR_UG; //Trigger a reset to clock in the RCR change
+    TIM1->SR &= ~(TIM_SR_UIF); //Reset the interrupt flag
+
+    __HAL_TIM_ENABLE_IT(&htim1, TIM_IT_UPDATE); // enable the update interrupt to turn this off
+
+    HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_1);
 }
 
 void speedMove() {
@@ -64,8 +76,7 @@ void vActuatorTask(){
 
     for(;;){
         //Motor status set by stateMachine
-        (&htim2)->Instance->RCR = 100;
-        __HAL_TIM_ENABLE(&htim2);
+        stepMove(400);
         // while (motorStatus!=IDLE) {
         //     if (goalReached) {
         //         motorStatus = IDLE;

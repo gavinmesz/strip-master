@@ -33,6 +33,7 @@
 #include "../User/OLED/OLED_2in42.h"
 #include <unistd.h>
 #include "task_display.h"
+#include "task_actuatorControl.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -199,10 +200,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
   if (htim->Instance == TIM1)
   {
-    TIM1->CR1 &= ~TIM_CR1_OPM;
-    HAL_TIM_PWM_Stop_IT(&htim1, TIM_CHANNEL_1);
-    TIM1->RCR = 0;
-    __HAL_TIM_CLEAR_IT(&htim1, TIM_CHANNEL_1);
+    // M1Steps -= TIM1->RCR;
+    // if (M1Steps > 0) {
+    //   __HAL_TIM_CLEAR_IT(&htim1, TIM_CHANNEL_1);
+    // } else {
+    //   TIM1->CR1 &= ~TIM_CR1_OPM;
+    //   HAL_TIM_PWM_Stop_IT(&htim1, TIM_CHANNEL_1);
+    //   TIM1->RCR = 0;
+    //   M1Steps = 0;
+    //   __HAL_TIM_CLEAR_IT(&htim1, TIM_CHANNEL_1);
+    // }
   }
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM6)

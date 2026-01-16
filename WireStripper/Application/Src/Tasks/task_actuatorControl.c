@@ -13,7 +13,9 @@
 #include "tim.h"
 #include "stm32f4xx_ll_tim.h"
 
-#define FEED_SPEED 100; //pulse/sec
+//PULSES AT 100Hz right now
+#define CLK_SPEED 1000000;
+#define FEED_SPEED 100; //max is 2000 pulses per second,
 #define MICROSTEP 1;
 
 //Status
@@ -36,24 +38,35 @@ int goalReached;
 int encoder1;
 int encoder2;
 
-void stepMove(int const step) {
-    //Configure PWM for one shot step move with fixed frequency.
-    //Initiate one shot pulse train.
-    TIM1->CR1 |= TIM_CR1_OPM; //One pulse mode
-    // TIM1->CR2 &= ~TIM_CR2_OIS1; //Idle is off
+//Duty cycle of step movement
+uint32_t dcDMA;
 
-    TIM1->RCR = step-1; //Set the repetition counter to some step count
-
-    TIM1->EGR = TIM_EGR_UG; //Trigger a reset to clock in the RCR change
-    TIM1->SR &= ~(TIM_SR_UIF); //Reset the interrupt flag
-
-    __HAL_TIM_ENABLE_IT(&htim1, TIM_IT_UPDATE); // enable the update interrupt to turn this off
-
-    HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_1);
+void changeSpeed(int speed, float const dc, TIM_TypeDef *TIMx, uint32_t channel) {
+    //Require arr value for specific frequency of pulses. 100pps = 1Mhz/10000. 1000 = 1Mhz/100. 1000 = arr.
+    TIMx->ARR = 1000000/speed;//pulses per second
+    TIMx->CCR1 = 50;
 }
 
-void speedMove() {
+void stepMove(int const step, float const speed, TIM_TypeDef *TIMx, uint32_t channel) {
+    //Configure PWM for one shot step move with fixed frequency.
+    //Setup DMA duty cycle, this should be sent "steps" number of times.
+    TIMx->ARR = (uint32_t)(1000000.0/speed);//pulses per second
+    dcDMA = (uint32_t)((float)(TIMx->ARR)*0.5);
+
+    TIMx->EGR = TIM_EGR_UG; //Trigger a reset to clock in the RCR change
+    TIMx->SR &= ~(TIM_SR_UIF); //Reset the interrupt flag
+
+    HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, &dcDMA, step);
+}
+
+void speedMove(int const speed, TIM_TypeDef *TIMx, uint32_t channel) {
     //configure PWM for speed frequency
+    changeSpeed(speed, 50, TIMx, channel);
+    HAL_TIM_PWM_Start(&htim1, channel);
+}
+
+void stopMotor(uint32_t channel) {
+    HAL_TIM_PWM_Stop(&htim1, channel);
 }
 
 void cutWire() {
@@ -70,19 +83,28 @@ void vActuatorTask(){
     motorStatus = IDLE;
     encoder1 = 0;
     encoder2 = 0;
-
     //Set the necessary pins
     // HAL_GPIO_WritePin(M1_MS1_GPIO_Port, M1_MS1_Pin, GPIO_PIN_SET);
 
     for(;;){
         //Motor status set by stateMachine
-        stepMove(400);
+        stepMove(500, 100, TIM1, TIM_CHANNEL_1);
         // while (motorStatus!=IDLE) {
         //     if (goalReached) {
         //         motorStatus = IDLE;
         //     }
         //     vTaskDelay(1000);
         // }
-        vTaskDelay(1000);
+        vTaskDelay(7000);
     }
+}
+
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
+{
+    /* Prevent unused argument(s) compilation warning */
+    HAL_TIM_PWM_Stop_DMA(&htim1, TIM_CHANNEL_1);
+
+    /* NOTE : This function should not be modified, when the callback is needed,
+              the HAL_TIM_PWM_PulseFinishedCallback could be implemented in the user file
+     */
 }

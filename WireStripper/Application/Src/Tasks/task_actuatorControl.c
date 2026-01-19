@@ -18,15 +18,12 @@
 
 //Motor constants
 #define M1_TIMER &htim1
-#define M1_TIMDEF TIM1
 #define M1_CHANNEL TIM_CHANNEL_1
 
 #define M2_TIMER &htim1
-#define M2_TIMDEF TIM1
 #define M2_CHANNEL TIM_CHANNEL_2
 
 #define M3_TIMER &htim1
-#define M3_TIMDEF TIM1
 #define M3_CHANNEL TIM_CHANNEL_3
 
 //Status
@@ -60,12 +57,22 @@ uint32_t dcDMA;
 void changeSpeed(int const speed, float const dc, TIM_TypeDef *TIMx, uint32_t const channel) {
     //Require arr value for specific frequency of pulses. 100pps = 1Mhz/10000. 1000 = 1Mhz/100. 1000 = arr.
     TIMx->ARR = (uint32_t)(CLK_SPEED/speed);//pulses per second
-    if (channel == M1_CHANNEL) {
-        TIMx->CCR1 = (uint32_t)((float)(TIMx->ARR)*dc);
-    } else if (channel == M2_CHANNEL) {
-        TIMx->CCR2 = (uint32_t)((float)(TIMx->ARR)*dc);
-    } else if (channel == M3_CHANNEL) {
-        TIMx->CCR3 = (uint32_t)((float)(TIMx->ARR)*dc);
+    switch (channel) {
+        case M1_CHANNEL: {
+            TIMx->CCR1 = (uint32_t)((float)(TIMx->ARR)*dc);
+            break;
+        }
+        case M2_CHANNEL: {
+            TIMx->CCR2 = (uint32_t)((float)(TIMx->ARR)*dc);
+            break;
+        }
+        case M3_CHANNEL: {
+            TIMx->CCR3 = (uint32_t)((float)(TIMx->ARR)*dc);
+            break;
+        }
+        default: {
+            break;
+        }
     }
 }
 
@@ -98,12 +105,22 @@ void speedMove(int const speed, TIM_TypeDef *TIMx, uint32_t const channel) {
 }
 
 void stopMotor(TIM_HandleTypeDef *htim, uint32_t const channel) {
-    if (channel == M1_CHANNEL) {
-        HAL_TIM_PWM_Stop(htim, M1_CHANNEL);
-    } else if (channel == M2_CHANNEL) {
-        HAL_TIM_PWM_Stop(htim, M2_CHANNEL);
-    } else if (channel == M3_CHANNEL) {
-        HAL_TIM_PWM_Stop(htim, M3_CHANNEL);
+    switch (channel) {
+        case M1_CHANNEL: {
+            HAL_TIM_PWM_Stop(htim, M1_CHANNEL);
+            break;
+        }
+        case M2_CHANNEL: {
+            HAL_TIM_PWM_Stop(htim, M2_CHANNEL);
+            break;
+        }
+        case M3_CHANNEL: {
+            HAL_TIM_PWM_Stop(htim, M3_CHANNEL);
+            break;
+        }
+        default: {
+            break;
+        }
     }
 }
 
@@ -121,30 +138,30 @@ void vActuatorTask(){
     motorStatus = IDLE;
     encoder1 = 0;
     encoder2 = 0;
+    M1Done=1;
+    M2Done=1;
+    M3Done=1;
     //Set the necessary pins
 
     for(;;){
         //Motor status set by stateMachine
-        // while (motorStatus!=IDLE) {
-        //     if (goalReached) {
-        //         motorStatus = IDLE;
-        //     }
-        //     vTaskDelay(1000);
-        // }
+        // stepMove(100, 100, TIM1, TIM_CHANNEL_1);
+        // stepMove(200, 100, TIM1, TIM_CHANNEL_2);
+        stepMove(300, 100, TIM1, TIM_CHANNEL_3);
         vTaskDelay(5000);
     }
 }
 
-void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
-{
-    uint8_t dmaStream;
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
     /* Prevent unused argument(s) compilation warning */
-    if () {
-        // HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
-        M1Done = 1;
-    }
-
-
+    //enabled but empty streams
+    //Check if TIM state is not busy
+    M1Done = TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_1)!=0x02U;
+    if (M1Done){HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);}
+    M2Done = TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_2)!=0x02U;
+    if (M2Done){HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_2);}
+    M3Done = TIM_CHANNEL_STATE_GET(&htim1, TIM_CHANNEL_3)!=0x02U;
+    if (M3Done){HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_3);}
     /* NOTE : This function should not be modified, when the callback is needed,
               the HAL_TIM_PWM_PulseFinishedCallback could be implemented in the user file
      */

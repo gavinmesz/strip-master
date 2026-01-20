@@ -19,12 +19,18 @@
 //Motor constants
 #define M1_TIMER &htim1
 #define M1_CHANNEL TIM_CHANNEL_1
-
 #define M2_TIMER &htim1
 #define M2_CHANNEL TIM_CHANNEL_2
-
 #define M3_TIMER &htim1
 #define M3_CHANNEL TIM_CHANNEL_3
+#define MICROSTEP_FEED 00b
+#define MICROSTEP_CUT 00b
+
+//Direction pins for motor control
+#define TO_FRONT GPIO_PIN_SET
+#define TO_BACK GPIO_PIN_RESET
+#define UP GPIO_PIN_SET
+#define DOWN GPIO_PIN_RESET
 
 //Status
 typedef enum {
@@ -46,7 +52,7 @@ uint8_t goalReached;
 int encoder1;
 int encoder2;
 
-//DMA transfer flags
+//Pulse train finished flags
 uint8_t M1Done;
 uint8_t M2Done;
 uint8_t M3Done;
@@ -54,20 +60,29 @@ uint8_t M3Done;
 //Duty cycle of step movement
 uint32_t dcDMA;
 
-void changeSpeed(int const speed, float const dc, TIM_TypeDef *TIMx, uint32_t const channel) {
+//change speed of motor
+void changeSpeed(int const speed, uint8_t const dir, TIM_TypeDef *TIMx, uint32_t const channel) {
     //Require arr value for specific frequency of pulses. 100pps = 1Mhz/10000. 1000 = 1Mhz/100. 1000 = arr.
     TIMx->ARR = (uint32_t)(CLK_SPEED/speed);//pulses per second
+    dcDMA = (uint32_t)((float)(TIMx->ARR)*0.5);
+
+    TIMx->EGR = TIM_EGR_UG; //Trigger a reset due to register change
+    TIMx->SR &= ~(TIM_SR_UIF); //Reset the interrupt flag
+
     switch (channel) {
         case M1_CHANNEL: {
-            TIMx->CCR1 = (uint32_t)((float)(TIMx->ARR)*dc);
+            TIMx->CCR1 = (uint32_t)((float)(TIMx->ARR)*0.5);
+            HAL_GPIO_WritePin(M1_DIR_GPIO_Port, M1_DIR_Pin, dir);
             break;
         }
         case M2_CHANNEL: {
-            TIMx->CCR2 = (uint32_t)((float)(TIMx->ARR)*dc);
+            TIMx->CCR2 = (uint32_t)((float)(TIMx->ARR)*0.5);
+            HAL_GPIO_WritePin(M2_DIR_GPIO_Port, M2_DIR_Pin, dir);
             break;
         }
         case M3_CHANNEL: {
-            TIMx->CCR3 = (uint32_t)((float)(TIMx->ARR)*dc);
+            TIMx->CCR3 = (uint32_t)((float)(TIMx->ARR)*0.5);
+            HAL_GPIO_WritePin(M3_DIR_GPIO_Port, M3_DIR_Pin, dir);
             break;
         }
         default: {
@@ -76,22 +91,20 @@ void changeSpeed(int const speed, float const dc, TIM_TypeDef *TIMx, uint32_t co
     }
 }
 
+//Movement of x steps in one direction at speed.
 //Return 0 if the step move has not finished yet. Return 1 if the DMA was started.
-uint8_t stepMove(int const step, float const speed, TIM_TypeDef *TIMx, uint32_t const channel) {
-    TIMx->ARR = (uint32_t)(CLK_SPEED/speed);//pulses per second
-    dcDMA = (uint32_t)((float)(TIMx->ARR)*0.5);
-
-    TIMx->EGR = TIM_EGR_UG; //Trigger a reset due to register change
-    TIMx->SR &= ~(TIM_SR_UIF); //Reset the interrupt flag
-
+uint8_t stepMove(int const step, float const speed, uint8_t const dir, TIM_TypeDef *TIMx, uint32_t const channel) {
     if (channel == M1_CHANNEL && M1Done) {
-        HAL_TIM_PWM_Start_DMA(&htim1, M1_CHANNEL, &dcDMA, step);
+        changeSpeed(speed, dir, TIMx, channel);
+        HAL_TIM_PWM_Start_DMA(&htim1, channel, &dcDMA, step);
         M1Done = 0;
     } else if (channel == M2_CHANNEL && M2Done) {
-        HAL_TIM_PWM_Start_DMA(&htim1, M2_CHANNEL, &dcDMA, step);
+        changeSpeed(speed, dir, TIMx, channel);
+        HAL_TIM_PWM_Start_DMA(&htim1, channel, &dcDMA, step);
         M2Done = 0;
     } else if (channel == M3_CHANNEL  && M3Done) {
-        HAL_TIM_PWM_Start_DMA(&htim1, M3_CHANNEL, &dcDMA, step);
+        changeSpeed(speed, dir, TIMx, channel);
+        HAL_TIM_PWM_Start_DMA(&htim1, channel, &dcDMA, step);
         M3Done = 0;
     } else {
         return 0;
@@ -99,8 +112,9 @@ uint8_t stepMove(int const step, float const speed, TIM_TypeDef *TIMx, uint32_t 
     return 1;
 }
 
-void speedMove(int const speed, TIM_TypeDef *TIMx, uint32_t const channel) {
-    changeSpeed(speed, 0.5, TIMx, channel);
+//continuous movement in one direction
+void speedMove(int const speed, uint8_t const dir, TIM_TypeDef *TIMx, uint32_t const channel) {
+    changeSpeed(speed, dir, TIMx, channel);
     HAL_TIM_PWM_Start(&htim1, channel); //continuous PWM, does not stop unless you tell it to
 }
 
@@ -130,6 +144,9 @@ void cutWire() {
 
 void stripWire() {
     //Sequence of movements on motor 3
+
+    //Set speed
+    //stop once wire detected
 }
 
 
@@ -145,9 +162,9 @@ void vActuatorTask(){
 
     for(;;){
         //Motor status set by stateMachine
-        // stepMove(100, 100, TIM1, TIM_CHANNEL_1);
-        // stepMove(200, 100, TIM1, TIM_CHANNEL_2);
-        stepMove(300, 100, TIM1, TIM_CHANNEL_3);
+        stepMove(100, 100, TO_FRONT, TIM1, M1_CHANNEL);
+        stepMove(200, 100, TO_FRONT, TIM1, M2_CHANNEL);
+        stepMove(300, 100, TO_FRONT, TIM1, M3_CHANNEL);
         vTaskDelay(5000);
     }
 }

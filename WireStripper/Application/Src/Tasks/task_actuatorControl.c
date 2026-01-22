@@ -7,9 +7,7 @@
 
 //specific includes
 #include "task_actuatorControl.h"
-
 #include <assert.h>
-
 #include "main.h"
 #include "stm32f4xx_hal_gpio.h"
 #include "tim.h"
@@ -56,6 +54,7 @@ MotorStatus motorStatus;
 uint8_t goalReached;
 
 typedef enum {
+    PLACEHOLDER,
     M1,
     M2,
     M3
@@ -65,7 +64,7 @@ typedef struct {
     MotorNum motor_num;
 
     //Timer Peripheral
-    TIM_HandleTypeDef *htim;
+    TIM_HandleTypeDef* htim;
     TIM_TypeDef *TIMx;
     uint32_t channel;
     uint32_t ccr;
@@ -86,21 +85,23 @@ typedef struct {
 }Motor;
 
 //Motors
-static Motor motors[3];
+static Motor Motor1;
+static Motor Motor2;
+static Motor Motor3;
 
 //Present Encoder Values
 int encoder1;
 int encoder2;
 
 //Duty cycle of step movement
-static uint32_t dcDMA1;
-static uint32_t dcDMA2;
-static uint32_t dcDMA3;
+uint32_t dcDMA1;
+uint32_t dcDMA2;
+uint32_t dcDMA3;
 
 uint8_t homeSetM3() {
     //0 if the homing was unsuccessful (M3 is currently running a distance job)
     uint8_t temp = 0;
-    if (motors[2].motorDone){
+    if (Motor3.motorDone){
         HAL_GPIO_WritePin(M3_nHOME_GPIO_Port, M3_nHOME_Pin, 0);
         HAL_Delay(pdMS_TO_TICKS(1));
         temp=1;
@@ -115,8 +116,9 @@ void enableMotor(uint8_t state, Motor const motor) {
     HAL_GPIO_WritePin(motor.EN_Port, motor.EN_Pin, state);
 }
 
-void nWakeMotor(uint8_t const state, Motor const motor) {
-    //Reminder M3 is nEN
+void wakeMotor(uint8_t state, Motor const motor) {
+    //M3 doesn't have a sleep pin
+    state = ~state;
     switch (motor.motor_num) {
         case M1: {
             HAL_GPIO_WritePin(M1_nSLP_GPIO_Port, M1_nSLP_Pin, state);
@@ -153,24 +155,24 @@ void microSet(uint8_t const microStep, Motor const motor) {
 }
 
 //change speed of motor. M1 and M2 are coupled in speed.
-void changeSpeed(float const speed, uint8_t const dir, Motor motor) {
+void changeSpeed(float const speed, uint8_t const dir, Motor *motor) {
     //Require arr value for specific frequency of pulses. 100pps = 1Mhz/10000. 1000 = 1Mhz/100. 1000 = arr.
-    motor.TIMx->ARR = (uint32_t)(CLK_SPEED/speed);//pulses per second
+    motor->TIMx->ARR = (uint32_t)(CLK_SPEED/speed);//pulses per second
 
-    motor.TIMx->EGR = TIM_EGR_UG; //Trigger a reset due to register change
-    motor.TIMx->SR &= ~(TIM_SR_UIF); //Reset the interrupt flag
+    motor->TIMx->EGR = TIM_EGR_UG; //Trigger a reset due to register change
+    motor->TIMx->SR &= ~(TIM_SR_UIF); //Reset the interrupt flag
 
-    motor.ccr = (uint32_t)((float)(motor.TIMx->ARR)*0.5);
-    HAL_GPIO_WritePin(motor.DIR_Port, motor.DIR_Pin, dir);
+    motor->ccr = (uint32_t)((float)(motor->TIMx->ARR)*0.5);
+    HAL_GPIO_WritePin(motor->DIR_Port, motor->DIR_Pin, dir);
 }
 
 //Movement of x steps in one direction at speed.
 //Return 0 if the step move has not finished yet. Return 1 if the DMA was started.
-uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor motor) {
-    if (motor.motorDone) {
+uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor* motor) {
+    if (motor->motorDone) {
         changeSpeed(speed, dir, motor);
-        HAL_TIM_PWM_Start_DMA(motor.htim, motor.channel, &motor.ccr, step);
-        motor.motorDone=0;
+        HAL_TIM_PWM_Start_DMA(motor->htim, motor->channel, &motor->ccr, step);
+        motor->motorDone=0;
         return 1;
     }
     return 0;
@@ -179,7 +181,7 @@ uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor mot
 //continuous movement in one direction
 uint8_t speedMove(int const speed, uint8_t const dir, Motor motor) {
     if (motor.motorDone) {
-        changeSpeed(speed, dir, motor);
+        changeSpeed(speed, dir, &motor);
         HAL_TIM_PWM_Start(motor.htim, motor.channel);
         motor.motorDone=0;
         return 1;
@@ -206,18 +208,73 @@ void stripWire() {
 void vActuatorTask(){
     //Initialize motor variables.
     motorStatus = IDLE;
-    encoder1 = 0;
-    encoder2 = 0;
 
-    //Initialize DMA transfer flags.
-    motors[0].motorDone=1;
-    motors[1].motorDone=1;
-    motors[2].motorDone=1;
+    Motor1 = (Motor) {
+        M1,
+        //Timer Peripheral
+        M1_TIMER,
+        TIM8,
+        TIM_CHANNEL_1,
+        TIM8->CCR1,
+        //Common Pins
+        M1_EN_GPIO_Port,
+        M1_EN_Pin,
+        M1_DIR_GPIO_Port,
+        M1_DIR_Pin,
+        M1_MS1_GPIO_Port,
+        M1_MS1_Pin,
+        M1_MS2_GPIO_Port,
+        M1_MS2_Pin,
+        M1_nFLT_GPIO_Port,
+        M1_nFLT_Pin,
+        1
+    };
+
+    Motor2 = (Motor) {
+        M2,
+        //Timer Peripheral
+        M2_TIMER,
+        TIM8,
+        TIM_CHANNEL_4,
+        TIM8->CCR4,
+        //Common Pins
+        M2_EN_GPIO_Port,
+        M2_EN_Pin,
+        M2_DIR_GPIO_Port,
+        M2_DIR_Pin,
+        M2_MS1_GPIO_Port,
+        M2_MS1_Pin,
+        M2_MS2_GPIO_Port,
+        M2_MS2_Pin,
+        M2_nFLT_GPIO_Port,
+        M2_nFLT_Pin,
+        1
+    };
+    Motor3 = (Motor) {
+        M3,
+        //Timer Peripheral
+        M3_TIMER,
+        TIM1,
+        TIM_CHANNEL_1,
+        TIM1->CCR1,
+        //Common Pins
+        M3_nEN_GPIO_Port,
+        M3_nEN_Pin,
+        M3_DIR_GPIO_Port,
+        M3_DIR_Pin,
+        M3_SM0_GPIO_Port,
+        M3_SM0_Pin,
+        M3_SM1_GPIO_Port,
+        M3_SM1_Pin,
+        M3_nFLT_GPIO_Port,
+        M3_nFLT_Pin,
+        1
+    };
 
     //Initialize microstepping configurations.
-    microSet(0, motors[0]);
-    microSet(0, motors[1]);
-    microSet(0, motors[2]);
+    microSet(0, Motor1);
+    microSet(0, Motor2);
+    microSet(0, Motor3);
 
     //Startup routines
     //M1 and M2
@@ -227,25 +284,24 @@ void vActuatorTask(){
 
     for(;;){
         //Motor status set by stateMachine
-        stepMove(100, 100, TO_FRONT,M1_CHANNEL);
-        stepMove(200, 100, TO_FRONT,M2_CHANNEL);
-        stepMove(300, 100, TO_FRONT,M3_CHANNEL);
+        stepMove(100, 100, TO_FRONT,&Motor1);
+        stepMove(200, 100, TO_FRONT,&Motor2);
+        stepMove(300, 100, TO_FRONT,&Motor3);
         vTaskDelay(5000);
     }
 }
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
     /* Prevent unused argument(s) compilation warning */
-    //enabled but empty streams
-    //Check if TIM state is not busy
-    if (htim == M1_TIMER) {
-        M1Done = TIM_CHANNEL_STATE_GET(M1_TIMER, M1_CHANNEL)!=0x02U;
-        if (M1Done){HAL_TIM_PWM_Stop_DMA(M1_TIMER, TIM_CHANNEL_1);}
-        M2Done = TIM_CHANNEL_STATE_GET(M2_TIMER, M2_CHANNEL)!=0x02U;
-        if (M2Done){HAL_TIM_PWM_Stop_DMA(M2_TIMER, TIM_CHANNEL_2);}
-    } else if (htim == M3_TIMER) {
-        M3Done = TIM_CHANNEL_STATE_GET(M3_TIMER, M3_CHANNEL)!=0x02U;
-        if (M3Done){HAL_TIM_PWM_Stop_DMA(M3_TIMER, TIM_CHANNEL_3);}
+    //Check if TIM state is not busy (state 0x02U)
+    if (htim == Motor1.htim) {
+        Motor1.motorDone = TIM_CHANNEL_STATE_GET(Motor1.htim, Motor1.channel)!=0x02U;
+        if (Motor1.motorDone){HAL_TIM_PWM_Stop_DMA(Motor1.htim, Motor1.channel);}
+        Motor2.motorDone = TIM_CHANNEL_STATE_GET(Motor2.htim, Motor2.channel)!=0x02U;
+        if (Motor2.motorDone){HAL_TIM_PWM_Stop_DMA(Motor2.htim, Motor2.channel);}
+    } else if (htim == Motor3.htim) {
+        Motor3.motorDone = TIM_CHANNEL_STATE_GET(Motor3.htim, Motor3.channel)!=0x02U;
+        if (Motor3.motorDone){HAL_TIM_PWM_Stop_DMA(Motor3.htim, Motor3.channel);}
     }
     /* NOTE : This function should not be modified, when the callback is needed,
               the HAL_TIM_PWM_PulseFinishedCallback could be implemented in the user file

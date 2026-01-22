@@ -99,3 +99,5 @@
 494	3920	7908180414786558	CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj	575d74042e997e29
 507	3925	7908180414916566	CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj	17dc2c7122933b34
 3925	6124	7908180449099723	WireStripper.elf	6bb5b4f7368fc686
+27	3005	7908281164195455	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj	ebccc4c64eeff55c
+3006	5119	7908281193981236	WireStripper.elf	6bb5b4f7368fc686

@@ -56,6 +56,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define BMS_INT_Pin GPIO_PIN_2
+#define BMS_INT_GPIO_Port GPIOF
+#define BMS_PMO_Pin GPIO_PIN_3
+#define BMS_PMO_GPIO_Port GPIOF
 #define MCO_Pin GPIO_PIN_0
 #define MCO_GPIO_Port GPIOH
 #define LIGHT_ON_1_Pin GPIO_PIN_2
@@ -84,12 +88,14 @@ void Error_Handler(void);
 #define BUCK12_PG_GPIO_Port GPIOB
 #define BUCK12_EN_Pin GPIO_PIN_2
 #define BUCK12_EN_GPIO_Port GPIOB
-#define M2_SLP_Pin GPIO_PIN_13
-#define M2_SLP_GPIO_Port GPIOF
-#define M1_SLP_Pin GPIO_PIN_14
-#define M1_SLP_GPIO_Port GPIOF
+#define M2_nSLP_Pin GPIO_PIN_13
+#define M2_nSLP_GPIO_Port GPIOF
+#define M1_nSLP_Pin GPIO_PIN_14
+#define M1_nSLP_GPIO_Port GPIOF
 #define M1_EN_Pin GPIO_PIN_15
 #define M1_EN_GPIO_Port GPIOF
+#define M1_MS2_Pin GPIO_PIN_0
+#define M1_MS2_GPIO_Port GPIOG
 #define M1_MS1_Pin GPIO_PIN_1
 #define M1_MS1_GPIO_Port GPIOG
 #define M1_nFLT_Pin GPIO_PIN_7
@@ -106,8 +112,6 @@ void Error_Handler(void);
 #define M2_MS1_GPIO_Port GPIOE
 #define M2_nFLT_Pin GPIO_PIN_15
 #define M2_nFLT_GPIO_Port GPIOE
-#define BMS_INT_Pin GPIO_PIN_12
-#define BMS_INT_GPIO_Port GPIOB
 #define M2_DIR_Pin GPIO_PIN_13
 #define M2_DIR_GPIO_Port GPIOB
 #define M3_RST_Pin GPIO_PIN_15

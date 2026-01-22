@@ -109,8 +109,8 @@ int main(void)
   MX_I2C2_Init();
   MX_ADC2_Init();
   MX_SPI2_Init();
-  MX_TIM11_Init();
   MX_USB_OTG_FS_PCD_Init();
+  MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   HAL_ADC_Start_DMA(&hadc1, adcVals, 4);

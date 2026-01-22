@@ -59,29 +59,48 @@ typedef enum {
     M1,
     M2,
     M3
+}MotorNum;
+
+typedef struct {
+    MotorNum motor_num;
+
+    //Timer Peripheral
+    TIM_HandleTypeDef *htim;
+    TIM_TypeDef *TIMx;
+    uint32_t channel;
+    uint32_t ccr;
+
+    //Common Pins
+    GPIO_TypeDef* EN_Port;
+    uint16_t EN_Pin;
+    GPIO_TypeDef* DIR_Port;
+    uint16_t DIR_Pin;
+    GPIO_TypeDef* MS1_Port;
+    uint16_t MS1_Pin;
+    GPIO_TypeDef* MS2_Port;
+    uint16_t MS2_Pin;
+    GPIO_TypeDef* nFAULT_Port;
+    uint16_t nFAULT_Pin;
+
+    uint8_t motorDone;
 }Motor;
+
+//Motors
+static Motor motors[3];
 
 //Present Encoder Values
 int encoder1;
 int encoder2;
 
-//Pulse train finished flags
-uint8_t M1Done;
-uint8_t M2Done;
-uint8_t M3Done;
-
-//Microstep values
-uint8_t microM1;
-uint8_t microM2;
-uint8_t microM3;
-
 //Duty cycle of step movement
-uint32_t dcDMA;
+static uint32_t dcDMA1;
+static uint32_t dcDMA2;
+static uint32_t dcDMA3;
 
 uint8_t homeSetM3() {
     //0 if the homing was unsuccessful (M3 is currently running a distance job)
     uint8_t temp = 0;
-    if (M3Done){
+    if (motors[2].motorDone){
         HAL_GPIO_WritePin(M3_nHOME_GPIO_Port, M3_nHOME_Pin, 0);
         HAL_Delay(pdMS_TO_TICKS(1));
         temp=1;
@@ -90,32 +109,22 @@ uint8_t homeSetM3() {
     return temp;
 }
 
-void enableMotor(uint8_t const state, Motor const motor) {
+void enableMotor(uint8_t state, Motor const motor) {
     //Reminder M3 is nEN
-    switch (motor) {
-        case M1: {
-            HAL_GPIO_WritePin(M1_EN_GPIO_Port, M1_EN_Pin, state);
-        }
-            case M2: {
-            HAL_GPIO_WritePin(M2_EN_GPIO_Port, M2_EN_Pin, state);
-        }
-            case M3: {
-            HAL_GPIO_WritePin(M3_nEN_GPIO_Port, M3_nEN_Pin, state);
-        }
-            default: {
-            break;
-        }
-    }
+    if (motor.motor_num == M3) {state = ~state;}
+    HAL_GPIO_WritePin(motor.EN_Port, motor.EN_Pin, state);
 }
 
 void nWakeMotor(uint8_t const state, Motor const motor) {
     //Reminder M3 is nEN
-    switch (motor) {
+    switch (motor.motor_num) {
         case M1: {
             HAL_GPIO_WritePin(M1_nSLP_GPIO_Port, M1_nSLP_Pin, state);
+            break;
         }
         case M2: {
             HAL_GPIO_WritePin(M2_nSLP_GPIO_Port, M2_nSLP_Pin, state);
+            break;
         }
         default: {
             break;
@@ -139,122 +148,47 @@ void microSet(uint8_t const microStep, Motor const motor) {
      *
      * I assume that the user will input the correct microstep values
      */
-    switch (motor) {
-        case M1: {
-            HAL_GPIO_WritePin(M1_MS1_GPIO_Port, GPIO_PIN_SET, microStep & 1);
-            HAL_GPIO_WritePin(M1_MS2_GPIO_Port, GPIO_PIN_SET, microStep>>1 & 1);
-            microM1 = microStep;
-            break;
-        }
-            case M2: {
-            HAL_GPIO_WritePin(M2_MS1_GPIO_Port, GPIO_PIN_SET, microStep & 1);
-            HAL_GPIO_WritePin(M2_MS2_GPIO_Port, GPIO_PIN_SET, microStep>>1 & 1);
-            microM1 = microStep;
-            break;
-        }
-            case M3: {
-            HAL_GPIO_WritePin(M3_SM0_GPIO_Port, GPIO_PIN_SET, microStep & 1);
-            HAL_GPIO_WritePin(M3_SM1_GPIO_Port, GPIO_PIN_SET, microStep>>1 & 1);
-            microM1 = microStep;
-            break;
-        }
-        default: {
-            break;
-        }
-    }
-
+    HAL_GPIO_WritePin(motor.MS1_Port, motor.MS1_Pin, microStep & 1);
+    HAL_GPIO_WritePin(motor.MS2_Port, motor.MS2_Pin, microStep>>1 & 1);
 }
 
 //change speed of motor. M1 and M2 are coupled in speed.
-void changeSpeed(float const speed, uint8_t const dir, TIM_TypeDef *TIMx, Motor const motor) {
+void changeSpeed(float const speed, uint8_t const dir, Motor motor) {
     //Require arr value for specific frequency of pulses. 100pps = 1Mhz/10000. 1000 = 1Mhz/100. 1000 = arr.
-    TIMx->ARR = (uint32_t)(CLK_SPEED/speed);//pulses per second
-    dcDMA = (uint32_t)((float)(TIMx->ARR)*0.5);
+    motor.TIMx->ARR = (uint32_t)(CLK_SPEED/speed);//pulses per second
 
-    TIMx->EGR = TIM_EGR_UG; //Trigger a reset due to register change
-    TIMx->SR &= ~(TIM_SR_UIF); //Reset the interrupt flag
+    motor.TIMx->EGR = TIM_EGR_UG; //Trigger a reset due to register change
+    motor.TIMx->SR &= ~(TIM_SR_UIF); //Reset the interrupt flag
 
-    switch (motor) {
-        case M1: {
-            TIMx->CCR1 = (uint32_t)((float)(TIMx->ARR)*0.5);
-            HAL_GPIO_WritePin(M1_DIR_GPIO_Port, M1_DIR_Pin, dir);
-            break;
-        }
-        case M2: {
-            TIMx->CCR2 = (uint32_t)((float)(TIMx->ARR)*0.5);
-            HAL_GPIO_WritePin(M2_DIR_GPIO_Port, M2_DIR_Pin, dir);
-            break;
-        }
-        case M3: {
-            TIMx->CCR3 = (uint32_t)((float)(TIMx->ARR)*0.5);
-            HAL_GPIO_WritePin(M3_DIR_GPIO_Port, M3_DIR_Pin, dir);
-            break;
-        }
-        default: {
-            break;
-        }
-    }
+    motor.ccr = (uint32_t)((float)(motor.TIMx->ARR)*0.5);
+    HAL_GPIO_WritePin(motor.DIR_Port, motor.DIR_Pin, dir);
 }
 
 //Movement of x steps in one direction at speed.
 //Return 0 if the step move has not finished yet. Return 1 if the DMA was started.
-uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor const motor) {
-    if (motor == M1 && M1Done) {
-        changeSpeed(speed, dir, M1_TIM, motor);
-        HAL_TIM_PWM_Start_DMA(M1_TIMER, motor, &dcDMA, step);
-        M1Done = 0;
-    } else if (motor == M2 && M2Done) {
-        changeSpeed(speed, dir, M2_TIM, motor);
-        HAL_TIM_PWM_Start_DMA(M2_TIMER, motor, &dcDMA, step);
-        M2Done = 0;
-    } else if (motor == M3  && M3Done) {
-        changeSpeed(speed, dir, M3_TIM, motor);
-        HAL_TIM_PWM_Start_DMA(M3_TIMER, motor, &dcDMA, step);
-        M3Done = 0;
-    } else {
-        return 0;
+uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor motor) {
+    if (motor.motorDone) {
+        changeSpeed(speed, dir, motor);
+        HAL_TIM_PWM_Start_DMA(motor.htim, motor.channel, &motor.ccr, step);
+        motor.motorDone=0;
+        return 1;
     }
-    return 1;
+    return 0;
 }
 
 //continuous movement in one direction
-uint8_t speedMove(int const speed, uint8_t const dir, Motor const motor) {
-    if (motor == M1 && M1Done) {
-        changeSpeed(speed, dir, M1_TIM, motor);
-        HAL_TIM_PWM_Start(M1_TIMER, motor);
-        M1Done = 0;
-    } else if (motor == M2 && M2Done) {
-        changeSpeed(speed, dir, M2_TIM, motor);
-        HAL_TIM_PWM_Start(M2_TIMER, motor);
-        M2Done = 0;
-    } else if (motor == M3  && M3Done) {
-        changeSpeed(speed, dir, M3_TIM, motor);
-        HAL_TIM_PWM_Start(M3_TIMER, motor);
-        M3Done = 0;
-    } else {
-        return 0;
+uint8_t speedMove(int const speed, uint8_t const dir, Motor motor) {
+    if (motor.motorDone) {
+        changeSpeed(speed, dir, motor);
+        HAL_TIM_PWM_Start(motor.htim, motor.channel);
+        motor.motorDone=0;
+        return 1;
     }
-    return 1;
+    return 0;
 }
 
 void stopMotor(Motor const motor) {
-    switch (motor) {
-        case M1: {
-            HAL_TIM_PWM_Stop(M1_TIMER, M1_CHANNEL);
-            break;
-        }
-        case M2: {
-            HAL_TIM_PWM_Stop(M2_TIMER, M2_CHANNEL);
-            break;
-        }
-        case M3: {
-            HAL_TIM_PWM_Stop(M3_TIMER, M3_CHANNEL);
-            break;
-        }
-        default: {
-            break;
-        }
-    }
+    HAL_TIM_PWM_Stop(motor.htim, motor.channel);
 }
 
 void cutWire() {
@@ -276,14 +210,14 @@ void vActuatorTask(){
     encoder2 = 0;
 
     //Initialize DMA transfer flags.
-    M1Done=1;
-    M2Done=1;
-    M3Done=1;
+    motors[0].motorDone=1;
+    motors[1].motorDone=1;
+    motors[2].motorDone=1;
 
     //Initialize microstepping configurations.
-    microSet(0, M1_CHANNEL);
-    microSet(0, M2_CHANNEL);
-    microSet(0, M3_CHANNEL);
+    microSet(0, motors[0]);
+    microSet(0, motors[1]);
+    microSet(0, motors[2]);
 
     //Startup routines
     //M1 and M2

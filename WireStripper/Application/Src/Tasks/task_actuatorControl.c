@@ -17,11 +17,14 @@
 #define MICROSTEP 1
 
 //Motor constants
-#define M1_TIMER &htim1
+#define M1_TIMER &htim8
+#define M1_TIM TIM8
 #define M1_CHANNEL TIM_CHANNEL_1
-#define M2_TIMER &htim1
-#define M2_CHANNEL TIM_CHANNEL_2
+#define M2_TIMER &htim8
+#define M2_TIM TIM8
+#define M2_CHANNEL TIM_CHANNEL_4
 #define M3_TIMER &htim1
+#define M3_TIM TIM1
 #define M3_CHANNEL TIM_CHANNEL_3
 #define MICROSTEP_FEED 00b
 #define MICROSTEP_CUT 00b
@@ -60,8 +63,8 @@ uint8_t M3Done;
 //Duty cycle of step movement
 uint32_t dcDMA;
 
-//change speed of motor
-void changeSpeed(int const speed, uint8_t const dir, TIM_TypeDef *TIMx, uint32_t const channel) {
+//change speed of motor. M1 and M2 are coupled in speed.
+void changeSpeed(float const speed, uint8_t const dir, TIM_TypeDef *TIMx, uint32_t const channel) {
     //Require arr value for specific frequency of pulses. 100pps = 1Mhz/10000. 1000 = 1Mhz/100. 1000 = arr.
     TIMx->ARR = (uint32_t)(CLK_SPEED/speed);//pulses per second
     dcDMA = (uint32_t)((float)(TIMx->ARR)*0.5);
@@ -93,18 +96,18 @@ void changeSpeed(int const speed, uint8_t const dir, TIM_TypeDef *TIMx, uint32_t
 
 //Movement of x steps in one direction at speed.
 //Return 0 if the step move has not finished yet. Return 1 if the DMA was started.
-uint8_t stepMove(int const step, float const speed, uint8_t const dir, TIM_TypeDef *TIMx, uint32_t const channel) {
+uint8_t stepMove(int const step, float const speed, uint8_t const dir, uint32_t const channel) {
     if (channel == M1_CHANNEL && M1Done) {
-        changeSpeed(speed, dir, TIMx, channel);
-        HAL_TIM_PWM_Start_DMA(&htim1, channel, &dcDMA, step);
+        changeSpeed(speed, dir, M1_TIM, channel);
+        HAL_TIM_PWM_Start_DMA(M1_TIMER, channel, &dcDMA, step);
         M1Done = 0;
     } else if (channel == M2_CHANNEL && M2Done) {
-        changeSpeed(speed, dir, TIMx, channel);
-        HAL_TIM_PWM_Start_DMA(&htim1, channel, &dcDMA, step);
+        changeSpeed(speed, dir, M2_TIM, channel);
+        HAL_TIM_PWM_Start_DMA(M2_TIMER, channel, &dcDMA, step);
         M2Done = 0;
     } else if (channel == M3_CHANNEL  && M3Done) {
-        changeSpeed(speed, dir, TIMx, channel);
-        HAL_TIM_PWM_Start_DMA(&htim1, channel, &dcDMA, step);
+        changeSpeed(speed, dir, M3_TIM, channel);
+        HAL_TIM_PWM_Start_DMA(M3_TIMER, channel, &dcDMA, step);
         M3Done = 0;
     } else {
         return 0;
@@ -113,23 +116,37 @@ uint8_t stepMove(int const step, float const speed, uint8_t const dir, TIM_TypeD
 }
 
 //continuous movement in one direction
-void speedMove(int const speed, uint8_t const dir, TIM_TypeDef *TIMx, uint32_t const channel) {
-    changeSpeed(speed, dir, TIMx, channel);
-    HAL_TIM_PWM_Start(&htim1, channel); //continuous PWM, does not stop unless you tell it to
+uint8_t speedMove(int const speed, uint8_t const dir, uint32_t const channel) {
+    if (channel == M1_CHANNEL && M1Done) {
+        changeSpeed(speed, dir, M1_TIM, channel);
+        HAL_TIM_PWM_Start(M1_TIMER, channel);
+        M1Done = 0;
+    } else if (channel == M2_CHANNEL && M2Done) {
+        changeSpeed(speed, dir, M2_TIM, channel);
+        HAL_TIM_PWM_Start(M2_TIMER, channel);
+        M2Done = 0;
+    } else if (channel == M3_CHANNEL  && M3Done) {
+        changeSpeed(speed, dir, M3_TIM, channel);
+        HAL_TIM_PWM_Start(M3_TIMER, channel);
+        M3Done = 0;
+    } else {
+        return 0;
+    }
+    return 1;
 }
 
-void stopMotor(TIM_HandleTypeDef *htim, uint32_t const channel) {
+void stopMotor(uint32_t const channel) {
     switch (channel) {
         case M1_CHANNEL: {
-            HAL_TIM_PWM_Stop(htim, M1_CHANNEL);
+            HAL_TIM_PWM_Stop(M1_TIMER, M1_CHANNEL);
             break;
         }
         case M2_CHANNEL: {
-            HAL_TIM_PWM_Stop(htim, M2_CHANNEL);
+            HAL_TIM_PWM_Stop(M2_TIMER, M2_CHANNEL);
             break;
         }
         case M3_CHANNEL: {
-            HAL_TIM_PWM_Stop(htim, M3_CHANNEL);
+            HAL_TIM_PWM_Stop(M3_TIMER, M3_CHANNEL);
             break;
         }
         default: {
@@ -162,9 +179,9 @@ void vActuatorTask(){
 
     for(;;){
         //Motor status set by stateMachine
-        stepMove(100, 100, TO_FRONT, TIM1, M1_CHANNEL);
-        stepMove(200, 100, TO_FRONT, TIM1, M2_CHANNEL);
-        stepMove(300, 100, TO_FRONT, TIM1, M3_CHANNEL);
+        stepMove(100, 100, TO_FRONT,M1_CHANNEL);
+        stepMove(200, 100, TO_FRONT,M2_CHANNEL);
+        stepMove(300, 100, TO_FRONT,M3_CHANNEL);
         vTaskDelay(5000);
     }
 }

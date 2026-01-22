@@ -56,8 +56,6 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define SERVO_PWM_Pin GPIO_PIN_7
-#define SERVO_PWM_GPIO_Port GPIOF
 #define MCO_Pin GPIO_PIN_0
 #define MCO_GPIO_Port GPIOH
 #define LIGHT_ON_1_Pin GPIO_PIN_2
@@ -86,32 +84,24 @@ void Error_Handler(void);
 #define BUCK12_PG_GPIO_Port GPIOB
 #define BUCK12_EN_Pin GPIO_PIN_2
 #define BUCK12_EN_GPIO_Port GPIOB
-#define ST_5V_Pin GPIO_PIN_11
-#define ST_5V_GPIO_Port GPIOF
 #define M2_SLP_Pin GPIO_PIN_13
 #define M2_SLP_GPIO_Port GPIOF
 #define M1_SLP_Pin GPIO_PIN_14
 #define M1_SLP_GPIO_Port GPIOF
 #define M1_EN_Pin GPIO_PIN_15
 #define M1_EN_GPIO_Port GPIOF
-#define M1_MS2_Pin GPIO_PIN_0
-#define M1_MS2_GPIO_Port GPIOG
 #define M1_MS1_Pin GPIO_PIN_1
 #define M1_MS1_GPIO_Port GPIOG
 #define M1_nFLT_Pin GPIO_PIN_7
 #define M1_nFLT_GPIO_Port GPIOE
 #define M1_DIR_Pin GPIO_PIN_8
 #define M1_DIR_GPIO_Port GPIOE
-#define M1_STEP_Pin GPIO_PIN_9
-#define M1_STEP_GPIO_Port GPIOE
+#define M3_STEP_Pin GPIO_PIN_9
+#define M3_STEP_GPIO_Port GPIOE
 #define M2_EN_Pin GPIO_PIN_10
 #define M2_EN_GPIO_Port GPIOE
-#define M2_STEP_Pin GPIO_PIN_11
-#define M2_STEP_GPIO_Port GPIOE
 #define M2_MS2_Pin GPIO_PIN_12
 #define M2_MS2_GPIO_Port GPIOE
-#define M3_STP_Pin GPIO_PIN_13
-#define M3_STP_GPIO_Port GPIOE
 #define M2_MS1_Pin GPIO_PIN_14
 #define M2_MS1_GPIO_Port GPIOE
 #define M2_nFLT_Pin GPIO_PIN_15
@@ -120,8 +110,6 @@ void Error_Handler(void);
 #define BMS_INT_GPIO_Port GPIOB
 #define M2_DIR_Pin GPIO_PIN_13
 #define M2_DIR_GPIO_Port GPIOB
-#define LD3_Pin GPIO_PIN_14
-#define LD3_GPIO_Port GPIOB
 #define M3_RST_Pin GPIO_PIN_15
 #define M3_RST_GPIO_Port GPIOB
 #define STLK_RX_Pin GPIO_PIN_8
@@ -144,12 +132,14 @@ void Error_Handler(void);
 #define M3_DIR_GPIO_Port GPIOG
 #define M3_nHOME_Pin GPIO_PIN_3
 #define M3_nHOME_GPIO_Port GPIOG
-#define ENC1_A_Pin GPIO_PIN_6
-#define ENC1_A_GPIO_Port GPIOC
+#define M1_STEP_Pin GPIO_PIN_6
+#define M1_STEP_GPIO_Port GPIOC
+#define OLED_RST_Pin GPIO_PIN_7
+#define OLED_RST_GPIO_Port GPIOC
 #define OLED_CS_Pin GPIO_PIN_8
 #define OLED_CS_GPIO_Port GPIOC
-#define OLED_RST_Pin GPIO_PIN_9
-#define OLED_RST_GPIO_Port GPIOC
+#define M2_STEP_Pin GPIO_PIN_9
+#define M2_STEP_GPIO_Port GPIOC
 #define OLED_DC_Pin GPIO_PIN_8
 #define OLED_DC_GPIO_Port GPIOA
 #define USB_DM_Pin GPIO_PIN_11
@@ -172,10 +162,12 @@ void Error_Handler(void);
 #define LED2_GPIO_Port GPIOD
 #define LED1_Pin GPIO_PIN_9
 #define LED1_GPIO_Port GPIOG
+#define UX_KNOB1_B_Pin GPIO_PIN_3
+#define UX_KNOB1_B_GPIO_Port GPIOB
+#define ENC1_A_Pin GPIO_PIN_4
+#define ENC1_A_GPIO_Port GPIOB
 #define LD2_Pin GPIO_PIN_7
 #define LD2_GPIO_Port GPIOB
-#define UX_KNOB1_B_Pin GPIO_PIN_9
-#define UX_KNOB1_B_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

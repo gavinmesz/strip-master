@@ -179,11 +179,11 @@ uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor* mo
 }
 
 //continuous movement in one direction
-uint8_t speedMove(int const speed, uint8_t const dir, Motor motor) {
-    if (motor.motorDone) {
-        changeSpeed(speed, dir, &motor);
-        HAL_TIM_PWM_Start(motor.htim, motor.channel);
-        motor.motorDone=0;
+uint8_t speedMove(int const speed, uint8_t const dir, Motor* motor) {
+    if (motor->motorDone) {
+        changeSpeed(speed, dir, motor);
+        HAL_TIM_PWM_Start(motor->htim, motor->channel);
+        motor->motorDone=0;
         return 1;
     }
     return 0;

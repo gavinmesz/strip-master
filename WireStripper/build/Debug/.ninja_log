@@ -101,3 +101,5 @@
 3925	6124	7908180449099723	WireStripper.elf	6bb5b4f7368fc686
 27	3005	7908281164195455	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj	ebccc4c64eeff55c
 3006	5119	7908281193981236	WireStripper.elf	6bb5b4f7368fc686
+20	1616	7908288674027036	CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj	ebccc4c64eeff55c
+1617	3028	7908288690001172	WireStripper.elf	6bb5b4f7368fc686

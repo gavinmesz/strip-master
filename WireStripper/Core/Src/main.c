@@ -110,8 +110,16 @@ int main(void)
   MX_USB_OTG_FS_PCD_Init();
   MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
+
+  //Starting encoders
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
+
+  //Starting ADC
   HAL_ADC_Start_DMA(&hadc1, adcVals, 4);
+
   /* USER CODE END 2 */
 
   /* Init scheduler */

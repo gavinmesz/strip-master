@@ -90,6 +90,10 @@ void Error_Handler(void);
 #define BUCK12_PG_GPIO_Port GPIOB
 #define BUCK12_EN_Pin GPIO_PIN_2
 #define BUCK12_EN_GPIO_Port GPIOB
+#define ST_5V_Pin GPIO_PIN_11
+#define ST_5V_GPIO_Port GPIOF
+#define ST_3V3_Pin GPIO_PIN_12
+#define ST_3V3_GPIO_Port GPIOF
 #define M2_nSLP_Pin GPIO_PIN_13
 #define M2_nSLP_GPIO_Port GPIOF
 #define M1_nSLP_Pin GPIO_PIN_14
@@ -164,12 +168,12 @@ void Error_Handler(void);
 #define LED2_GPIO_Port GPIOD
 #define LED1_Pin GPIO_PIN_9
 #define LED1_GPIO_Port GPIOG
-#define UX_KNOB1_B_Pin GPIO_PIN_3
-#define UX_KNOB1_B_GPIO_Port GPIOB
 #define ENC1_A_Pin GPIO_PIN_4
 #define ENC1_A_GPIO_Port GPIOB
 #define LD2_Pin GPIO_PIN_7
 #define LD2_GPIO_Port GPIOB
+#define UX_KNOB1_B_Pin GPIO_PIN_9
+#define UX_KNOB1_B_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

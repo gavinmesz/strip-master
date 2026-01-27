@@ -12,6 +12,7 @@
 #include "stm32f4xx_hal_gpio.h"
 #include "tim.h"
 #include "stm32f4xx_ll_tim.h"
+#include "task_stateMachine.h"
 
 //PULSES AT 100Hz right now
 #define CLK_SPEED 1000000.0
@@ -39,7 +40,7 @@
 
 //Status
 typedef enum {
-    IDLE,
+    START,
     CALIB, //M1 feed to wire detect
     FEED1, //M1 feed one strip length past cutters
     STRIP1, //cutter engage to strip, back off very slightly (loop would start here if wire #2)
@@ -50,8 +51,8 @@ typedef enum {
     STRIP2, //cutter engage to strip, back off very slightly
     PEEL2, //M2 push out fully, M1 feed forward 1 strip length past.
 }MotorStatus;
-MotorStatus motorStatus;
-uint8_t goalReached;
+
+static MotorStatus motorStatus;
 
 typedef enum {
     PLACEHOLDER,
@@ -98,7 +99,7 @@ uint32_t dcDMA1;
 uint32_t dcDMA2;
 uint32_t dcDMA3;
 
-uint8_t homeSetM3() {
+static uint8_t homeSetM3() {
     //0 if the homing was unsuccessful (M3 is currently running a distance job)
     uint8_t temp = 0;
     if (Motor3.motorDone){
@@ -110,13 +111,13 @@ uint8_t homeSetM3() {
     return temp;
 }
 
-void enableMotor(uint8_t state, Motor const motor) {
+static void enableMotor(uint8_t state, Motor const motor) {
     //Reminder M3 is nEN
     if (motor.motor_num == M3) {state = ~state;}
     HAL_GPIO_WritePin(motor.EN_Port, motor.EN_Pin, state);
 }
 
-void wakeMotor(uint8_t state, Motor const motor) {
+static void wakeMotor(uint8_t state, Motor const motor) {
     //M3 doesn't have a sleep pin
     state = ~state;
     switch (motor.motor_num) {
@@ -134,7 +135,7 @@ void wakeMotor(uint8_t state, Motor const motor) {
     }
 }
 
-void microSet(uint8_t const microStep, Motor const motor) {
+static void microSet(uint8_t const microStep, Motor const motor) {
     /*
      * Microstep values: Wire Feed
      * 0b00 -> MS1 LOW and MS2 LOW: no microstepping
@@ -155,7 +156,7 @@ void microSet(uint8_t const microStep, Motor const motor) {
 }
 
 //change speed of motor. M1 and M2 are coupled in speed.
-void changeSpeed(float const speed, uint8_t const dir, Motor *motor) {
+static void changeSpeed(float const speed, uint8_t const dir, Motor *motor) {
     //Require arr value for specific frequency of pulses. 100pps = 1Mhz/10000. 1000 = 1Mhz/100. 1000 = arr.
     motor->TIMx->ARR = (uint32_t)(CLK_SPEED/speed);//pulses per second
 
@@ -168,7 +169,7 @@ void changeSpeed(float const speed, uint8_t const dir, Motor *motor) {
 
 //Movement of x steps in one direction at speed.
 //Return 0 if the step move has not finished yet. Return 1 if the DMA was started.
-uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor* motor) {
+static uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor* motor) {
     if (motor->motorDone) {
         changeSpeed(speed, dir, motor);
         HAL_TIM_PWM_Start_DMA(motor->htim, motor->channel, &motor->ccr, step);
@@ -179,7 +180,7 @@ uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor* mo
 }
 
 //continuous movement in one direction
-uint8_t speedMove(int const speed, uint8_t const dir, Motor* motor) {
+static uint8_t speedMove(int const speed, uint8_t const dir, Motor* motor) {
     if (motor->motorDone) {
         changeSpeed(speed, dir, motor);
         HAL_TIM_PWM_Start(motor->htim, motor->channel);
@@ -189,7 +190,7 @@ uint8_t speedMove(int const speed, uint8_t const dir, Motor* motor) {
     return 0;
 }
 
-void stopMotor(Motor const motor) {
+static void stopMotor(Motor const motor) {
     HAL_TIM_PWM_Stop(motor.htim, motor.channel);
 }
 
@@ -271,18 +272,27 @@ void vActuatorTask(){
         1
     };
 
-    //Initialize microstepping configurations.
+    //Initialize microstepping configurations
     microSet(0, Motor1);
     microSet(0, Motor2);
     microSet(0, Motor3);
 
-    //Startup routines
+    //Startup routines (when ready)
     //M1 and M2
-    //Wakeup, enable, set microstep, no fault
+    //Wakeup, enable, set microstep, no faults
     //M3
     //nEnable, reset if you need to home, no faults
 
     for(;;){
+        //Acknowledge that job was received.
+        if (systemState == ENGAGE) {
+            job_finish = 0;
+        } else if (systemState == DISENGAGE) {
+            job_finish = 0;
+        } else if (systemState == JOB_RUNNING) {
+            job_finish = 0;
+        }
+
         //Motor status set by stateMachine
         stepMove(100, 100, TO_FRONT,&Motor1);
         stepMove(200, 100, TO_FRONT,&Motor2);

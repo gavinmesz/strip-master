@@ -37,7 +37,7 @@ add_executable(${PROJECT_NAME}
         Core/Src/i2c.c
         Core/Src/spi.c
         Core/Src/tim.c
-        Core/Src/usart.c
+#        Core/Src/usart.c
         Core/Src/freertos.c
         Core/Src/stm32f4xx_hal_msp.c
         Core/Src/stm32f4xx_it.c

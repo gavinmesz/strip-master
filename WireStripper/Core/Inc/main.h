@@ -70,8 +70,10 @@ void Error_Handler(void);
 #define UX_KNOB2_A_GPIO_Port GPIOA
 #define UX_KNOB2_B_Pin GPIO_PIN_1
 #define UX_KNOB2_B_GPIO_Port GPIOA
-#define LIGHT_IN_2_Pin GPIO_PIN_3
-#define LIGHT_IN_2_GPIO_Port GPIOA
+#define LIGHT_IN1_Pin GPIO_PIN_2
+#define LIGHT_IN1_GPIO_Port GPIOA
+#define LIGHT_IN2_Pin GPIO_PIN_3
+#define LIGHT_IN2_GPIO_Port GPIOA
 #define GAUGE_IN_Pin GPIO_PIN_4
 #define GAUGE_IN_GPIO_Port GPIOA
 #define UX_POT_Pin GPIO_PIN_5
@@ -116,10 +118,6 @@ void Error_Handler(void);
 #define M2_DIR_GPIO_Port GPIOB
 #define M3_RST_Pin GPIO_PIN_15
 #define M3_RST_GPIO_Port GPIOB
-#define STLK_RX_Pin GPIO_PIN_8
-#define STLK_RX_GPIO_Port GPIOD
-#define STLK_TX_Pin GPIO_PIN_9
-#define STLK_TX_GPIO_Port GPIOD
 #define M3_nEN_Pin GPIO_PIN_10
 #define M3_nEN_GPIO_Port GPIOD
 #define M3_SM1_Pin GPIO_PIN_11

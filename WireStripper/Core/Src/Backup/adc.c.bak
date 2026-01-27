@@ -170,7 +170,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     PA4     ------> ADC1_IN4
     PA5     ------> ADC1_IN5
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_2|LIGHT_IN_2_Pin|GAUGE_IN_Pin|UX_POT_Pin;
+    GPIO_InitStruct.Pin = LIGHT_IN1_Pin|LIGHT_IN2_Pin|GAUGE_IN_Pin|UX_POT_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -238,7 +238,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     PA4     ------> ADC1_IN4
     PA5     ------> ADC1_IN5
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_2|LIGHT_IN_2_Pin|GAUGE_IN_Pin|UX_POT_Pin);
+    HAL_GPIO_DeInit(GPIOA, LIGHT_IN1_Pin|LIGHT_IN2_Pin|GAUGE_IN_Pin|UX_POT_Pin);
 
     /* ADC1 DMA DeInit */
     HAL_DMA_DeInit(adcHandle->DMA_Handle);

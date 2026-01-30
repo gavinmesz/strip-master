@@ -3,22 +3,15 @@
  * Absolutely must run periodically. Make sure that all PG pins are OK. Send status.
  */
 
-#include "task_manager.h" // Has FreeRTOS functions and globals defined
-
-//task specific includes
-#include "task_safety.h"
-
-void vSafetyTask() {
-    for (;;) {
-
-        /*
+/*
          * Notes on the BMS
          * When entering into normal from ship mode: 250ms
          * Full updates given every 250ms
          *
          * V(cell) = GAIN * ADC(cell) + OFFSET. GAIN and OFFSET are found in the registers.
          * Coulomb counter: 16 bit integrating ADC
-         * CC reading = 12-bit 2's complement * 8.44uV/LSB
+         * CC reading = 12-bit 2's complement * 8.44uV/LSB. CC_READY
+         * - Gain error of around -0.55%FSR across all temps. counter offset of around -0.8uV.
          *
          * Pack voltage: Vbat = 4*GAIN*ADC(cell) + (#cells * OFFSET)
          *
@@ -31,13 +24,54 @@ void vSafetyTask() {
          *
          * FETs:
          * Have to manually control the discharge FET.
+         * - Must avoid undesirable enable combinations.
+         * - Charge pump on driver will automatically enable but should def enable it upon startup.
          *
          * Cell balancing:
-         * -
+         * - Up to the host controller to set which algorithm is used. Adjacent cells cannot be balanced simultaneously.
+         *
+         * Alert:
+         * - Host controller can manually pull up this pin to disable the pack. It can also drive it high if it needs to
+         * - No internal debounce on the pin.
+         * - DEVICE_XREADY -> clear this bit after a fault
+         * - OVRD_ALERT -> when STM32 is pulling up ALERT.
+         *
+         * I2C
+         * - 100kHz, slave, 7-bits address factory programmed.
+         * - Block writes allowed by sending additional data bytes before the stop. auto increments register address.
+         * - CRC (optional): x8 + x2 + x + 1, initial value is 0. single - calculated over slave address, reg addy, and data.
+         * block write - first data byte calc same as single. subsequent calculated over data byte only.
+         * - Bad CRC -> I2C slave will NACK the CRC and will enter idle. Repeated start is available.
+         * - Timing requirements in the datasheet.
+         *
+         * Modes
+         * - SHIP mode entered after every POR event. Super low power mode.
+         *
+         * Registers
+         * SYS_CTRL1: read load present, RW adc enable, RW temp sel, shutdown command
+         * SYS_CTRL2: delays, CC_EN, CC_ONESHOT, discharge and charge ON.
+         * PROTECT1/PROTECT2: OCD and SCD thresholds and delay
+         * PROTECT3: UV, OV delay
+         * - If OV delay is 2s and UV delay is 4s, PROTECT 3 should be programmed with 0x50.
+         * OV_TRIP/UV_TRIP: thresholds
+         * - Ex. if the OV threshold is 4.3V, offset 0 and gain 382, the desired threshold is 11257 (0x2BF9). OV_TRIP
+         * should be programmed with 0xBF.
+         * CC_CFG_REGISTER: Set bits to 0x19 upon device startup
+         * Lots of read only registers: cell voltage, vbat calculation, temperature, CC reading, ADC gain and offset
+         *
+         * Application notes:
          *
          *
          *
          */
+
+#include "task_manager.h" // Has FreeRTOS functions and globals defined
+
+//task specific includes
+#include "task_safety.h"
+
+void vSafetyTask() {
+    for (;;) {
 
         counterVar++;
         vTaskDelay(100);

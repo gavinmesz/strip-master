@@ -23,7 +23,7 @@
 SystemStatus systemState;
 
 /*
- * 0. Startup checks. All should be true before moing on.
+ * 0. Startup checks. All should be true before moving on.
  *  a. Power OK?
  *  b. wire not detected at #2?
  *  c. check if peripherals successfully initiated.

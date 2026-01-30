@@ -41,12 +41,12 @@
 //Status
 typedef enum {
     START,
-    CALIB, //M1 feed to wire detect
+    CALIB, //M1 feed to wire detecta
     FEED1, //M1 feed one strip length past cutters
     STRIP1, //cutter engage to strip, back off very slightly (loop would start here if wire #2)
     PEEL1, //M1 motor reverse distance
     FEED2, //M1,M2 feed forward one full length
-    CUT, //cutter engage full and disengage
+    CUT, //cutter engage full and disengge
     FEED3, //M1 motor reverse to wire detect, M2 reverse one strip length
     STRIP2, //cutter engage to strip, back off very slightly
     PEEL2, //M2 push out fully, M1 feed forward 1 strip length past.

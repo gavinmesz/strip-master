@@ -119,7 +119,10 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
 
   //Starting ADC
-  HAL_ADC_Start_DMA(&hadc1, adcVals, 4);
+  HAL_ADC_Start_DMA(&hadc1, adcVals1, 2);
+  HAL_ADC_Start(&hadc2);
+  HAL_ADC_Start_DMA(&hadc2, adcVals3, 2);
+
 
   /* USER CODE END 2 */
 

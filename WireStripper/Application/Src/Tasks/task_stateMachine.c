@@ -15,8 +15,8 @@
 #include "task_actuatorControl.h"
 #include "task_display.h"
 
-#define WIRE_IN_DETECT &adcVals[1]
-#define WIRE_END_DETECT &adcVals[2]
+#define WIRE_IN_DETECT &adcVals3[0]
+#define WIRE_END_DETECT &adcVals3[1]
 #define WIRE_DETECT_LOW_THRES 0.5
 #define WIRE_DETECT_HIGH_THRES 1
 

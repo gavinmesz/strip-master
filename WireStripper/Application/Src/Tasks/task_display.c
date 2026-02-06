@@ -27,7 +27,9 @@ int quantity;
 int length;
 int stripLength;
 int stripCut; //Strip or strip and cut (1=Strip and cut)
-uint32_t adcVals[4];
+uint32_t adcVals1[2];
+uint32_t adcVals2[1];
+uint32_t adcVals3[2];
 
 /*
  * OLED_Update:
@@ -57,7 +59,7 @@ int OLED_Update(const UBYTE * Img) {
 
         HAL_GPIO_WritePin(OLED_DC_GPIO_Port, OLED_DC_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(OLED_CS_GPIO_Port, OLED_CS_Pin, GPIO_PIN_RESET);
-        HAL_SPI_Transmit_DMA(&hspi2, frameBuf, Imagesize); //Send whole frame buffer in one shot
+        HAL_SPI_Transmit_DMA(&hspi4, frameBuf, Imagesize); //Send whole frame buffer in one shot
 
         status = 0;
     }
@@ -78,7 +80,7 @@ int OLED_Clear() {
 
         HAL_GPIO_WritePin(OLED_DC_GPIO_Port, OLED_DC_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(OLED_CS_GPIO_Port, OLED_CS_Pin, GPIO_PIN_RESET);
-        HAL_SPI_Transmit_DMA(&hspi2, frameBuf, Imagesize); //Send whole frame buffer in one shot
+        HAL_SPI_Transmit_DMA(&hspi4, frameBuf, Imagesize); //Send whole frame buffer in one shot
 
         status = 0;
     }
@@ -129,10 +131,12 @@ void vDisplayTask()
         //Global config variables held in task_stateMachine.c
         //High priority is to save time for other tasks as much as possible. Be mindful of unnecessary tasks (ie don't Update the OLED if ADC/encoder values have not changed).
         quantity = __HAL_TIM_GET_COUNTER(&htim2);
+        HAL_ADC_PollForConversion(&hadc2, 1);
+        int sensorVal = HAL_ADC_GetValue(&hadc2);
         //Paint functions from GUIPaint.c if the values are different
         Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
         Paint_DrawString_EN(10, 17, "hello world", &Font8, WHITE, BLACK);
-        Paint_DrawNum(10, 30, adcVals[1], &Font8, 4, WHITE, BLACK);
+        Paint_DrawNum(10, 30, adcVals1[1], &Font8, 4, WHITE, BLACK);
         Paint_DrawNum(10, 43, quantity, &Font12, 2, BLACK, WHITE);
 
         //Update OLED.

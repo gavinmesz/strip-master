@@ -18,6 +18,7 @@ add_executable(${PROJECT_NAME}
         Application/Src/Tasks/task_actuatorControl.c
         Application/Src/Tasks/task_safety.c
         Application/Src/Tasks/task_stateMachine.c
+        Application/Src/Tasks/task_motorTest.c
 
         Core/User/Config/DEV_Config.c
         Core/User/Fonts/font8.c
@@ -37,7 +38,7 @@ add_executable(${PROJECT_NAME}
         Core/Src/i2c.c
         Core/Src/spi.c
         Core/Src/tim.c
-#        Core/Src/usart.c
+        Core/Src/usart.c
         Core/Src/freertos.c
         Core/Src/stm32f4xx_hal_msp.c
         Core/Src/stm32f4xx_it.c
@@ -46,6 +47,8 @@ add_executable(${PROJECT_NAME}
         Core/Src/sysmem.c
 
         startup_stm32f446xx.s
+        Application/Src/Tasks/task_motorTest.c
+        Application/Inc/Tasks/task_motorTest.h
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

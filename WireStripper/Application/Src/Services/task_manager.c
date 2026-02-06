@@ -1,16 +1,22 @@
+#define TEST 1
+
 //Tasks included
 #include "task_manager.h"
 #include "task_display.h"
 #include "task_actuatorControl.h"
 #include "task_safety.h"
 #include "task_stateMachine.h"
+#include "task_motorTest.h"
 
 #include "FreeRTOSConfig.h"
+
+#define TEST 1
 
 TaskHandle_t xDisplayTaskHandle = NULL;
 TaskHandle_t xActuatorTaskHandle = NULL;
 TaskHandle_t xSafetyTaskHandle = NULL;
 TaskHandle_t xStateMachineTaskHandle = NULL;
+TaskHandle_t xMotorTestHandle = NULL;
 int counterVar;
 
 void TaskManager_InitTasks(void){
@@ -27,8 +33,19 @@ void TaskManager_InitTasks(void){
 
 void TaskManager_CreateAllTasks(void)
 {
-
     BaseType_t xReturned;
+    #if TEST
+        //Actuator Task
+        xReturned = xTaskCreate(vMotorTestTask, "MotorTest", 512, NULL, configMAX_PRIORITIES-3, &xMotorTestHandle);
+
+        configASSERT(xReturned == pdPASS);
+
+    #else
+        //Actuator Task
+        xReturned = xTaskCreate(vActuatorTask, "Actuator", 512, NULL, configMAX_PRIORITIES-3, &xActuatorTaskHandle);
+
+        configASSERT(xReturned == pdPASS);
+    #endif
 
     //Actuator Task
     xReturned = xTaskCreate(vActuatorTask, "Actuator", 512, NULL, configMAX_PRIORITIES-3, &xActuatorTaskHandle);

@@ -9,7 +9,7 @@ void vStateMachineTask();
 
 typedef enum {
     CHECKS,
-    IDLE,
+    NONE,
     ENGAGE,
     DISENGAGE,
     ENGAGED,

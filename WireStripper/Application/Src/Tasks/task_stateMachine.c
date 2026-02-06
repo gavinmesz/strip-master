@@ -27,12 +27,12 @@ SystemStatus systemState;
  *  a. Power OK?
  *  b. wire not detected at #2?
  *  c. check if peripherals successfully initiated.
- * 1. Stay IDLE while waiting for interrupt flags
+ * 1. Stay NONE while waiting for interrupt flags
  * 2. Deal with interrupt flags
  *  a. Wire detected -> Feed wire in until wire detect 2. FEEDING..., WAIT_FOR_USER.
  *  b. Safety flag -> Disable HV power. Require restart to move on. Display?. POWER_ERROR.
  * 3. Wait for button Press
- *  a. STOP -> Disengage wire job to actuator control, stepMove. DISENGAGING... Return to IDLE.
+ *  a. STOP -> Disengage wire job to actuator control, stepMove. DISENGAGING... Return to NONE.
  *  b. GO -> Send "start job" to actuator control. JOB_RUNNING
  *  c. Power safety Flag -> Disable HV Power. Require restart to move on. Display? POWER_ERROR.
  * 4. Job is running, interrupt flags
@@ -68,13 +68,13 @@ void vStateMachineTask() {
             *  If these aren't true, something is wrong, SAFETY ERROR
             */
                 if (safetyOK && wirePresent(*WIRE_IN_DETECT)) {
-                    systemState = IDLE;
+                    systemState = NONE;
                 } else {
                     systemState = SAFETY_ERROR;
                 }
             }
-            case IDLE: {
-            /* 1. Stay IDLE while waiting for interrupt flags
+            case NONE: {
+            /* 1. Stay NONE while waiting for interrupt flags
              * 2. Deal with interrupt flags
              *  a. Wire detected -> Feed wire in until wire detect 2. ENGAGE..., WAIT_FOR_USER.
              *  b. Safety flag -> Disable HV power. Require restart to move on. Display?. POWER_ERROR.
@@ -93,12 +93,12 @@ void vStateMachineTask() {
             }
             case DISENGAGE: {
                 if (job_finish) {
-                    systemState = IDLE;
+                    systemState = NONE;
                 }
             }
             case ENGAGED: {
                 /*
-                *  a. STOP -> Disengage wire job to actuator control, stepMove. DISENGAGING... Return to IDLE.
+                *  a. STOP -> Disengage wire job to actuator control, stepMove. DISENGAGING... Return to NONE.
                 *  b. GO -> Send "start job" to actuator control. JOB_RUNNING
                 *  c. Power safety Flag -> Disable HV Power. Require restart to move on. Display? POWER_ERROR.
                 */

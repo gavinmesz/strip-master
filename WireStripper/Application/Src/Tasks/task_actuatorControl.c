@@ -14,81 +14,12 @@
 #include "stm32f4xx_ll_tim.h"
 #include "task_stateMachine.h"
 
-//PULSES AT 100Hz right now
-#define CLK_SPEED 1000000.0
-#define MICROSTEP 1
-
-//Motor constants
-#define M1_TIMER &htim8
-#define M1_TIM TIM8
-#define M1_CHANNEL TIM_CHANNEL_1
-#define M2_TIMER &htim8
-#define M2_TIM TIM8
-#define M2_CHANNEL TIM_CHANNEL_4
-#define M3_TIMER &htim1
-#define M3_TIM TIM1
-#define M3_CHANNEL TIM_CHANNEL_1
-
-//Direction pins for motor control
-#define TO_FRONT GPIO_PIN_SET
-#define TO_BACK GPIO_PIN_RESET
-#define UP GPIO_PIN_SET
-#define DOWN GPIO_PIN_RESET
-
-#define ENABLE 1
-#define DISABLE 0
-
-//Status
-typedef enum {
-    START,
-    CALIB, //M1 feed to wire detecta
-    FEED1, //M1 feed one strip length past cutters
-    STRIP1, //cutter engage to strip, back off very slightly (loop would start here if wire #2)
-    PEEL1, //M1 motor reverse distance
-    FEED2, //M1,M2 feed forward one full length
-    CUT, //cutter engage full and disengge
-    FEED3, //M1 motor reverse to wire detect, M2 reverse one strip length
-    STRIP2, //cutter engage to strip, back off very slightly
-    PEEL2, //M2 push out fully, M1 feed forward 1 strip length past.
-}MotorStatus;
-
-static MotorStatus motorStatus;
-
-typedef enum {
-    PLACEHOLDER,
-    M1,
-    M2,
-    M3
-}MotorNum;
-
-typedef struct {
-    MotorNum motor_num;
-
-    //Timer Peripheral
-    TIM_HandleTypeDef* htim;
-    TIM_TypeDef *TIMx;
-    uint32_t channel;
-    uint32_t ccr;
-
-    //Common Pins
-    GPIO_TypeDef* EN_Port;
-    uint16_t EN_Pin;
-    GPIO_TypeDef* DIR_Port;
-    uint16_t DIR_Pin;
-    GPIO_TypeDef* MS1_Port;
-    uint16_t MS1_Pin;
-    GPIO_TypeDef* MS2_Port;
-    uint16_t MS2_Pin;
-    GPIO_TypeDef* nFAULT_Port;
-    uint16_t nFAULT_Pin;
-
-    uint8_t motorDone;
-}Motor;
+MotorStatus motorStatus;
 
 //Motors
-static Motor Motor1;
-static Motor Motor2;
-static Motor Motor3;
+Motor Motor1;
+Motor Motor2;
+Motor Motor3;
 
 //Present Encoder Values
 int encoder1;
@@ -99,7 +30,7 @@ uint32_t dcDMA1;
 uint32_t dcDMA2;
 uint32_t dcDMA3;
 
-static uint8_t homeSetM3() {
+uint8_t homeSetM3() {
     //0 if the homing was unsuccessful (M3 is currently running a distance job)
     uint8_t temp = 0;
     if (Motor3.motorDone){
@@ -111,13 +42,13 @@ static uint8_t homeSetM3() {
     return temp;
 }
 
-static void enableMotor(uint8_t state, Motor const motor) {
+void enableMotor(uint8_t state, Motor const motor) {
     //Reminder M3 is nEN
     if (motor.motor_num == M3) {state = ~state;}
     HAL_GPIO_WritePin(motor.EN_Port, motor.EN_Pin, state);
 }
 
-static void wakeMotor(uint8_t state, Motor const motor) {
+void wakeMotor(uint8_t state, Motor const motor) {
     //M3 doesn't have a sleep pin
     state = ~state;
     switch (motor.motor_num) {
@@ -135,7 +66,7 @@ static void wakeMotor(uint8_t state, Motor const motor) {
     }
 }
 
-static void microSet(uint8_t const microStep, Motor const motor) {
+void microSet(uint8_t const microStep, Motor const motor) {
     /*
      * Microstep values: Wire Feed
      * 0b00 -> MS1 LOW and MS2 LOW: no microstepping
@@ -156,7 +87,7 @@ static void microSet(uint8_t const microStep, Motor const motor) {
 }
 
 //change speed of motor. M1 and M2 are coupled in speed.
-static void changeSpeed(float const speed, uint8_t const dir, Motor *motor) {
+void changeSpeed(float const speed, uint8_t const dir, Motor *motor) {
     //Require arr value for specific frequency of pulses. 100pps = 1Mhz/10000. 1000 = 1Mhz/100. 1000 = arr.
     motor->TIMx->ARR = (uint32_t)(CLK_SPEED/speed);//pulses per second
 
@@ -169,7 +100,7 @@ static void changeSpeed(float const speed, uint8_t const dir, Motor *motor) {
 
 //Movement of x steps in one direction at speed.
 //Return 0 if the step move has not finished yet. Return 1 if the DMA was started.
-static uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor* motor) {
+uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor* motor) {
     if (motor->motorDone) {
         changeSpeed(speed, dir, motor);
         HAL_TIM_PWM_Start_DMA(motor->htim, motor->channel, &motor->ccr, step);
@@ -180,7 +111,7 @@ static uint8_t stepMove(int const step, float const speed, uint8_t const dir, Mo
 }
 
 //continuous movement in one direction
-static uint8_t speedMove(int const speed, uint8_t const dir, Motor* motor) {
+uint8_t speedMove(int const speed, uint8_t const dir, Motor* motor) {
     if (motor->motorDone) {
         changeSpeed(speed, dir, motor);
         HAL_TIM_PWM_Start(motor->htim, motor->channel);
@@ -190,8 +121,9 @@ static uint8_t speedMove(int const speed, uint8_t const dir, Motor* motor) {
     return 0;
 }
 
-static void stopMotor(Motor const motor) {
-    HAL_TIM_PWM_Stop(motor.htim, motor.channel);
+void stopMotor(Motor *motor) {
+    HAL_TIM_PWM_Stop(motor->htim, motor->channel);
+    motor->motorDone = 1;
 }
 
 void cutWire() {

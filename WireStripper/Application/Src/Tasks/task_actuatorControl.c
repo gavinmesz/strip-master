@@ -216,19 +216,19 @@ void vActuatorTask(){
     //nEnable, reset if you need to home, no faults
 
     for(;;){
-        //Acknowledge that job was received.
-        if (systemState == ENGAGE) {
-            job_finish = 0;
-        } else if (systemState == DISENGAGE) {
-            job_finish = 0;
-        } else if (systemState == JOB_RUNNING) {
-            job_finish = 0;
-        }
-
-        //Motor status set by stateMachine
-        stepMove(100, 100, TO_FRONT,&Motor1);
-        stepMove(200, 100, TO_FRONT,&Motor2);
-        stepMove(300, 100, TO_FRONT,&Motor3);
+        // //Acknowledge that job was received.
+        // if (systemState == ENGAGE) {
+        //     job_finish = 0;
+        // } else if (systemState == DISENGAGE) {
+        //     job_finish = 0;
+        // } else if (systemState == JOB_RUNNING) {
+        //     job_finish = 0;
+        // }
+        //
+        // //Motor status set by stateMachine
+        // stepMove(100, 100, TO_FRONT,&Motor1);
+        // stepMove(200, 100, TO_FRONT,&Motor2);
+        // stepMove(300, 100, TO_FRONT,&Motor3);
         vTaskDelay(5000);
     }
 }
@@ -236,7 +236,7 @@ void vActuatorTask(){
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
     /* Prevent unused argument(s) compilation warning */
     //Check if TIM state is not busy (state 0x02U)
-    if (htim == Motor1.htim) {
+    if (htim->Instance == TIM8) {
         Motor1.motorDone = TIM_CHANNEL_STATE_GET(Motor1.htim, Motor1.channel)!=0x02U;
         if (Motor1.motorDone){HAL_TIM_PWM_Stop_DMA(Motor1.htim, Motor1.channel);}
         Motor2.motorDone = TIM_CHANNEL_STATE_GET(Motor2.htim, Motor2.channel)!=0x02U;

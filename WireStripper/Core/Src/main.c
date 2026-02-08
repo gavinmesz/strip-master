@@ -128,18 +128,6 @@ int main(void)
 
 
   /* USER CODE END 2 */
-  char diagnostic_msg[] = "UART STARTING...\r\n";
-  uint8_t b;
-  while(1) {
-    if(HAL_UART_Receive(&huart2, &b, 1, 10) == HAL_OK) {
-      HAL_UART_Transmit(&huart2, &b, 1, 10);
-    }
-    if (HAL_UART_Transmit(&huart2, (uint8_t*)diagnostic_msg, 18, 100) == HAL_OK) {
-      // Blink LED if transmission was successful
-      HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-    }
-    HAL_Delay(500);
-  }
   /* Init scheduler */
   osKernelInitialize();  /* Call init function for freertos objects (in cmsis_os2.c) */
   MX_FREERTOS_Init();

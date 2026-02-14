@@ -62,21 +62,21 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "FreeRTOS::@768a070a0fe75716b479",
-					"jsonFile" : "target-FreeRTOS-Debug-a81db88162cf7226a221.json",
+					"jsonFile" : "target-FreeRTOS-Debug-5b9570ca9dc1ea2ac34a.json",
 					"name" : "FreeRTOS",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "STM32_Drivers::@768a070a0fe75716b479",
-					"jsonFile" : "target-STM32_Drivers-Debug-77504c0a29258808e727.json",
+					"jsonFile" : "target-STM32_Drivers-Debug-2f3d970bbebedae979c9.json",
 					"name" : "STM32_Drivers",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "WireStripper::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-WireStripper-Debug-6f9ab9421709fac6ca5f.json",
+					"jsonFile" : "target-WireStripper-Debug-d62b115171e2d97057f9.json",
 					"name" : "WireStripper",
 					"projectIndex" : 0
 				}

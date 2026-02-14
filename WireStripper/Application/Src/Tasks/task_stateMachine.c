@@ -15,11 +15,6 @@
 #include "task_actuatorControl.h"
 #include "task_display.h"
 
-#define WIRE_IN_DETECT &adcVals3[0]
-#define WIRE_END_DETECT &adcVals3[1]
-#define WIRE_DETECT_LOW_THRES 0.5
-#define WIRE_DETECT_HIGH_THRES 1
-
 SystemStatus systemState;
 
 /*
@@ -47,7 +42,7 @@ volatile uint8_t safetyOK;
 volatile uint8_t job_finish;
 
 //Is the wire detected? 0 for no, 1 for yes
-static uint8_t wirePresent(float adc){
+uint8_t wirePresent(float adc){
     if (adc < WIRE_DETECT_LOW_THRES) { //voltage low means light blocked
         return 1;
     } else if (adc > WIRE_DETECT_HIGH_THRES) { //voltage high means no blockage
@@ -86,11 +81,6 @@ void vStateMachineTask() {
                     systemState = ENGAGE;
                 }
             }
-            case ENGAGE: {
-                if (job_finish) {
-                    systemState = ENGAGED;
-                }
-            }
             case DISENGAGE: {
                 if (job_finish) {
                     systemState = NONE;
@@ -115,12 +105,10 @@ void vStateMachineTask() {
                 * 4. Job is running, interrupt flags
                 *  a. STOP -> E-stop. Disable HV Power. Require restart to move on. Display? E-STOP.
                 *  b. Power safety Flag -> Disable HV Power. Require restart to move on. Display? POWER_ERROR.
-                *  c. Job finished -> Disable HV Power. Move to ENGAGED.
+                *  c. Job finished -> Actuator task will set JOB_RUNNING to Done
                 */
                 if (!safetyOK || stop_button) {
                     systemState = SAFETY_ERROR;
-                } else if (job_finish) {
-                    systemState = ENGAGED;
                 }
             }
             case SAFETY_ERROR: {
@@ -133,6 +121,6 @@ void vStateMachineTask() {
                 systemState = SAFETY_ERROR; //Should never be in an unknown state
             }
         }
-        vTaskDelay(100);
+        vTaskDelay(20);
     }
 }

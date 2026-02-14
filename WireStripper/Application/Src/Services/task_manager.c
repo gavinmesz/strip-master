@@ -34,18 +34,17 @@ void TaskManager_InitTasks(void){
 void TaskManager_CreateAllTasks(void)
 {
     BaseType_t xReturned;
-    #if TEST
-        //Actuator Task
+    if ( TEST ) {
+        //Testing Task
         xReturned = xTaskCreate(vMotorTestTask, "MotorTest", 512, NULL, configMAX_PRIORITIES-3, &xMotorTestHandle);
 
         configASSERT(xReturned == pdPASS);
-
-    #else
+    } else {
         //Actuator Task
         xReturned = xTaskCreate(vActuatorTask, "Actuator", 512, NULL, configMAX_PRIORITIES-3, &xActuatorTaskHandle);
 
         configASSERT(xReturned == pdPASS);
-    #endif
+    }
 
     //Actuator Task
     xReturned = xTaskCreate(vActuatorTask, "Actuator", 512, NULL, configMAX_PRIORITIES-3, &xActuatorTaskHandle);

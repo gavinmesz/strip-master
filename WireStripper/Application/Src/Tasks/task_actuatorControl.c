@@ -12,7 +12,21 @@
 #include "stm32f4xx_hal_gpio.h"
 #include "tim.h"
 #include "stm32f4xx_ll_tim.h"
+#include "task_display.h"
 #include "task_stateMachine.h"
+
+#define WHEEL_RADIUS 1
+#define BASE_STEPS_PER_REV 200
+#define FEED_SPEED 100
+#define CUT_SPEED 100
+#define STRIP_SPEED 50
+#define PEEL_SPEED 100
+
+#define M1_TO_CUT_DIST 10
+#define M2_TO_CUT_DIST 10
+#define TOLERANCE_STEP 5
+#define SPIT_STEPS 200 + M2_TO_CUT_DIST
+#define CUT_BACK_OFF 2
 
 MotorStatus motorStatus;
 
@@ -26,9 +40,21 @@ int encoder1;
 int encoder2;
 
 //Duty cycle of step movement
-uint32_t dcDMA1;
-uint32_t dcDMA2;
-uint32_t dcDMA3;
+static uint32_t dcDMA1;
+static uint32_t dcDMA2;
+static uint32_t dcDMA3;
+
+//Microstep values
+static uint8_t microStep1;
+static uint8_t microStep2;
+
+//Finished wires
+int finishedWires;
+
+static int length_to_steps(int const length_mm, uint8_t const microStep) {
+    return (length_mm/(2*3.14159*WHEEL_RADIUS))*BASE_STEPS_PER_REV*microStep;
+}
+
 
 uint8_t homeSetM3() {
     //0 if the homing was unsuccessful (M3 is currently running a distance job)
@@ -100,10 +126,18 @@ void changeSpeed(float const speed, uint8_t const dir, Motor *motor) {
 
 //Movement of x steps in one direction at speed.
 //Return 0 if the step move has not finished yet. Return 1 if the DMA was started.
-uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor* motor) {
+uint8_t stepMove(int const step, float const speed, Motor* motor) {
+    int dir;
+    int steptemp = step;
+    if (step<0){
+        dir = TO_FRONT;
+        steptemp *= -1;
+    } else {
+        dir = TO_BACK;
+    }
     if (motor->motorDone) {
         changeSpeed(speed, dir, motor);
-        HAL_TIM_PWM_Start_DMA(motor->htim, motor->channel, &motor->ccr, step);
+        HAL_TIM_PWM_Start_DMA(motor->htim, motor->channel, &motor->ccr, steptemp);
         motor->motorDone=0;
         return 1;
     }
@@ -111,9 +145,17 @@ uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor* mo
 }
 
 //continuous movement in one direction
-uint8_t speedMove(int const speed, uint8_t const dir, Motor* motor) {
+uint8_t speedMove(int speed, Motor* motor) {
+    int dir;
+    int speedtemp = speed;
+    if (speed<0){
+        dir = TO_FRONT;
+        speedtemp *= -1;
+    } else {
+        dir = TO_BACK;
+    }
     if (motor->motorDone) {
-        changeSpeed(speed, dir, motor);
+        changeSpeed(speedtemp, dir, motor);
         HAL_TIM_PWM_Start(motor->htim, motor->channel);
         motor->motorDone=0;
         return 1;
@@ -126,21 +168,116 @@ void stopMotor(Motor *motor) {
     motor->motorDone = 1;
 }
 
-void cutWire() {
-    //Sequence of events on motor 3
+void stopAllMotors() {
+    stopMotor(&Motor1);
+    stopMotor(&Motor2);
+    stopMotor(&Motor3);
 }
 
-void stripWire() {
-    //Sequence of movements on motor 3
-
-    //Set speed
-    //stop once wire detected
+uint8_t cutWire() {
+    //Todo: move M3 one full rotation
 }
 
+uint8_t stripWire() {
+    //Todo: move M3, stop and back off when detected
+}
+
+uint8_t encoderMove(int const length, float const speed) {
+    //Todo: move motor1 and 2 using encoders for reference
+}
+
+uint8_t M1Home() {
+    //Todo: move motor 1 such that the wire end is at the light. Recalibrate.
+}
+
+//Running the motor's job
+void runJob() {
+    switch (motorStatus) { //Internal states unimportant to the boss task
+        case (IDLE): { //entry point
+            finishedWires = 0;
+            motorStatus = START;
+            break;
+        }
+        case (START): { //Check if we met our goal
+            if (finishedWires >= quantity){ //Return to IDLE state
+                motorStatus = IDLE;
+                systemState = ENGAGED;
+            } else { //Feed new wire one strip length + distance from light to cutter (dead reckoning)
+                if (stepMove(length_to_steps(stripLength+M1_TO_CUT_DIST, microStep1), FEED_SPEED, &Motor1)) {motorStatus = STRIP_ENGAGE1;}
+            }
+            break;
+        }
+        case (STRIP_ENGAGE1): { //Engage the cutters once the previous move is finished.
+            if (Motor1.motorDone == 1) {
+                if (stripWire()) { //Engages M3 then backs off a lil
+                    motorStatus = M1_PEEL;
+                }
+            }
+            break;
+        }
+        case (M1_PEEL): { //use motor 1 to peel the insulation off
+            if (stepMove(-(length_to_steps(stripLength, microStep1)+TOLERANCE_STEP), PEEL_SPEED, &Motor1)) {motorStatus = M1_FULL_LENGTH_FEED;}
+            break;
+        }
+        case (M1_FULL_LENGTH_FEED): { // Move the full length
+            if (Motor1.motorDone == 1) { //Motor finished, start full length move
+                if (encoderMove(length+TOLERANCE_STEP, FEED_SPEED)) {motorStatus = CUT;}
+            }
+            break;
+        }
+        case (CUT): { //Cut the wire
+            if (stepMove(BASE_STEPS_PER_REV, CUT_SPEED, &Motor3)) {motorStatus = CALIBRATE_AND_M2_STRIP;}
+            break;
+        }
+        case (CALIBRATE_AND_M2_STRIP): { //Feed M1 to light to recalibrate, feed M2 one strip length
+            if (Motor3.motorDone == 1) {
+                if (stepMove(-length_to_steps(stripLength, microStep2), FEED_SPEED, &Motor2)) {
+                    if (speedMove(-FEED_SPEED, &Motor1)) {
+                        while (wirePresent(*WIRE_END_DETECT)) { //Poll while wire is present
+                            vTaskDelay(10);
+                        }
+                        stopMotor(&Motor1); //Stop when the wire is not detected anymore
+                        stepMove(TOLERANCE_STEP, FEED_SPEED, &Motor1);// Move forward a lil
+                        motorStatus = STRIP_ENGAGE2;
+                    }
+                }
+            }
+            break;
+        }
+        case (STRIP_ENGAGE2): {
+            if (Motor2.motorDone == 1 && Motor1.motorDone == 1) {
+                if (stripWire()) { //engage teeth again
+                    motorStatus = M2_PEEL;
+                }
+            }
+            break;
+        }
+        case (M2_PEEL): { //Spit out wire with M2
+            if (stepMove((length_to_steps(stripLength, microStep1)+TOLERANCE_STEP), PEEL_SPEED, &Motor2)) {
+                motorStatus = SPIT;
+            }
+            break;
+        }
+        case (SPIT): {  //Spit out the wire
+            if (stepMove(SPIT_STEPS, PEEL_SPEED, &Motor2)) {
+                motorStatus = RESTART;
+            }
+            break;
+        }
+        case (RESTART): { //When wire is spit out, increment finished wires and restart the process
+            if (Motor2.motorDone == 1) {
+                finishedWires++;
+                motorStatus = START;
+            }
+        }
+        default: {systemState = SAFETY_ERROR;}
+    }
+}
 
 void vActuatorTask(){
     //Initialize motor variables.
     motorStatus = IDLE;
+    finishedWires = 0;
 
     Motor1 = (Motor) {
         M1,
@@ -217,19 +354,60 @@ void vActuatorTask(){
 
     for(;;){
         // //Acknowledge that job was received.
-        // if (systemState == ENGAGE) {
-        //     job_finish = 0;
-        // } else if (systemState == DISENGAGE) {
-        //     job_finish = 0;
-        // } else if (systemState == JOB_RUNNING) {
-        //     job_finish = 0;
-        // }
-        //
-        // //Motor status set by stateMachine
-        // stepMove(100, 100, TO_FRONT,&Motor1);
-        // stepMove(200, 100, TO_FRONT,&Motor2);
-        // stepMove(300, 100, TO_FRONT,&Motor3);
-        vTaskDelay(5000);
+        switch (systemState) {
+            case (NONE): {
+                motorStatus = IDLE;
+                stopAllMotors();
+                break;
+            }
+            case (SAFETY_ERROR):{ //Todo: Have to make sure that the motors stop
+                motorStatus = IDLE;
+                stopAllMotors();
+                break;
+            }
+
+            //Engage action
+            case (ENGAGE): {
+                //Move wire feed until LIGHT_IN1 hit
+                speedMove(100, &Motor1);
+                systemState = ENGAGING;
+                break;
+            }
+            case (ENGAGING): {
+                if (wirePresent(*WIRE_END_DETECT)) {
+                    systemState = ENGAGED;
+                }
+                break;
+            }
+            case (ENGAGED): {
+                stopMotor(&Motor1);
+                break;
+            }
+
+            //Disengage Action
+            case (DISENGAGE): {
+                speedMove(-100, &Motor1);
+                systemState = DISENGAGING;
+                break;
+            }
+            case (DISENGAGING): {
+                if (!wirePresent(*WIRE_IN_DETECT)) {
+                    systemState = NONE;
+                }
+                break;
+            }
+
+            //Set by boss task, run job
+            case (JOB_RUNNING): {
+                runJob();
+                break;
+            }
+
+            default:{systemState = SAFETY_ERROR;}
+        }
+
+        //Refresh every 10ms
+        vTaskDelay(10);
     }
 }
 

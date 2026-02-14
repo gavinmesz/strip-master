@@ -57,15 +57,15 @@ typedef struct {
 //Status
 typedef enum {
     START,
-    CALIB,
-    FEED1,
-    STRIP1,
-    PEEL1,
-    FEED2,
+    STRIP_ENGAGE1,
+    M1_PEEL,
+    M1_FULL_LENGTH_FEED,
     CUT,
-    FEED3,
-    STRIP2,
-    PEEL2,
+    CALIBRATE_AND_M2_STRIP,
+    STRIP_ENGAGE2,
+    M2_PEEL,
+    SPIT,
+    RESTART,
     IDLE // Added to match your vActuatorTask initialization
 } MotorStatus;
 
@@ -75,15 +75,16 @@ void enableMotor(uint8_t state, Motor const motor);
 void wakeMotor(uint8_t state, Motor const motor);
 void microSet(uint8_t const microStep, Motor const motor);
 void changeSpeed(float const speed, uint8_t const dir, Motor *motor);
-uint8_t stepMove(int const step, float const speed, uint8_t const dir, Motor* motor);
-uint8_t speedMove(int const speed, uint8_t const dir, Motor* motor);
+uint8_t stepMove(int const step, float const speed,  Motor* motor);
+uint8_t speedMove(int const speed, Motor* motor);
 void stopMotor(Motor *motor);
-void cutWire(void);
-void stripWire(void);
+uint8_t cutWire(void);
+uint8_t stripWire(void);
 
 extern Motor Motor1;
 extern Motor Motor2;
 extern Motor Motor3;
+
 
 extern int encoder1;
 extern int encoder2;

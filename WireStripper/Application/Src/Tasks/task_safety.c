@@ -59,10 +59,6 @@
          * CC_CFG_REGISTER: Set bits to 0x19 upon device startup
          * Lots of read only registers: cell voltage, vbat calculation, temperature, CC reading, ADC gain and offset
          *
-         * Application notes:
-         *
-         *
-         *
          */
 
 #include "task_manager.h" // Has FreeRTOS functions and globals defined

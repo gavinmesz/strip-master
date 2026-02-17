@@ -128,6 +128,7 @@ int main(void)
 
 
   /* USER CODE END 2 */
+
   /* Init scheduler */
   osKernelInitialize();  /* Call init function for freertos objects (in cmsis_os2.c) */
   MX_FREERTOS_Init();
@@ -263,9 +264,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-
-int _write(int file, char *ptr, int len) {
-  HAL_StatusTypeDef status = HAL_UART_Transmit(&huart2, (uint8_t *)ptr, len, HAL_MAX_DELAY);
-  if (status != HAL_OK) return -1;
-  return len;
-}

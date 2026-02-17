@@ -136,3 +136,6 @@
 626	3491	7930563386685686	cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj	736b2144c509c3bf
 19	827	7930563811679699	CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj	10843e77595c93d1
 828	3544	7930563819775594	WireStripper.elf	515d9314e922f67e
+36	985	7930568604352073	CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj	10843e77595c93d1
+18	988	7930568604182132	CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj	5409c971d2f027ac
+988	1674	7930568613872825	WireStripper.elf	515d9314e922f67e

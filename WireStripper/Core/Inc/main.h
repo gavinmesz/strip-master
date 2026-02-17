@@ -88,6 +88,8 @@ void Error_Handler(void);
 #define ENC1_B_GPIO_Port GPIOA
 #define LD1_Pin GPIO_PIN_0
 #define LD1_GPIO_Port GPIOB
+#define CUT_POT_Pin GPIO_PIN_1
+#define CUT_POT_GPIO_Port GPIOB
 #define M2_nSLP_Pin GPIO_PIN_13
 #define M2_nSLP_GPIO_Port GPIOF
 #define M1_nSLP_Pin GPIO_PIN_14

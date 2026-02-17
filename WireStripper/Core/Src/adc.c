@@ -203,14 +203,21 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     __HAL_RCC_ADC1_CLK_ENABLE();
 
     __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
     /**ADC1 GPIO Configuration
     PA4     ------> ADC1_IN4
     PA5     ------> ADC1_IN5
+    PB1     ------> ADC1_IN9
     */
     GPIO_InitStruct.Pin = GAUGE_IN_Pin|UX_POT_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = CUT_POT_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(CUT_POT_GPIO_Port, &GPIO_InitStruct);
 
     /* ADC1 DMA Init */
     /* ADC1 Init */
@@ -313,8 +320,11 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     /**ADC1 GPIO Configuration
     PA4     ------> ADC1_IN4
     PA5     ------> ADC1_IN5
+    PB1     ------> ADC1_IN9
     */
     HAL_GPIO_DeInit(GPIOA, GAUGE_IN_Pin|UX_POT_Pin);
+
+    HAL_GPIO_DeInit(CUT_POT_GPIO_Port, CUT_POT_Pin);
 
     /* ADC1 DMA DeInit */
     HAL_DMA_DeInit(adcHandle->DMA_Handle);

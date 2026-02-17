@@ -8444,23 +8444,20 @@ Discarded input sections
  .text          0x00000000        0x0 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .data          0x00000000        0x0 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .bss           0x00000000        0x0 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
- .text.CopyArray
-                0x00000000       0x20 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .text.Checksum
                 0x00000000       0x26 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
- .text.CRC8     0x00000000       0x44 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .text.I2C_WriteReg
                 0x00000000       0x30 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
- .text.I2C_ReadReg
-                0x00000000       0x30 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
- .text.BQ769x2_SetRegister
-                0x00000000       0xd6 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .text.CommandSubcommands
                 0x00000000       0x26 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
- .text.Subcommands
-                0x00000000       0xb0 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
+ .text.I2C_ReadReg
+                0x00000000       0x30 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .text.DirectCommands
                 0x00000000       0x48 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
+ .text.Subcommands
+                0x00000000       0xb0 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
+ .text.BQ769x2_SetRegister
+                0x00000000       0xd6 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .text.BQ769x2_Init
                 0x00000000      0x106 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .text.BQ769x2_BOTHOFF
@@ -8541,14 +8538,14 @@ Discarded input sections
  .bss.RX_32Byte
                 0x00000000       0x20 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .bss.RX_data   0x00000000        0x2 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
- .debug_info    0x00000000     0x1790 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
- .debug_abbrev  0x00000000      0x36c CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
+ .debug_info    0x00000000     0x16ec CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
+ .debug_abbrev  0x00000000      0x34c CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .debug_loclists
-                0x00000000      0x45c CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
+                0x00000000      0x3c1 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .debug_aranges
-                0x00000000       0xd0 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
+                0x00000000       0xc0 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .debug_rnglists
-                0x00000000       0xa7 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
+                0x00000000       0x9b CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .debug_macro   0x00000000      0x3f8 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .debug_macro   0x00000000      0xad8 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .debug_macro   0x00000000      0x2b3 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
@@ -8622,7 +8619,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x1c CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .debug_macro   0x00000000       0x16 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .debug_macro   0x00000000      0x170 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
- .debug_macro   0x00000000      0xa78 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
+ .debug_macro   0x00000000      0xa8a CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .debug_macro   0x00000000      0x17b CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .debug_macro   0x00000000      0x15a CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .debug_macro   0x00000000       0xc9 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
@@ -8631,10 +8628,10 @@ Discarded input sections
  .debug_macro   0x00000000      0x4b0 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .debug_macro   0x00000000       0xb5 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .debug_macro   0x00000000       0xaa CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
- .debug_line    0x00000000     0x10bd CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
- .debug_str     0x00000000    0xe483b CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
+ .debug_line    0x00000000      0xff3 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
+ .debug_str     0x00000000    0xe4816 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .comment       0x00000000       0x47 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
- .debug_frame   0x00000000      0x2f4 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
+ .debug_frame   0x00000000      0x2b8 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .ARM.attributes
                 0x00000000       0x34 CMakeFiles/WireStripper.dir/Drivers/BMS/Src/BQ7692006PWR.c.obj
  .group         0x00000000        0xc CMakeFiles/WireStripper.dir/Core/Src/usb_otg.c.obj
@@ -11255,7 +11252,7 @@ LOAD linker stubs
  .debug_rnglists
                 0x00001bbd       0x20 CMakeFiles/WireStripper.dir/Core/Src/usb_otg.c.obj
 
-.debug_macro    0x00000000    0x2c6eb
+.debug_macro    0x00000000    0x2c6fd
  .debug_macro   0x00000000      0x23d cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_macro   0x0000023d      0xad8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_macro   0x00000d15       0x2e cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
@@ -11346,74 +11343,74 @@ LOAD linker stubs
  .debug_macro   0x00024f26      0x331 CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj
  .debug_macro   0x00025257       0x6a CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj
  .debug_macro   0x000252c1       0x22 CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj
- .debug_macro   0x000252e3      0xa78 CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj
- .debug_macro   0x00025d5b      0x424 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
- .debug_macro   0x0002617f       0x10 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
- .debug_macro   0x0002618f       0x1c CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
- .debug_macro   0x000261ab       0xc3 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
- .debug_macro   0x0002626e      0x413 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
- .debug_macro   0x00026681       0x1c CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
- .debug_macro   0x0002669d      0x5d0 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
- .debug_macro   0x00026c6d       0xe4 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj
- .debug_macro   0x00026d51      0x3bd CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
- .debug_macro   0x0002710e       0x40 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
- .debug_macro   0x0002714e      0x415 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
- .debug_macro   0x00027563      0x17b CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
- .debug_macro   0x000276de       0x1c CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
- .debug_macro   0x000276fa       0x10 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
- .debug_macro   0x0002770a       0x1c CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
- .debug_macro   0x00027726       0x16 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
- .debug_macro   0x0002773c      0x170 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
- .debug_macro   0x000278ac      0x39d CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
- .debug_macro   0x00027c49       0x10 CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
- .debug_macro   0x00027c59       0x6c CMakeFiles/WireStripper.dir/Core/User/Fonts/font8.c.obj
- .debug_macro   0x00027cc5       0x6c CMakeFiles/WireStripper.dir/Core/User/Fonts/font12.c.obj
- .debug_macro   0x00027d31       0x6c CMakeFiles/WireStripper.dir/Core/User/Fonts/font16.c.obj
- .debug_macro   0x00027d9d      0x3c1 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
- .debug_macro   0x0002815e      0x19b CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
- .debug_macro   0x000282f9      0x3cc CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
- .debug_macro   0x000286c5      0x4fd CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00028bc2       0x66 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00028c28       0xdd CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00028d05       0x16 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00028d1b       0x10 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00028d2b       0x1c CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00028d47       0x52 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00028d99       0x22 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00028dbb       0x10 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00028dcb       0x52 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00028e1d       0xcf CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00028eec       0x1c CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00028f08       0x3d CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00028f45      0x52f CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x00029474       0x70 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
- .debug_macro   0x000294e4      0x32b CMakeFiles/WireStripper.dir/Core/Src/dma.c.obj
- .debug_macro   0x0002980f      0x32b CMakeFiles/WireStripper.dir/Core/Src/gpio.c.obj
- .debug_macro   0x00029b3a      0x32b CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
- .debug_macro   0x00029e65      0x32b CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
- .debug_macro   0x0002a190      0x32b CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
- .debug_macro   0x0002a4bb      0x32b CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
- .debug_macro   0x0002a7e6      0x32b CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
- .debug_macro   0x0002ab11      0x3b5 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
- .debug_macro   0x0002aec6       0x6c CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
- .debug_macro   0x0002af32      0x321 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_macro   0x0002b253      0x32b CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_macro   0x0002b57e      0x23d CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_macro   0x0002b7bb      0x265 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
- .debug_macro   0x0002ba20       0x10 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
- .debug_macro   0x0002ba30       0x10 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
- .debug_macro   0x0002ba40       0x10 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
- .debug_macro   0x0002ba50       0x35 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
- .debug_macro   0x0002ba85      0x12c CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
- .debug_macro   0x0002bbb1       0x10 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
- .debug_macro   0x0002bbc1      0x242 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
- .debug_macro   0x0002be03       0x10 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
- .debug_macro   0x0002be13      0x18a CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
- .debug_macro   0x0002bf9d       0x16 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
- .debug_macro   0x0002bfb3       0xce CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
- .debug_macro   0x0002c081      0x103 CMakeFiles/WireStripper.dir/Core/Src/sysmem.c.obj
- .debug_macro   0x0002c184      0x23c CMakeFiles/WireStripper.dir/Core/Src/sysmem.c.obj
- .debug_macro   0x0002c3c0      0x32b CMakeFiles/WireStripper.dir/Core/Src/usb_otg.c.obj
+ .debug_macro   0x000252e3      0xa8a CMakeFiles/WireStripper.dir/Application/Src/Services/task_manager.c.obj
+ .debug_macro   0x00025d6d      0x424 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
+ .debug_macro   0x00026191       0x10 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
+ .debug_macro   0x000261a1       0x1c CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
+ .debug_macro   0x000261bd       0xc3 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_display.c.obj
+ .debug_macro   0x00026280      0x413 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
+ .debug_macro   0x00026693       0x1c CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
+ .debug_macro   0x000266af      0x5d0 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_actuatorControl.c.obj
+ .debug_macro   0x00026c7f       0xe4 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_safety.c.obj
+ .debug_macro   0x00026d63      0x3bd CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
+ .debug_macro   0x00027120       0x40 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_stateMachine.c.obj
+ .debug_macro   0x00027160      0x415 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
+ .debug_macro   0x00027575      0x17b CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
+ .debug_macro   0x000276f0       0x1c CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
+ .debug_macro   0x0002770c       0x10 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
+ .debug_macro   0x0002771c       0x1c CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
+ .debug_macro   0x00027738       0x16 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
+ .debug_macro   0x0002774e      0x170 CMakeFiles/WireStripper.dir/Application/Src/Tasks/task_motorTest.c.obj
+ .debug_macro   0x000278be      0x39d CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
+ .debug_macro   0x00027c5b       0x10 CMakeFiles/WireStripper.dir/Core/User/Config/DEV_Config.c.obj
+ .debug_macro   0x00027c6b       0x6c CMakeFiles/WireStripper.dir/Core/User/Fonts/font8.c.obj
+ .debug_macro   0x00027cd7       0x6c CMakeFiles/WireStripper.dir/Core/User/Fonts/font12.c.obj
+ .debug_macro   0x00027d43       0x6c CMakeFiles/WireStripper.dir/Core/User/Fonts/font16.c.obj
+ .debug_macro   0x00027daf      0x3c1 CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
+ .debug_macro   0x00028170      0x19b CMakeFiles/WireStripper.dir/Core/User/GUI/GUI_Paint.c.obj
+ .debug_macro   0x0002830b      0x3cc CMakeFiles/WireStripper.dir/Core/User/OLED/OLED_2in42.c.obj
+ .debug_macro   0x000286d7      0x4fd CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00028bd4       0x66 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00028c3a       0xdd CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00028d17       0x16 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00028d2d       0x10 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00028d3d       0x1c CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00028d59       0x52 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00028dab       0x22 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00028dcd       0x10 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00028ddd       0x52 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00028e2f       0xcf CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00028efe       0x1c CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00028f1a       0x3d CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00028f57      0x52f CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x00029486       0x70 CMakeFiles/WireStripper.dir/Core/Src/main.c.obj
+ .debug_macro   0x000294f6      0x32b CMakeFiles/WireStripper.dir/Core/Src/dma.c.obj
+ .debug_macro   0x00029821      0x32b CMakeFiles/WireStripper.dir/Core/Src/gpio.c.obj
+ .debug_macro   0x00029b4c      0x32b CMakeFiles/WireStripper.dir/Core/Src/adc.c.obj
+ .debug_macro   0x00029e77      0x32b CMakeFiles/WireStripper.dir/Core/Src/i2c.c.obj
+ .debug_macro   0x0002a1a2      0x32b CMakeFiles/WireStripper.dir/Core/Src/spi.c.obj
+ .debug_macro   0x0002a4cd      0x32b CMakeFiles/WireStripper.dir/Core/Src/tim.c.obj
+ .debug_macro   0x0002a7f8      0x32b CMakeFiles/WireStripper.dir/Core/Src/usart.c.obj
+ .debug_macro   0x0002ab23      0x3b5 CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
+ .debug_macro   0x0002aed8       0x6c CMakeFiles/WireStripper.dir/Core/Src/freertos.c.obj
+ .debug_macro   0x0002af44      0x321 CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_macro   0x0002b265      0x32b CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_macro   0x0002b590      0x23d CMakeFiles/WireStripper.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_macro   0x0002b7cd      0x265 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
+ .debug_macro   0x0002ba32       0x10 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
+ .debug_macro   0x0002ba42       0x10 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
+ .debug_macro   0x0002ba52       0x10 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
+ .debug_macro   0x0002ba62       0x35 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
+ .debug_macro   0x0002ba97      0x12c CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
+ .debug_macro   0x0002bbc3       0x10 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
+ .debug_macro   0x0002bbd3      0x242 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
+ .debug_macro   0x0002be15       0x10 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
+ .debug_macro   0x0002be25      0x18a CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
+ .debug_macro   0x0002bfaf       0x16 CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
+ .debug_macro   0x0002bfc5       0xce CMakeFiles/WireStripper.dir/Core/Src/syscalls.c.obj
+ .debug_macro   0x0002c093      0x103 CMakeFiles/WireStripper.dir/Core/Src/sysmem.c.obj
+ .debug_macro   0x0002c196      0x23c CMakeFiles/WireStripper.dir/Core/Src/sysmem.c.obj
+ .debug_macro   0x0002c3d2      0x32b CMakeFiles/WireStripper.dir/Core/Src/usb_otg.c.obj
 
 .debug_line     0x00000000    0x39523
  .debug_line    0x00000000      0x7cf cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj

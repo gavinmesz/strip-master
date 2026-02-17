@@ -48,7 +48,7 @@ add_executable(${PROJECT_NAME}
 
         startup_stm32f446xx.s
         Application/Src/Tasks/task_motorTest.c
-        Application/Inc/Tasks/task_motorTest.h
+        Drivers/BMS/Src/BQ7692006PWR.c
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -66,6 +66,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         Drivers/CMSIS/Device/ST/STM32F4xx/Include
         Drivers/CMSIS/Include
         Drivers/STM32F4xx_HAL_Driver/Inc
+        Drivers/BMS/Inc
 )
 
 # Pull in CubeMX-generated targets (STM32_Drivers, FreeRTOS, USB, etc.)

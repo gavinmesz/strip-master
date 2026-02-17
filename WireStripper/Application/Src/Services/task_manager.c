@@ -7,6 +7,7 @@
 #include "task_safety.h"
 #include "task_stateMachine.h"
 #include "task_motorTest.h"
+#include "C:\Users\Admin\Desktop\4A\MTE481\strip-master\WireStripper\Drivers\BMS\Inc\BQ7692006PWR.h"
 
 #include "FreeRTOSConfig.h"
 

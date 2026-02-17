@@ -186,10 +186,6 @@ uint8_t encoderMove(int const length, float const speed) {
     //Todo: move motor1 and 2 using encoders for reference
 }
 
-uint8_t M1Home() {
-    //Todo: move motor 1 such that the wire end is at the light. Recalibrate.
-}
-
 //Running the motor's job
 void runJob() {
     switch (motorStatus) { //Internal states unimportant to the boss task

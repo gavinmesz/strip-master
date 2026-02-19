@@ -35,6 +35,7 @@
 #include "task_display.h"
 #include "string.h"
 #include "task_actuatorControl.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

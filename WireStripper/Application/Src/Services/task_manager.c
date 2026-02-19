@@ -45,25 +45,25 @@ void TaskManager_CreateAllTasks(void)
         xReturned = xTaskCreate(vActuatorTask, "Actuator", 512, NULL, configMAX_PRIORITIES-3, &xActuatorTaskHandle);
 
         configASSERT(xReturned == pdPASS);
+
+        //Actuator Task
+        xReturned = xTaskCreate(vActuatorTask, "Actuator", 512, NULL, configMAX_PRIORITIES-3, &xActuatorTaskHandle);
+
+        configASSERT(xReturned == pdPASS);
+
+        //Display Task: stack should be >1024 due to display buffer size
+        xReturned = xTaskCreate(vDisplayTask, "Display",  2048, NULL, configMAX_PRIORITIES-4, &xDisplayTaskHandle);
+
+        configASSERT(xReturned == pdPASS);
+
+        // Safety Poll Task: Make sure all bucks present power good
+        xReturned = xTaskCreate(vSafetyTask, "Safety",   512, NULL, configMAX_PRIORITIES-1, &xSafetyTaskHandle);
+
+        configASSERT(xReturned == pdPASS);
+
+        // State Machine Task: Monitor events and produce motor setpoints
+        xReturned = xTaskCreate(vStateMachineTask, "StateMachine",   512, NULL, configMAX_PRIORITIES-2, &xStateMachineTaskHandle);
+
+        configASSERT(xReturned == pdPASS);
     }
-
-    //Actuator Task
-    xReturned = xTaskCreate(vActuatorTask, "Actuator", 512, NULL, configMAX_PRIORITIES-3, &xActuatorTaskHandle);
-
-    configASSERT(xReturned == pdPASS);
-
-    //Display Task: stack should be >1024 due to display buffer size
-    xReturned = xTaskCreate(vDisplayTask, "Display",  2048, NULL, configMAX_PRIORITIES-4, &xDisplayTaskHandle);
-
-    configASSERT(xReturned == pdPASS);
-
-    // Safety Poll Task: Make sure all bucks present power good
-    xReturned = xTaskCreate(vSafetyTask, "Safety",   512, NULL, configMAX_PRIORITIES-1, &xSafetyTaskHandle);
-
-    configASSERT(xReturned == pdPASS);
-
-    // State Machine Task: Monitor events and produce motor setpoints
-    xReturned = xTaskCreate(vStateMachineTask, "StateMachine",   512, NULL, configMAX_PRIORITIES-2, &xStateMachineTaskHandle);
-
-    configASSERT(xReturned == pdPASS);
 }

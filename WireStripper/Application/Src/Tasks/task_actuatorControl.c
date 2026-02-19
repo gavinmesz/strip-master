@@ -115,12 +115,19 @@ void microSet(uint8_t const microStep, Motor const motor) {
 //change speed of motor. M1 and M2 are coupled in speed.
 void changeSpeed(float const speed, uint8_t const dir, Motor *motor) {
     //Require arr value for specific frequency of pulses. 100pps = 1Mhz/10000. 1000 = 1Mhz/100. 1000 = arr.
-    motor->TIMx->ARR = (uint32_t)(CLK_SPEED/speed);//pulses per second
+    uint32_t arr = (uint32_t)(CLK_SPEED/speed);
+    if (arr>65535) {
+        arr = 65535;
+    }
+
+    motor->TIMx->ARR = arr;//pulses per second
 
     motor->TIMx->EGR = TIM_EGR_UG; //Trigger a reset due to register change
     motor->TIMx->SR &= ~(TIM_SR_UIF); //Reset the interrupt flag
 
     motor->ccr = (uint32_t)((float)(motor->TIMx->ARR)*0.5);
+    __HAL_TIM_SET_COMPARE(motor->htim, motor->channel, motor->ccr);
+
     HAL_GPIO_WritePin(motor->DIR_Port, motor->DIR_Pin, dir);
 }
 

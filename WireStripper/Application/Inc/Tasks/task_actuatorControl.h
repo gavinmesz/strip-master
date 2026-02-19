@@ -80,6 +80,7 @@ uint8_t speedMove(int const speed, Motor* motor);
 void stopMotor(Motor *motor);
 uint8_t cutWire(void);
 uint8_t stripWire(void);
+void stopAllMotors();
 
 extern Motor Motor1;
 extern Motor Motor2;

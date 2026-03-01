@@ -21,10 +21,18 @@ TaskHandle_t xMotorTestHandle = NULL;
 int counterVar;
 
 void TaskManager_InitTasks(void){
+    //Display
     if (initDisplay() != 1) {
         configASSERT(0);
     }
 
+    //Motor actuators
+
+    //Safety
+    BMS.i2cHandle = &hi2c2;
+    BQ76920_Initialize(&BMS, &hi2c2); // Init BMS
+
+    //Display
     //Assign nonsense values to user config variables to begin
     quantity = -1;
     length = -1;

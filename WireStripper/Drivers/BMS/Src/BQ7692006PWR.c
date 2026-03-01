@@ -1,585 +1,401 @@
-/* --COPYRIGHT--,BSD_EX
- * Copyright (c) 2021, Texas Instruments Incorporated
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * *  Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * *  Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * *  Neither the name of Texas Instruments Incorporated nor the names of
- *    its contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * --/COPYRIGHT--*//* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  * (Non-USER sections generated from STM32CubeMX software)
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
-  */
-//  BQ76952EVM demo code for STM32 NUCLEO-F103RB + BQ76952EVM
-//
-//  Connection description: The I2C SCL and SDA pins are the only pin connections required between the
-//  NUCLEO board and the BQ76952EVM for this demo code. Also a ground connection should be made between the 2 boards.
-//  The ALERT, RST_SHUT, and DFETOFF pins are also configured on the MCU and can be used as shown.
-//
-//                                     /|\ /|\
-//                   STM32             5k |
-//                 -----------------    |  5k
-//                |             PB8 |---+---|-- I2C Clock (SCL)
-//                |                 |       |
-//                |		        PB9 |-------+-- I2C Data (SDA)
-//                |                 |
-//     DFETOFF ---| PA8             |
-//                |                 |
-//   RST_SHUT  ---| PA9        		|--- Green LED
-//                |                 |
-//      ALERT  ---|	PA10            |
-//                |                 |
+/*******************************************************************************
+ * @file        BQ76920.c
+ * @brief       C Library for BQ76920 an Analog Front-End Battery Manangement System
+ * @version     2.0
+ * @author      Nawat Kitiphuwadon, extensively modified by Ignatius Djaynurdin
+ * @date        2023-7-04
+ ********************************************************************************
 
-//Todo: Make this non-blocking
-#include "main.h"
-#include <stdio.h>
-#include "../Inc/BQ7692006PWR.h"
+ MIT License
+ Copyright (c) 2018 ETA Systems
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
+
+#include "BQ7692006PWR.h"
 #include "i2c.h"
-#include "FreeRTOS.h"
-#include "task.h"
+#include <stdint.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
 
-#define DEV_ADDR  0x10  // BQ769x2 address is 0x10 including R/W bit or 0x8 as 7-bit address
-#define CRC_Mode 0  // 0 for disabled, 1 for enabled
-#define MAX_BUFFER_SIZE 10
-#define R 0 // Read; Used in DirectCommands and Subcommands functions
-#define W 1 // Write; Used in DirectCommands and Subcommands functions
-#define W2 2 // Write data with two bytes; Used in Subcommands function
+void BQ76920_Initialize(BQ76920_t *BMS, I2C_HandleTypeDef *i2cHandle) {
+	// Device StartUp
+	BMS->i2cHandle = i2cHandle;
+	BMS->SOH = 100.0f;
 
-/* USER CODE BEGIN PV */
-uint8_t RX_data [2] = {0x00, 0x00}; // used in several functions to store data read from BQ769x2
-uint8_t RX_32Byte [32] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-	//used in Subcommands read function
-// Global Variables for cell voltages, temperatures, Stack voltage, PACK Pin voltage, LD Pin voltage, CC2 current
-uint16_t CellVoltage [16] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-float Temperature [3] = {0,0,0};
-uint16_t Stack_Voltage = 0x00;
-uint16_t Pack_Voltage = 0x00;
-uint16_t LD_Voltage = 0x00;
-uint16_t Pack_Current = 0x00;
+	// Set SYS_STAT to 0xff
+	uint8_t SYS_STAT_VAL = 0xff;
+	BQ76920_WriteRegister(BMS, SYS_STAT, &SYS_STAT_VAL);
 
-uint16_t AlarmBits = 0x00;
-uint8_t value_SafetyStatusA;  // Safety Status Register A
-uint8_t value_SafetyStatusB;  // Safety Status Register B
-uint8_t value_SafetyStatusC;  // Safety Status Register C
-uint8_t value_PFStatusA;   // Permanent Fail Status Register A
-uint8_t value_PFStatusB;   // Permanent Fail Status Register B
-uint8_t value_PFStatusC;   // Permanent Fail Status Register C
-uint8_t FET_Status;  // FET Status register contents  - Shows states of FETs
-uint16_t CB_ActiveCells;  // Cell Balancing Active Cells
+	// Set CC_CFG to 0x19
+	uint8_t CC_CFG_REG = 0x19;
+	BQ76920_WriteRegister(BMS, CC_CFG, &CC_CFG_REG);
 
-uint8_t	UV_Fault = 0;   // under-voltage fault state
-uint8_t	OV_Fault = 0;   // over-voltage fault state
-uint8_t	SCD_Fault = 0;  // short-circuit fault state
-uint8_t	OCD_Fault = 0;  // over-current fault state
-uint8_t ProtectionsTriggered = 0; // Set to 1 if any protection triggers
+	// Set ADC_EN and TEMP_SEL
+	uint8_t SYS_CTRL1_REG = 0x10;
+	BQ76920_WriteRegister(BMS, SYS_CTRL1, &SYS_CTRL1_REG);
 
-uint8_t LD_ON = 0;	// Load Detect status bit
-uint8_t DSG = 0;   // discharge FET state
-uint8_t CHG = 0;   // charge FET state
-uint8_t PCHG = 0;  // pre-charge FET state
-uint8_t PDSG = 0;  // pre-discharge FET state
+	// Set CC_EN
+	uint8_t SYS_CTRL2_REG = 0x43; // Set to 0x43 if no SOC
+	BQ76920_WriteRegister(BMS, SYS_CTRL2, &SYS_CTRL2_REG);
 
-uint32_t AccumulatedCharge_Int; // in BQ769x2_READPASSQ func
-uint32_t AccumulatedCharge_Frac;// in BQ769x2_READPASSQ func
-uint32_t AccumulatedCharge_Time;// in BQ769x2_READPASSQ func
+	// Read ADCGAIN
+	uint8_t regData[2] = { 0u, 0u };	// declare buffer
+	BQ76920_ReadRegister(BMS, ADCGAIN1, &regData[0]);
+	BQ76920_ReadRegister(BMS, ADCGAIN2, &regData[1]);
+	uint8_t ADCGAIN = (((regData[1] & 0xE0) >> 5) | ((regData[0] & 0x0C) << 1));
+	uint16_t GAIN = ADCGAIN + 365;
+	BMS->GAIN = GAIN;
 
-static void CopyArray(uint8_t *source, uint8_t *dest, uint8_t count)
-{
-    uint8_t copyIndex = 0;
-    for (copyIndex = 0; copyIndex < count; copyIndex++)
-    {
-        dest[copyIndex] = source[copyIndex];
+	// Read ADCOFFSET
+	BQ76920_ReadRegister(BMS, ADCOFFSET, &regData[0]);
+	int8_t OFFSET = (int8_t) regData[0];
+	BMS->OFFSET = OFFSET;
+
+	// Set protect1 register
+	uint8_t PROTECT1_REG;
+	BQ76920_ReadRegister(BMS, PROTECT1, &PROTECT1_REG);
+	PROTECT1_REG = PROTECT1_REG | (SDC_100us_delay << 3);
+	PROTECT1_REG = PROTECT1_REG | SCD_Threshold_89mV;
+	BQ76920_WriteRegister(BMS, PROTECT1, &PROTECT1_REG);
+
+	// Set protect2 register
+	uint8_t PROTECT2_REG;
+	BQ76920_ReadRegister(BMS, PROTECT2, &PROTECT2_REG);
+	PROTECT2_REG = PROTECT2_REG | (ODC_160ms_delay << 5);
+	PROTECT2_REG = PROTECT2_REG | (OCD_Threshold_8mV);
+	BQ76920_WriteRegister(BMS, PROTECT2, &PROTECT2_REG);
+
+	// Set protect3 register
+	uint8_t PROTECT3_REG;
+	BQ76920_ReadRegister(BMS, PROTECT3, &PROTECT3_REG);
+	PROTECT3_REG = PROTECT3_REG | (UV_Delay_4s << 6);
+	PROTECT3_REG = PROTECT3_REG | (OV_Delay_4s << 4);
+	BQ76920_WriteRegister(BMS, PROTECT3, &PROTECT3_REG);
+
+	// Set OV_Trip register
+	uint16_t OV = grossOV * 1000;
+	uint16_t temp = (uint16_t) ((float) (OV - BMS->OFFSET)
+			/ ((float) (BMS->GAIN) / 1000));
+	temp = (temp & 0x0ff0) >> 4;
+	uint8_t OV_TRIP_FULL = temp & 0xff;
+	BQ76920_WriteRegister(BMS, OV_TRIP, &OV_TRIP_FULL);
+
+	// Set UV_Trip register
+	uint16_t UV = grossUV * 1000;
+	temp =
+			(uint16_t) ((float) (UV - BMS->OFFSET)
+					/ ((float) (BMS->GAIN) / 1000));
+	temp = (temp & 0x0ff0) >> 4;
+	uint8_t UV_TRIP_FULL = temp & 0xff;
+	BQ76920_WriteRegister(BMS, UV_TRIP, &UV_TRIP_FULL);
+
+	BMS->SOH = 45.0;
+	BMS->SOHEnergy = 45.0;
+	BMS->SOHCapacity = 45.0;
+	BMS->SOHOCV = 45.0;
+}
+
+float getCellVoltage(BQ76920_t *BMS, int cell) {
+	if ((cell == VC1) || (cell == VC2) || (cell == VC3) || (cell == VC4)) {
+		uint8_t regData[2] = { 0u, 0u };	// Declare buffer
+		BQ76920_ReadRegister(BMS, cell, &regData[0]); // Read Hi
+		BQ76920_ReadRegister(BMS, cell + 1, &regData[1]); // Read Lo
+		uint16_t VoltageCellRaw = (((regData[0] & 0x3f) << 8)) | regData[1];
+		float VoltageCell = (((float) (BMS->GAIN) / 1000)
+				* ((float) VoltageCellRaw) + (float) (BMS->OFFSET)) / 1000;
+		// Stored data in struct for balance Cell
+		switch (cell) {
+		case VC1:
+			BMS->Vcell[0] = VoltageCell;
+			break;
+		case VC2:
+			BMS->Vcell[1] = VoltageCell;
+			break;
+		case VC3:
+			BMS->Vcell[2] = VoltageCell;
+			break;
+		case VC4:
+			BMS->Vcell[3] = VoltageCell;
+			break;
+		default:
+			break;
+		}
+		// Return float value of requested cell
+		return VoltageCell;
+	} else
+		return 0;
+}
+
+float getPackVoltage(BQ76920_t *BMS) {
+	uint8_t regData[2] = { 0u, 0u };	// Declare buffer
+	BQ76920_ReadRegister(BMS, BAT_LO, &regData[0]);	// Read data in BAT_LO register
+	BQ76920_ReadRegister(BMS, BAT_HI, &regData[1]); // Read data in BAT_HI register
+	// Return float value of Vpack
+	BMS->Vpack = (float) ((regData[1] << 8) | regData[0]) * 4
+			* (BMS->GAIN / 1000000.0f) + (4 * (BMS->OFFSET) / 1000);
+	return BMS->Vpack;
+}
+
+float getCurrent(BQ76920_t *BMS) {
+	uint8_t regData[2] = { 0u, 0u };	// Declare buffer
+	BQ76920_ReadRegister(BMS, CC_LO, &regData[0]);
+	BQ76920_ReadRegister(BMS, CC_HI, &regData[1]);
+
+	int16_t CurrentRaw = (int16_t) ((regData[1] << 8) | regData[0]);
+
+	// Check if CurrentRaw is negative
+	if (CurrentRaw & 0x8000) {
+		// Perform 2's complement conversion
+		CurrentRaw = -(~CurrentRaw + 1);
+	}
+
+	if (CurrentRaw == 1 || CurrentRaw == -1) {
+		CurrentRaw = 0;
+	}
+
+	float Current = (float) CurrentRaw * 8.44; // in uV
+	Current = Current / RSENSE; // in mA
+
+	return Current; // in mA
+}
+
+float SOCPack(BQ76920_t *BMS, float PackCurrent, float Vpack) {
+    // Determine total capacity in mW-sec and mA-sec
+    float fullCapacityEnergy = grossCapacity * 3600.0f * 4.0f * nominalPackV * (BMS->SOH / 100.0f);
+    float fullCapacityCurrent = grossCapacity * 3600.0f * 4.0f * (BMS->SOH / 100.0f);
+
+    // Take account for Round Trip Efficiency during charging
+    if (PackCurrent > 0) {
+       PackCurrent *= ROUND_TRIP_EFFICIENCY;
     }
+
+    // Sensor Reading Integration
+    // NOTE: This assumes this function is called at exactly 1.000 Hz.
+    // If your loop timing varies, you must multiply PackCurrent by dt (elapsed time in seconds).
+    BMS->wattUsage += (PackCurrent * Vpack);
+    BMS->currentUsage += PackCurrent;
+
+    // Calculation of percentages
+    BMS->SOCEnergy = (float) ((fullCapacityEnergy + BMS->wattUsage) * 100.0f / fullCapacityEnergy);
+    BMS->SOCCapacity = (float) ((fullCapacityCurrent + BMS->currentUsage) * 100.0f / fullCapacityCurrent);
+
+    // Set SOC using the industry-standard Coulomb Counting (Capacity) method
+    BMS->SOC = BMS->SOCCapacity;
+
+    return BMS->SOC;
 }
 
-static unsigned char Checksum(unsigned char *ptr, unsigned char len)
-// Calculates the checksum when writing to a RAM register. The checksum is the inverse of the sum of the bytes.
-{
-	unsigned char i;
-	unsigned char checksum = 0;
+float SOHPack(BQ76920_t *BMS) {
+    // Determine thresholds
+    float EnergyCapacity = grossCapacity * 3600.0f * 4.0f * nominalPackV;
+    float AmpereCapacity = grossCapacity * 3600.0f * 4.0f;
+    float FullOCV = netOV;
 
-	for(i=0; i<len; i++)
-		checksum += ptr[i];
+    // Safely find the lowest cell voltage to determine SOHOCV
+    // (Assumes a 4-cell configuration based on original loop logic)
+    BMS->smallestV = BMS->Vcell[0];
+    for (int i = 1; i < 4; i++) {
+       if (BMS->Vcell[i] < BMS->smallestV) {
+          BMS->smallestV = BMS->Vcell[i];
+       }
+    }
 
-	checksum = 0xff & ~checksum;
+    // Calculate individual health metrics
+    BMS->SOHEnergy = (float) (BMS->wattUsage * 100.0f / EnergyCapacity);
+    BMS->SOHCapacity = (float) (BMS->currentUsage * 100.0f / AmpereCapacity);
+    BMS->SOHOCV = (float) (BMS->smallestV * 100.0f / FullOCV);
 
-	return(checksum);
+    // Blend the metrics using a simple average instead of a Kalman filter
+    // You can adjust the weights here if you trust Capacity fade more than OCV drop
+    BMS->SOH = (BMS->SOHCapacity + BMS->SOHOCV + BMS->SOHEnergy) / 3.0f;
+
+    // Reset accumulators for the next full cycle
+    BMS->wattUsage = 0.0f;
+    BMS->currentUsage = 0.0f;
+
+    return BMS->SOH;
 }
 
-static unsigned char CRC8(unsigned char *ptr, unsigned char len)
-//Calculates CRC8 for passed bytes. Used in i2c read and write functions
-{
-	unsigned char i;
-	unsigned char crc=0;
-	while(len--!=0)
-	{
-		for(i=0x80; i!=0; i/=2)
-		{
-			if((crc & 0x80) != 0)
-			{
-				crc *= 2;
-				crc ^= 0x107;
+void readAlert(BQ76920_t *BMS) {
+	uint8_t temp;
+	BQ76920_ReadRegister(BMS, SYS_STAT, &temp);
+	for (int i = 0; i <= 7; i++) {
+		uint8_t tmp = temp;
+		BMS->Alert[i] = (tmp >> i) & 1;
+	}
+}
+
+void EnableBalanceCell(BQ76920_t *BMS, float PackCurrent) {
+	if (PackCurrent <= 0.0f) {
+		uint8_t notBalancing = 0x00;
+		BQ76920_WriteRegister(BMS, CELLBAL1, &notBalancing);
+	} else {
+		float maxDifference = 0;
+		int balanceCase = 0;
+		uint8_t balancingFlags = 0x01;
+		// Iterate over the array and find the maximum difference
+		for (int i = 0; i < 3; i++) {
+			float difference = fabsf(BMS->Vcell[i] - BMS->Vcell[i + 1]);
+			if (difference > maxDifference) {
+				maxDifference = difference;
+				balanceCase = i;
 			}
-			else
-				crc *= 2;
-
-			if((*ptr & i)!=0)
-				crc ^= 0x107;
 		}
-		ptr++;
+		// Set the balancing flags based on the balanceCase
+		if (balanceCase == 1) {
+			balancingFlags = 0x02;
+		} else if (balanceCase == 2) {
+			balancingFlags = 0x04;
+		}
+		BQ76920_WriteRegister(BMS, CELLBAL1, &balancingFlags);
 	}
-	return(crc);
 }
 
-static void I2C_WriteReg(uint8_t reg_addr, uint8_t *reg_data, uint8_t count)
-{
-	uint8_t TX_Buffer [MAX_BUFFER_SIZE] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-#if CRC_Mode
-	{
-		uint8_t crc_count = 0;
-		crc_count = count * 2;
-		uint8_t crc1stByteBuffer [3] = {0x10, reg_addr, reg_data[0]};
-		unsigned int j;
-		unsigned int i;
-		uint8_t temp_crc_buffer [3];
-
-		TX_Buffer[0] = reg_data[0];
-		TX_Buffer[1] = CRC8(crc1stByteBuffer,3);
-
-		j = 2;
-		for(i=1; i<count; i++)
-		{
-			TX_Buffer[j] = reg_data[i];
-			j = j + 1;
-			temp_crc_buffer[0] = reg_data[i];
-			TX_Buffer[j] = CRC8(temp_crc_buffer,1);
-			j = j + 1;
-		}
-		HAL_I2C_Mem_Write(&hi2c1, DEV_ADDR, reg_addr, 1, TX_Buffer, crc_count, 1000);
-	}
-#else
-	HAL_I2C_Mem_Write(&hi2c2, DEV_ADDR, reg_addr, 1, reg_data, count, 1000);
-#endif
+void turnCHGOn(BQ76920_t *BMS) {
+	uint8_t temp;
+	BQ76920_ReadRegister(BMS, SYS_CTRL2, &temp);
+	temp = temp | 1;
+	BQ76920_WriteRegister(BMS, SYS_CTRL2, &temp);
 }
 
-static int I2C_ReadReg(uint8_t reg_addr, uint8_t *reg_data, uint8_t count)
-{
-	unsigned int RX_CRC_Fail = 0;  // reset to 0. If in CRC Mode and CRC fails, this will be incremented.
-	uint8_t RX_Buffer [MAX_BUFFER_SIZE] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-#if CRC_Mode
-	{
-		uint8_t crc_count = 0;
-		uint8_t ReceiveBuffer [10] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-		crc_count = count * 2;
-		unsigned int j;
-		unsigned int i;
-		unsigned char CRCc = 0;
-		uint8_t temp_crc_buffer [3];
+void turnDSGOn(BQ76920_t *BMS) {
+	uint8_t temp;
+	BQ76920_ReadRegister(BMS, SYS_CTRL2, &temp);
+	temp = temp | 2;
+	BQ76920_WriteRegister(BMS, SYS_CTRL2, &temp);
+}
 
-		HAL_I2C_Mem_Read(&hi2c1, DEV_ADDR, reg_addr, 1, ReceiveBuffer, crc_count, 1000);
-		uint8_t crc1stByteBuffer [4] = {0x10, reg_addr, 0x11, ReceiveBuffer[0]};
-		CRCc = CRC8(crc1stByteBuffer,4);
-		if (CRCc != ReceiveBuffer[1])
-		{
-			RX_CRC_Fail += 1;
-		}
-		RX_Buffer[0] = ReceiveBuffer[0];
+void turnCHGOff(BQ76920_t *BMS) {
+	uint8_t temp;
+	BQ76920_ReadRegister(BMS, SYS_CTRL2, &temp);
+	temp = temp & 254;
+	BQ76920_WriteRegister(BMS, SYS_CTRL2, &temp);
+}
 
-		j = 2;
-		for (i=1; i<count; i++)
-		{
-			RX_Buffer[i] = ReceiveBuffer[j];
-			temp_crc_buffer[0] = ReceiveBuffer[j];
-			j = j + 1;
-			CRCc = CRC8(temp_crc_buffer,1);
-			if (CRCc != ReceiveBuffer[j])
-				RX_CRC_Fail += 1;
-			j = j + 1;
-		}
-		CopyArray(RX_Buffer, reg_data, crc_count);
+void turnDSGOff(BQ76920_t *BMS) {
+	uint8_t temp;
+	BQ76920_ReadRegister(BMS, SYS_CTRL2, &temp);
+	temp = temp & 253;
+	BQ76920_WriteRegister(BMS, SYS_CTRL2, &temp);
+}
+
+void CLEAR_SYS_STAT(BQ76920_t *BMS) {
+	uint8_t temp = 0xff;
+	BQ76920_WriteRegister(BMS, SYS_STAT, &temp);
+}
+
+uint8_t getAlert(BQ76920_t *BMS, uint8_t k) {
+	return BMS->Alert[k];
+}
+
+uint8_t checkUV(float Vcell[4]) {
+	if (Vcell[0] <= netUV || Vcell[1] <= netUV || Vcell[2] <= netUV
+			|| Vcell[3] <= netUV) {
+		return 1;
 	}
-#else
-	HAL_I2C_Mem_Read(&hi2c2, DEV_ADDR, reg_addr, 1, reg_data, count, 1000);
-#endif
 	return 0;
 }
 
-void BQ769x2_SetRegister(uint16_t reg_addr, uint32_t reg_data, uint8_t datalen)
-{
-	uint8_t TX_Buffer[2] = {0x00, 0x00};
-	uint8_t TX_RegData[6] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-
-	//TX_RegData in little endian format
-	TX_RegData[0] = reg_addr & 0xff;
-	TX_RegData[1] = (reg_addr >> 8) & 0xff;
-	TX_RegData[2] = reg_data & 0xff; //1st byte of data
-
-	switch(datalen)
-    {
-		case 1: //1 byte datalength
-      		I2C_WriteReg(0x3E, TX_RegData, 3);
-			vTaskDelay(2); //2ms
-			TX_Buffer[0] = Checksum(TX_RegData, 3);
-			TX_Buffer[1] = 0x05; //combined length of register address and data
-      		I2C_WriteReg(0x60, TX_Buffer, 2); // Write the checksum and length
-			vTaskDelay(2); //2ms
-			break;
-		case 2: //2 byte datalength
-			TX_RegData[3] = (reg_data >> 8) & 0xff;
-			I2C_WriteReg(0x3E, TX_RegData, 4);
-			vTaskDelay(2); //2ms
-			TX_Buffer[0] = Checksum(TX_RegData, 4);
-			TX_Buffer[1] = 0x06; //combined length of register address and data
-      		I2C_WriteReg(0x60, TX_Buffer, 2); // Write the checksum and length
-			vTaskDelay(2); //2ms
-			break;
-		case 4: //4 byte datalength, Only used for CCGain and Capacity Gain
-			TX_RegData[3] = (reg_data >> 8) & 0xff;
-			TX_RegData[4] = (reg_data >> 16) & 0xff;
-			TX_RegData[5] = (reg_data >> 24) & 0xff;
-			I2C_WriteReg(0x3E, TX_RegData, 6);
-			vTaskDelay(2); //2ms
-			TX_Buffer[0] = Checksum(TX_RegData, 6);
-			TX_Buffer[1] = 0x08; //combined length of register address and data
-      		I2C_WriteReg(0x60, TX_Buffer, 2); // Write the checksum and length
-			vTaskDelay(2); //2ms
-			break;
-    }
-}
-
-static void CommandSubcommands(uint16_t command) //For Command only Subcommands
-// See the TRM or the BQ76952 header file for a full list of Command-only subcommands
-{	//For DEEPSLEEP/SHUTDOWN subcommand you will need to call this function twice consecutively
-
-	uint8_t TX_Reg[2] = {0x00, 0x00};
-
-	//TX_Reg in little endian format
-	TX_Reg[0] = command & 0xff;
-	TX_Reg[1] = (command >> 8) & 0xff;
-
-	I2C_WriteReg(0x3E,TX_Reg,2);
-	vTaskDelay(2); //2ms
-}
-
-static void Subcommands(uint16_t command, uint16_t data, uint8_t type)
-// See the TRM or the BQ76952 header file for a full list of Subcommands
-{
-	//security keys and Manu_data writes dont work with this function (reading these commands works)
-	//max readback size is 32 bytes i.e. DASTATUS, CUV/COV snapshot
-	uint8_t TX_Reg[4] = {0x00, 0x00, 0x00, 0x00};
-	uint8_t TX_Buffer[2] = {0x00, 0x00};
-
-	//TX_Reg in little endian format
-	TX_Reg[0] = command & 0xff;
-	TX_Reg[1] = (command >> 8) & 0xff;
-
-	if (type == R) {//read
-		I2C_WriteReg(0x3E,TX_Reg,2);
-		vTaskDelay(2);
-		I2C_ReadReg(0x40, RX_32Byte, 32); //RX_32Byte is a global variable
+uint8_t checkNotUV(float Vcell[4], uint8_t UV) {
+	if (UV && Vcell[0] >= netUV + thresholdRange
+			&& Vcell[1] >= netUV + thresholdRange
+			&& Vcell[2] >= netUV + thresholdRange
+			&& Vcell[3] >= netUV + thresholdRange) {
+		return 1;
 	}
-	else if (type == W) {
-		//FET_Control, REG12_Control
-		TX_Reg[2] = data & 0xff;
-		I2C_WriteReg(0x3E,TX_Reg,3);
-		vTaskDelay(1);
-		TX_Buffer[0] = Checksum(TX_Reg, 3);
-		TX_Buffer[1] = 0x05; //combined length of registers address and data
-		I2C_WriteReg(0x60, TX_Buffer, 2);
-		vTaskDelay(1);
+	return 0;
+}
+
+uint8_t checkOV(float Vcell[4]) {
+	if (Vcell[0] >= grossOV || Vcell[1] >= grossOV || Vcell[2] >= grossOV
+			|| Vcell[3] >= grossOV) {
+		return 1;
 	}
-	else if (type == W2){ //write data with 2 bytes
-		//CB_Active_Cells, CB_SET_LVL
-		TX_Reg[2] = data & 0xff;
-		TX_Reg[3] = (data >> 8) & 0xff;
-		I2C_WriteReg(0x3E,TX_Reg,4);
-		vTaskDelay(1);
-		TX_Buffer[0] = Checksum(TX_Reg, 4);
-		TX_Buffer[1] = 0x06; //combined length of registers address and data
-		I2C_WriteReg(0x60, TX_Buffer, 2);
-		vTaskDelay(1);
+	return 0;
+}
+
+uint8_t checkNotOV(float Vcell[4], uint8_t OV) {
+	if (OV && Vcell[0] <= grossOV - thresholdRange
+			&& Vcell[1] <= grossOV - thresholdRange
+			&& Vcell[2] <= grossOV - thresholdRange
+			&& Vcell[3] <= grossOV - thresholdRange) {
+		return 1;
 	}
+	return 0;
 }
 
-static void DirectCommands(uint8_t command, uint16_t data, uint8_t type)
-// See the TRM or the BQ76952 header file for a full list of Direct Commands
-{	//type: R = read, W = write
-	uint8_t TX_data[2] = {0x00, 0x00};
-
-	//little endian format
-	TX_data[0] = data & 0xff;
-	TX_data[1] = (data >> 8) & 0xff;
-
-	if (type == R) {//Read
-		I2C_ReadReg(command, RX_data, 2); //RX_data is a global variable
-		vTaskDelay(2);
-	}
-	if (type == W) {//write
-    //Control_status, alarm_status, alarm_enable all 2 bytes long
-		I2C_WriteReg(command,TX_data,2);
-		vTaskDelay(2);
-	}
+// Debug
+void justWrite1(BQ76920_t *BMS) { // For Debug
+	uint8_t temp = 0xcd;
+	BQ76920_WriteRegister(BMS, CC_CFG, &temp);
 }
 
-void BQ769x2_Init() {
-	// Configures all parameters in device RAM
-
-	// Enter CONFIGUPDATE mode (Subcommand 0x0090) - It is required to be in CONFIG_UPDATE mode to program the device RAM settings
-	// See TRM for full description of CONFIG_UPDATE mode
-	CommandSubcommands(SET_CFGUPDATE);
-
-	// After entering CONFIG_UPDATE mode, RAM registers can be programmed. When programming RAM, checksum and length must also be
-	// programmed for the change to take effect. All of the RAM registers are described in detail in the BQ769x2 TRM.
-	// An easier way to find the descriptions is in the BQStudio Data Memory screen. When you move the mouse over the register name,
-	// a full description of the register and the bits will pop up on the screen.
-
-	// 'Power Config' - 0x9234 = 0x2D80
-	// Setting the DSLP_LDO bit allows the LDOs to remain active when the device goes into Deep Sleep mode
-  	// Set wake speed bits to 00 for best performance
-	BQ769x2_SetRegister(PowerConfig, 0x2D80, 2);
-
-	// 'REG0 Config' - set REG0_EN bit to enable pre-regulator
-	BQ769x2_SetRegister(REG0Config, 0x01, 1);
-
-	// 'REG12 Config' - Enable REG1 with 3.3V output (0x0D for 3.3V, 0x0F for 5V)
-	BQ769x2_SetRegister(REG12Config, 0x0D, 1);
-
-	// Set DFETOFF pin to control BOTH CHG and DSG FET - 0x92FB = 0x42 (set to 0x00 to disable)
-	BQ769x2_SetRegister(DFETOFFPinConfig, 0x42, 1);
-
-	// Set up ALERT Pin - 0x92FC = 0x2A
-	// This configures the ALERT pin to drive high (REG1 voltage) when enabled.
-	// The ALERT pin can be used as an interrupt to the MCU when a protection has triggered or new measurements are available
-	BQ769x2_SetRegister(ALERTPinConfig, 0x2A, 1);
-
-	// Set TS1 to measure Cell Temperature - 0x92FD = 0x07
-	BQ769x2_SetRegister(TS1Config, 0x07, 1);
-
-	// Set TS3 to measure FET Temperature - 0x92FF = 0x0F
-	BQ769x2_SetRegister(TS3Config, 0x0F, 1);
-
-	// Set HDQ to measure Cell Temperature - 0x9300 = 0x07
-	BQ769x2_SetRegister(HDQPinConfig, 0x00, 1);  // No thermistor installed on EVM HDQ pin, so set to 0x00
-
-	// 'VCell Mode' - Enable 16 cells - 0x9304 = 0x0000; Writing 0x0000 sets the default of 16 cells
-	BQ769x2_SetRegister(VCellMode, 0x0000, 2);
-
-	// Enable protections in 'Enabled Protections A' 0x9261 = 0xBC
-	// Enables SCD (short-circuit), OCD1 (over-current in discharge), OCC (over-current in charge),
-	// COV (over-voltage), CUV (under-voltage)
-	BQ769x2_SetRegister(EnabledProtectionsA, 0xBC, 1);
-
-	// Enable all protections in 'Enabled Protections B' 0x9262 = 0xF7
-	// Enables OTF (over-temperature FET), OTINT (internal over-temperature), OTD (over-temperature in discharge),
-	// OTC (over-temperature in charge), UTINT (internal under-temperature), UTD (under-temperature in discharge), UTC (under-temperature in charge)
-	BQ769x2_SetRegister(EnabledProtectionsB, 0xF7, 1);
-
-	// 'Default Alarm Mask' - 0x..82 Enables the FullScan and ADScan bits, default value = 0xF800
-	BQ769x2_SetRegister(DefaultAlarmMask, 0xF882, 2);
-
-	// Set up Cell Balancing Configuration - 0x9335 = 0x03   -  Automated balancing while in Relax or Charge modes
-	// Also see "Cell Balancing with BQ769x2 Battery Monitors" document on ti.com
-	BQ769x2_SetRegister(BalancingConfiguration, 0x03, 1);
-
-	// Set up CUV (under-voltage) Threshold - 0x9275 = 0x31 (2479 mV)
-	// CUV Threshold is this value multiplied by 50.6mV
-	BQ769x2_SetRegister(CUVThreshold, 0x31, 1);
-
-	// Set up COV (over-voltage) Threshold - 0x9278 = 0x55 (4301 mV)
-	// COV Threshold is this value multiplied by 50.6mV
-	BQ769x2_SetRegister(COVThreshold, 0x55, 1);
-
-	// Set up OCC (over-current in charge) Threshold - 0x9280 = 0x05 (10 mV = 10A across 1mOhm sense resistor) Units in 2mV
-	BQ769x2_SetRegister(OCCThreshold, 0x05, 1);
-
-	// Set up OCD1 Threshold - 0x9282 = 0x0A (20 mV = 20A across 1mOhm sense resistor) units of 2mV
-	BQ769x2_SetRegister(OCD1Threshold, 0x0A, 1);
-
-	// Set up SCD Threshold - 0x9286 = 0x05 (100 mV = 100A across 1mOhm sense resistor)  0x05=100mV
-	BQ769x2_SetRegister(SCDThreshold, 0x05, 1);
-
-	// Set up SCD Delay - 0x9287 = 0x03 (30 us) Enabled with a delay of (value - 1) * 15 µs; min value of 1
-	BQ769x2_SetRegister(SCDDelay, 0x03, 1);
-
-	// Set up SCDL Latch Limit to 1 to set SCD recovery only with load removal 0x9295 = 0x01
-	// If this is not set, then SCD will recover based on time (SCD Recovery Time parameter).
-	BQ769x2_SetRegister(SCDLLatchLimit, 0x01, 1);
-
-	// Exit CONFIGUPDATE mode  - Subcommand 0x0092
-	CommandSubcommands(EXIT_CFGUPDATE);
+float justGetter1(BQ76920_t *BMS) { // For Debug
+	return BMS->SOCEnergy;
 }
 
-//  ********************************* FET Control Commands  ***************************************
-
-void BQ769x2_BOTHOFF () {
-	// Disables all FETs using the DFETOFF (BOTHOFF) pin
-	// The DFETOFF pin on the BQ76952EVM should be connected to the MCU board to use this function
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);  // DFETOFF pin (BOTHOFF) set high
+float justGetter2(BQ76920_t *BMS) { // For Debug
+	return BMS->SOCCapacity;
 }
 
-void BQ769x2_RESET_BOTHOFF () {
-	// Resets DFETOFF (BOTHOFF) pin
-	// The DFETOFF pin on the BQ76952EVM should be connected to the MCU board to use this function
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);  // DFETOFF pin (BOTHOFF) set low
+float justGetter3(BQ76920_t *BMS) { // For Debug
+	return BMS->SOH;
 }
 
-void BQ769x2_ReadFETStatus() {
-	// Read FET Status to see which FETs are enabled
-	DirectCommands(FETStatus, 0x00, R);
-	FET_Status = (RX_data[1]*256 + RX_data[0]);
-	DSG = ((0x4 & RX_data[0])>>2);// discharge FET state
-  	CHG = (0x1 & RX_data[0]);// charge FET state
-  	PCHG = ((0x2 & RX_data[0])>>1);// pre-charge FET state
-  	PDSG = ((0x8 & RX_data[0])>>3);// pre-discharge FET state
+float justGetter4(BQ76920_t *BMS) { // For Debug
+	return BMS->SOHEnergy;
 }
 
-// ********************************* End of FET Control Commands *********************************
-
-// ********************************* BQ769x2 Power Commands   *****************************************
-
-void BQ769x2_ShutdownPin() {
-	// Puts the device into SHUTDOWN mode using the RST_SHUT pin
-	// The RST_SHUT pin on the BQ76952EVM should be connected to the MCU board to use this function
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);  // Sets RST_SHUT pin
+float justGetter5(BQ76920_t *BMS) { // For Debug
+	return BMS->SOHCapacity;
 }
 
-void BQ769x2_ReleaseShutdownPin() {
-	// Releases the RST_SHUT pin
-	// The RST_SHUT pin on the BQ76952EVM should be connected to the MCU board to use this function
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);  // Resets RST_SHUT pin
+float justGetter6(BQ76920_t *BMS) { // For Debug
+	return BMS->SOHOCV;
 }
 
-// ********************************* End of BQ769x2 Power Commands   *****************************************
-
-
-// ********************************* BQ769x2 Status and Fault Commands   *****************************************
-
-uint16_t BQ769x2_ReadAlarmStatus() {
-	// Read this register to find out why the ALERT pin was asserted
-	DirectCommands(AlarmStatus, 0x00, R);
-	return (RX_data[1]*256 + RX_data[0]);
+int32_t justGetter7(BQ76920_t *BMS) { // For Debug
+	return BMS->wattUsage;
 }
 
-void BQ769x2_ReadSafetyStatus() { //good example functions
-	// Read Safety Status A/B/C and find which bits are set
-	// This shows which primary protections have been triggered
-	DirectCommands(SafetyStatusA, 0x00, R);
-	value_SafetyStatusA = (RX_data[1]*256 + RX_data[0]);
-	//Example Fault Flags
-	UV_Fault = ((0x4 & RX_data[0])>>2);
-	OV_Fault = ((0x8 & RX_data[0])>>3);
-	SCD_Fault = ((0x8 & RX_data[1])>>3);
-	OCD_Fault = ((0x2 & RX_data[1])>>1);
-	DirectCommands(SafetyStatusB, 0x00, R);
-	value_SafetyStatusB = (RX_data[1]*256 + RX_data[0]);
-	DirectCommands(SafetyStatusC, 0x00, R);
-	value_SafetyStatusC = (RX_data[1]*256 + RX_data[0]);
-	if ((value_SafetyStatusA + value_SafetyStatusB + value_SafetyStatusC) > 1) {
-		ProtectionsTriggered = 1; }
-	else {
-		ProtectionsTriggered = 0; }
+int32_t justGetter8(BQ76920_t *BMS) { // For Debug
+	return BMS->currentUsage;
 }
 
-void BQ769x2_ReadPFStatus() {
-	// Read Permanent Fail Status A/B/C and find which bits are set
-	// This shows which permanent failures have been triggered
-	DirectCommands(PFStatusA, 0x00, R);
-	value_PFStatusA = (RX_data[1]*256 + RX_data[0]);
-	DirectCommands(PFStatusB, 0x00, R);
-	value_PFStatusB = (RX_data[1]*256 + RX_data[0]);
-	DirectCommands(PFStatusC, 0x00, R);
-	value_PFStatusC = (RX_data[1]*256 + RX_data[0]);
+uint8_t justRead1(BQ76920_t *BMS) { // For Debug
+	uint8_t temp;
+	BQ76920_ReadRegister(BMS, CELLBAL1, &temp);
+	return temp;
 }
 
-// ********************************* End of BQ769x2 Status and Fault Commands   *****************************************
-
-
-// ********************************* BQ769x2 Measurement Commands   *****************************************
-
-
-uint16_t BQ769x2_ReadVoltage(uint8_t command)
-// This function can be used to read a specific cell voltage or stack / pack / LD voltage
-{
-	//RX_data is global var
-	DirectCommands(command, 0x00, R);
-	if(command >= Cell1Voltage && command <= Cell16Voltage) {//Cells 1 through 16 (0x14 to 0x32)
-		return (RX_data[1]*256 + RX_data[0]); //voltage is reported in mV
-	}
-	else {//stack, Pack, LD
-		return 10 * (RX_data[1]*256 + RX_data[0]); //voltage is reported in 0.01V units
-	}
-
-}
-void BQ769x2_ReadAllVoltages()
-// Reads all cell voltages, Stack voltage, PACK pin voltage, and LD pin voltage
-{
-  int cellvoltageholder = Cell1Voltage; //Cell1Voltage is 0x14
-  for (int x = 0; x < 16; x++){//Reads all cell voltages
-    CellVoltage[x] = BQ769x2_ReadVoltage(cellvoltageholder);
-    cellvoltageholder = cellvoltageholder + 2;
-  }
-  Stack_Voltage = BQ769x2_ReadVoltage(StackVoltage);
-  Pack_Voltage = BQ769x2_ReadVoltage(PACKPinVoltage);
-  LD_Voltage = BQ769x2_ReadVoltage(LDPinVoltage);
+uint8_t justRead2(BQ76920_t *BMS) { // For Debug
+	uint8_t temp;
+	BQ76920_ReadRegister(BMS, SYS_CTRL2, &temp);
+	return temp;
 }
 
-uint16_t BQ769x2_ReadCurrent()
-// Reads PACK current
-{
-	DirectCommands(CC2Current, 0x00, R);
-	return (RX_data[1]*256 + RX_data[0]);  // current is reported in mA
+// Low Level Implementation
+void BQ76920_ReadRegister(BQ76920_t *BMS, uint8_t reg, uint8_t *data) {
+	HAL_I2C_Mem_Read(BMS->i2cHandle, BQ76920_ADDRESS, reg,
+	I2C_MEMADD_SIZE_8BIT, data, 1, 200);
 }
 
-float BQ769x2_ReadTemperature(uint8_t command)
-{
-	DirectCommands(command, 0x00, R);
-	//RX_data is a global var
-	return (0.1 * (float)(RX_data[1]*256 + RX_data[0])) - 273.15;  // converts from 0.1K to Celcius
+void BQ76920_WriteRegister(BQ76920_t *BMS, uint8_t reg, uint8_t *data) {
+	HAL_I2C_Mem_Write(BMS->i2cHandle, BQ76920_ADDRESS, reg,
+	I2C_MEMADD_SIZE_8BIT, data, 1, 200);
 }
-
-void BQ769x2_ReadPassQ(){ // Read Accumulated Charge and Time from DASTATUS6
-	Subcommands(DASTATUS6, 0x00, R);
-	AccumulatedCharge_Int = ((RX_32Byte[3]<<24) + (RX_32Byte[2]<<16) + (RX_32Byte[1]<<8) + RX_32Byte[0]); //Bytes 0-3
-	AccumulatedCharge_Frac = ((RX_32Byte[7]<<24) + (RX_32Byte[6]<<16) + (RX_32Byte[5]<<8) + RX_32Byte[4]); //Bytes 4-7
-	AccumulatedCharge_Time = ((RX_32Byte[11]<<24) + (RX_32Byte[10]<<16) + (RX_32Byte[9]<<8) + RX_32Byte[8]); //Bytes 8-11
-}
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

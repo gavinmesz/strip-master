@@ -182,10 +182,11 @@ void stopAllMotors() {
 }
 
 uint8_t cutWire() {
-    //Todo: move M3 one full rotation
+    //Todo: move M3 forward then back. Very slow
 }
 
 uint8_t stripWire() {
+
     //Todo: move M3, stop and back off when detected
 }
 

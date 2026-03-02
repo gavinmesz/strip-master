@@ -181,17 +181,20 @@ void stopAllMotors() {
     stopMotor(&Motor3);
 }
 
-uint8_t cutWire() {
-    //Todo: move M3 forward then back. Very slow
-}
-
 uint8_t stripWire() {
 
     //Todo: move M3, stop and back off when detected
 }
 
-uint8_t encoderMove(int const length, float const speed) {
-    //Todo: move motor1 and 2 using encoders for reference
+uint8_t encoderMove(int length, float const speed, uint32_t OG_Reading) {
+    uint32_t enc = __HAL_TIM_GET_COUNTER(&htim3);
+    if (OG_Reading-enc<length_to_steps(length, microStep1)) {
+        speedMove(speed, &Motor1); //Move motor at speed
+        speedMove(speed, &Motor2); //Move motor at speed
+        return 0;
+    }
+    stopAllMotors();
+    return 1;
 }
 
 //Running the motor's job
@@ -220,12 +223,17 @@ void runJob() {
             break;
         }
         case (M1_PEEL): { //use motor 1 to peel the insulation off
-            if (stepMove(-(length_to_steps(stripLength, microStep1)+TOLERANCE_STEP), PEEL_SPEED, &Motor1)) {motorStatus = M1_FULL_LENGTH_FEED;}
+            if (stepMove(-(length_to_steps(stripLength, microStep1)+TOLERANCE_STEP), PEEL_SPEED, &Motor1)) {
+                motorStatus = M1_FULL_LENGTH_FEED;
+                encoder1 = __HAL_TIM_GET_COUNTER(&htim3);
+                encoder2 = __HAL_TIM_GET_COUNTER(&htim4);
+            }
+
             break;
         }
         case (M1_FULL_LENGTH_FEED): { // Move the full length
             if (Motor1.motorDone == 1) { //Motor finished, start full length move
-                if (encoderMove(length+TOLERANCE_STEP, FEED_SPEED)) {motorStatus = CUT;}
+                if (encoderMove(length+TOLERANCE_STEP, FEED_SPEED, encoder1)) {motorStatus = CUT;}
             }
             break;
         }

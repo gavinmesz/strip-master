@@ -111,7 +111,7 @@ void vMotorTestTask(void *argument) {
                     else if (strcmp(cmd_buffer, "jog") == 0) {
                         currentMode = MODE_JOG;
                         printf("!!! JOG MODE ACTIVE !!!\r\n");
-                        printf("M1:A/D | M2:F/H | M3:J/L | Spd:+/- | Mode: M | [SPACE]:Stop | [Q]:Exit\r\n");
+                        printf("M1:A/D | M2:F/H | M1+M2:C/B | M3:J/L | Spd:+/- | Mode: M | [SPACE]:Stop | [Q]:Exit\r\n");
                         printf("Speed: %d pps | Mode: %s\r\n>", jog_speed, hold_to_run_active ? "Hold-to-Run" : "Continuous");
                     }
                     else if (strcmp(cmd_buffer, "status") == 0) {
@@ -183,6 +183,20 @@ void vMotorTestTask(void *argument) {
                     if (rx_char == 'h' || rx_char == 'H') { last_m2_tick = HAL_GetTick(); speedMove(-jog_speed, &Motor2); }
                     if (rx_char == 'j' || rx_char == 'J') { last_m3_tick = HAL_GetTick(); speedMove(jog_speed,  &Motor3); }
                     if (rx_char == 'l' || rx_char == 'L') { last_m3_tick = HAL_GetTick(); speedMove(-jog_speed, &Motor3); }
+
+                    // Composite Controls: M1 & M2 Simultaneous
+                    if (rx_char == 'c' || rx_char == 'C') {
+                        last_m1_tick = HAL_GetTick();
+                        last_m2_tick = HAL_GetTick();
+                        speedMove(jog_speed, &Motor1);
+                        speedMove(jog_speed, &Motor2);
+                    }
+                    if (rx_char == 'b' || rx_char == 'B') {
+                        last_m1_tick = HAL_GetTick();
+                        last_m2_tick = HAL_GetTick();
+                        speedMove(-jog_speed, &Motor1);
+                        speedMove(-jog_speed, &Motor2);
+                    }
                 }
             }
         }

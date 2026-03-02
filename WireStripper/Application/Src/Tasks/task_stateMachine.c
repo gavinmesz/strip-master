@@ -13,8 +13,8 @@
 #include "BQ7692006PWR.h"
 #include "main.h"
 #include "stm32f4xx_hal_gpio.h"
-#include "task_actuatorControl.h"
 #include "task_display.h"
+#include "task_safety.h"
 
 SystemStatus systemState;
 
@@ -52,7 +52,6 @@ uint8_t wirePresent(float adc){
 }
 
 void vStateMachineTask() {
-    static uint8_t shutdown = 0;
     systemState = CHECKS;
 
     for (;;) {
@@ -63,9 +62,10 @@ void vStateMachineTask() {
             *  b. wire not detected at #2? Make sure wire not jammed in already
             *  If these aren't true, something is wrong, SAFETY ERROR
             */
+                turnCHGOn(&BMS);
+                turnDSGOn(&BMS);
+                vTaskDelay(250); // Wait some time to start, allow for any safety signals to get sent.
                 if (safetyOK && wirePresent(*WIRE_IN_DETECT)) {
-                    turnCHGOn(BMS);
-                    turnDSGOn(BMS);
                     systemState = NONE;
                 } else {
                     systemState = SAFETY_ERROR;
@@ -116,6 +116,8 @@ void vStateMachineTask() {
             }
             case SAFETY_ERROR: {
                 //Here forever, shut down power
+                turnCHGOff(&BMS);
+                turnDSGOff(&BMS);
                 if (HAL_GPIO_ReadPin(BUCK12_EN_GPIO_Port, BUCK12_EN_Pin)) {
                     HAL_GPIO_WritePin(BUCK12_EN_GPIO_Port, BUCK12_EN_Pin, GPIO_PIN_RESET);
                 }

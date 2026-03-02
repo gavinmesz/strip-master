@@ -128,20 +128,26 @@ void vDisplayTask()
     Paint_Clear(BLACK);
 
     for(;;){
-        //Global config variables held in task_stateMachine.c
-        //High priority is to save time for other tasks as much as possible. Be mindful of unnecessary tasks (ie don't Update the OLED if ADC/encoder values have not changed).
-        quantity = __HAL_TIM_GET_COUNTER(&htim2);
-        HAL_ADC_PollForConversion(&hadc2, 1);
-        int sensorVal = HAL_ADC_GetValue(&hadc2);
-        //Paint functions from GUIPaint.c if the values are different
-        Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
-        Paint_DrawString_EN(10, 17, "hello world", &Font8, WHITE, BLACK);
-        Paint_DrawNum(10, 30, adcVals1[1], &Font8, 4, WHITE, BLACK);
-        Paint_DrawNum(10, 43, quantity, &Font12, 2, BLACK, WHITE);
 
-        //Update OLED.
-        if (!OLED_Update(ImgBuffer)) {
-            colour++;
+        switch (systemState) {
+            default: {
+                //Global config variables held in task_stateMachine.c
+                //High priority is to save time for other tasks as much as possible. Be mindful of unnecessary tasks (ie don't Update the OLED if ADC/encoder values have not changed).
+                quantity = __HAL_TIM_GET_COUNTER(&htim2);
+                HAL_ADC_PollForConversion(&hadc2, 1);
+                int sensorVal = HAL_ADC_GetValue(&hadc2);
+
+                //Paint functions from GUIPaint.c if the values are different
+                Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
+                Paint_DrawString_EN(10, 17, "hello world", &Font8, WHITE, BLACK);
+                Paint_DrawNum(10, 30, adcVals1[1], &Font8, 4, WHITE, BLACK);
+                Paint_DrawNum(10, 43, quantity, &Font12, 2, BLACK, WHITE);
+
+                //Update OLED.
+                if (!OLED_Update(ImgBuffer)) {
+                    colour++;
+                }
+            }
         }
 
         //Give up task. Have not setup preemption so this can starve all tasks.

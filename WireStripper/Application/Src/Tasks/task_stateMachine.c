@@ -10,6 +10,7 @@
 
 #include <stdlib.h>
 
+#include "BQ7692006PWR.h"
 #include "main.h"
 #include "stm32f4xx_hal_gpio.h"
 #include "task_actuatorControl.h"
@@ -63,6 +64,8 @@ void vStateMachineTask() {
             *  If these aren't true, something is wrong, SAFETY ERROR
             */
                 if (safetyOK && wirePresent(*WIRE_IN_DETECT)) {
+                    turnCHGOn(BMS);
+                    turnDSGOn(BMS);
                     systemState = NONE;
                 } else {
                     systemState = SAFETY_ERROR;
@@ -123,4 +126,16 @@ void vStateMachineTask() {
         }
         vTaskDelay(20);
     }
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    /* Prevent unused argument(s) compilation warning */
+    UNUSED(GPIO_Pin);
+    if (GPIO_Pin == BMS_INT_Pin) {
+        safetyOK = 0;
+    }
+    /* NOTE: This function Should not be modified, when the callback is needed,
+             the HAL_GPIO_EXTI_Callback could be implemented in the user file
+     */
 }

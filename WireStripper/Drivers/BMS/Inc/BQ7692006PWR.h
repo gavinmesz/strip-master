@@ -32,7 +32,7 @@
 
 #define BQ76920_ADDRESS			(0x18<<1) // change address respectively to the IC 7 bit addressing
 #define NUMBER_OF_CELLS 		4	 	// Number of cells
-#define RSENSE					20	 	// mOhm - Gavin: Changed from 1mOhm to 20mOhm based on our Rsense value
+#define RSENSE					20	 	// mOhm | Gavin - Changed from 1mOhm to 20mOhm based on our Rsense value
 #define	balanceThreshold		0.05f	// V
 
 /* Register mapping */
@@ -68,18 +68,18 @@
 #define ADCOFFSET				0x51
 #define ADCGAIN2				0x59
 
-#define grossOV					4.18	// HARD in V
-#define netOV					4.02	// Virtual Full V
-#define netUV					3.08	// Virtual Empty V
-#define grossUV					2.7	 	// HARD in V
+#define grossOV					4.20	// HARD in V
+#define netOV					4.15	// VVirtual Full V
+#define netUV					3.30	// Virtual Empty V
+#define grossUV					3.00	// HARD in V
 
-#define grossCapacity			3200	// in mAh
-#define netCapacity				2240	// in mAh
-#define nominalV				3.67	// in V
-#define nominalPackV			14.68 	// in V
+#define grossCapacity			850	// in mAh | Gavin - capacity in datasheet
+#define netCapacity				720	// in mAh
+#define nominalV				3.7	// in V
+#define nominalPackV			14.8 	// in
 
-#define thresholdRange			0.2		// in V
-#define MaxChargeCurrent		3100	// in mA
+#define thresholdRange			0.2		// in V | Gavin - to deal with the increase in voltage once load is removed in an UV event
+#define MaxChargeCurrent		1000	// in mA | Gavin - Max charge = 5C, discharge is 70C with burst 140C. Set at 10A for safety
 #define MaxDischargeCurrent		10000	// in mA
 #define ROUND_TRIP_EFFICIENCY 	0.9	// Round trip efficiency coefficient
 

@@ -66,29 +66,37 @@
 //task specific includes
 #include "task_safety.h"
 #include "BQ7692006PWR.h"
+#include "task_stateMachine.h"
 
 BQ76920_t BMS;
 float PackCurrent;
 float SOH;
 
+static void checkSafety() {
+    for (int i = 0; i <= 6; i += 2) {
+        // Get V cells
+        BMS.Vcell[i / 2] = getCellVoltage(&BMS, 12 + i);
+    }
+    BMS.Vpack = getPackVoltage(&BMS); // Get V pack
+    PackCurrent = getCurrent(&BMS); // in mA
+    BMS.SOC = SOCPack(&BMS, PackCurrent, BMS.Vpack);
+    SOH = SOHPack(&BMS);
+}
+
 void vSafetyTask() {
 
-
     for (;;) {
-
-        //poll BMS numbers
-        for (int i = 0; i <= 6; i += 2) {
-            // Get V cells
-            BMS.Vcell[i / 2] = getCellVoltage(&BMS, 12 + i);
+        switch (systemState) {
+            case SAFETY_ERROR: {
+                readAlert(&BMS);
+                break;
+            }
+            default: {
+                break;
+            }
         }
 
-        BMS.Vpack = getPackVoltage(&BMS); // Get V pack
-
-        PackCurrent = getCurrent(&BMS); // in mA
-
-        BMS.SOC = SOCPack(&BMS, PackCurrent, BMS.Vpack);
-
-        SOH = SOHPack(&BMS);
+        checkSafety();
 
         counterVar++;
         vTaskDelay(100);

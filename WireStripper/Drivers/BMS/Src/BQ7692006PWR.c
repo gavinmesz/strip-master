@@ -111,7 +111,7 @@ void BQ76920_Initialize(BQ76920_t *BMS, I2C_HandleTypeDef *i2cHandle) {
 }
 
 float getCellVoltage(BQ76920_t *BMS, int cell) {
-	if ((cell == VC1) || (cell == VC2) || (cell == VC3) || (cell == VC4)) {
+	if ((cell == VC1) || (cell == VC2) || (cell == VC3) || (cell == VC4) || (cell == VC5)) {
 		uint8_t regData[2] = { 0u, 0u };	// Declare buffer
 		BQ76920_ReadRegister(BMS, cell, &regData[0]); // Read Hi
 		BQ76920_ReadRegister(BMS, cell + 1, &regData[1]); // Read Lo
@@ -129,7 +129,7 @@ float getCellVoltage(BQ76920_t *BMS, int cell) {
 		case VC3:
 			BMS->Vcell[2] = VoltageCell;
 			break;
-		case VC4:
+		case VC5:
 			BMS->Vcell[3] = VoltageCell;
 			break;
 		default:

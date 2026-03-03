@@ -140,6 +140,7 @@ void Error_Handler(void);
 #define BUCK12_PG_GPIO_Port GPIOG
 #define BUCK12_EN_Pin GPIO_PIN_6
 #define BUCK12_EN_GPIO_Port GPIOG
+#define BUCK12_EN_EXTI_IRQn EXTI9_5_IRQn
 #define ST_5V_Pin GPIO_PIN_7
 #define ST_5V_GPIO_Port GPIOG
 #define ST_3V3_Pin GPIO_PIN_8

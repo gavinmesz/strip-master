@@ -146,7 +146,7 @@ enum OV_D { 		// undervoltage cell delay
 };
 
 enum cell {
-	VC1 = VC1_HI, VC2 = VC2_HI, VC3 = VC3_HI, VC4 = VC4_HI // skip VC5 because batt pack is 4S
+	VC1 = VC1_HI, VC2 = VC2_HI, VC3 = VC3_HI, VC4 = VC4_HI, VC5 = VC5_HI // skip VC5 because batt pack is 4S
 };
 
 typedef struct {

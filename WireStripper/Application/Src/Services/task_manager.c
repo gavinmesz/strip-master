@@ -28,9 +28,10 @@ void TaskManager_InitTasks(void){
 
     //Motor actuators
 
-    //Safety
+    //Safety/Power
     BMS.i2cHandle = &hi2c2;
     BQ76920_Initialize(&BMS, &hi2c2); // Init BMS
+    HAL_GPIO_WritePin(LDO_EN_GPIO_Port, LDO_EN_Pin, GPIO_PIN_SET);
 
     //Display
     //Assign nonsense values to user config variables to begin
@@ -45,14 +46,12 @@ void TaskManager_CreateAllTasks(void)
     BaseType_t xReturned;
     if ( TEST ) {
         //Testing Task
-        xReturned = xTaskCreate(vMotorTestTask, "MotorTest", 512, NULL, configMAX_PRIORITIES-3, &xMotorTestHandle);
+        // xReturned = xTaskCreate(vMotorTestTask, "MotorTest", 512, NULL, configMAX_PRIORITIES-3, &xMotorTestHandle);
+        xReturned = xTaskCreate(vSafetyTask, "Safety",   512, NULL, configMAX_PRIORITIES-1, &xSafetyTaskHandle);
+
 
         configASSERT(xReturned == pdPASS);
     } else {
-        //Actuator Task
-        xReturned = xTaskCreate(vActuatorTask, "Actuator", 512, NULL, configMAX_PRIORITIES-3, &xActuatorTaskHandle);
-
-        configASSERT(xReturned == pdPASS);
 
         //Actuator Task
         xReturned = xTaskCreate(vActuatorTask, "Actuator", 512, NULL, configMAX_PRIORITIES-3, &xActuatorTaskHandle);

@@ -72,31 +72,51 @@ BQ76920_t BMS;
 float PackCurrent;
 float SOH;
 
-static void checkSafety() {
-    for (int i = 0; i <= 6; i += 2) {
+static uint8_t checkSafety() {
+    for (int i = 0; i <= 8; i += 2) {
         // Get V cells
-        BMS.Vcell[i / 2] = getCellVoltage(&BMS, 12 + i);
+        if (i<6) {
+            BMS.Vcell[i / 2] = getCellVoltage(&BMS, 12 + i);
+        }
+        if (i>6) {
+            BMS.Vcell[3] = getCellVoltage(&BMS, 12 + i);
+        }
     }
-    BMS.Vpack = getPackVoltage(&BMS); // Get V pack
-    PackCurrent = getCurrent(&BMS); // in mA
+    BMS.Vpack = getPackVoltage(&BMS); // Get V pack requires 2 bytes register read. ~1-2ms
+    PackCurrent = getCurrent(&BMS); // in mA requires 2 bytes register read. ~1-2ms
     BMS.SOC = SOCPack(&BMS, PackCurrent, BMS.Vpack);
     SOH = SOHPack(&BMS);
+
+    if (!HAL_GPIO_ReadPin(BUCK12_PG_GPIO_Port, BUCK12_PG_Pin)) { //When asserted low, there's a problem
+        return 0;
+    }
+
+    //To-do: Fault on stepper motors
+
+    return 1;
 }
 
 void vSafetyTask() {
-
+    systemState = NONE;
     for (;;) {
         switch (systemState) {
             case SAFETY_ERROR: {
                 readAlert(&BMS);
+                turnCHGOn(&BMS);
+                turnDSGOn(&BMS);
+                systemState = NONE;
                 break;
             }
             default: {
+                if (!checkSafety()) {
+                    safetyOK = 0;
+                    turnCHGOff(&BMS);
+                    turnDSGOff(&BMS);
+                    systemState = SAFETY_ERROR;
+                }
                 break;
             }
         }
-
-        checkSafety();
 
         counterVar++;
         vTaskDelay(100);

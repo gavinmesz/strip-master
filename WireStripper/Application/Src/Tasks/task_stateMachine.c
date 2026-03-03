@@ -46,9 +46,18 @@ volatile uint8_t job_finish;
 uint8_t wirePresent(float adc){
     if (adc < WIRE_DETECT_LOW_THRES) { //voltage low means light blocked
         return 1;
-    } else if (adc > WIRE_DETECT_HIGH_THRES) { //voltage high means no blockage
-        return 0;
     }
+    return 0;
+}
+
+void turnOffBAT() {
+    turnDSGOff(&BMS);
+    turnCHGOff(&BMS);
+}
+
+void turnOnBAT() {
+    turnDSGOn(&BMS);
+    turnCHGOn(&BMS);
 }
 
 void vStateMachineTask() {
@@ -62,8 +71,7 @@ void vStateMachineTask() {
             *  b. wire not detected at #2? Make sure wire not jammed in already
             *  If these aren't true, something is wrong, SAFETY ERROR
             */
-                turnCHGOn(&BMS);
-                turnDSGOn(&BMS);
+                turnOnBAT();
                 vTaskDelay(250); // Wait some time to start, allow for any safety signals to get sent.
                 if (safetyOK && wirePresent(*WIRE_IN_DETECT)) {
                     systemState = NONE;
@@ -116,11 +124,8 @@ void vStateMachineTask() {
             }
             case SAFETY_ERROR: {
                 //Here forever, shut down power
-                turnCHGOff(&BMS);
-                turnDSGOff(&BMS);
-                if (HAL_GPIO_ReadPin(BUCK12_EN_GPIO_Port, BUCK12_EN_Pin)) {
-                    HAL_GPIO_WritePin(BUCK12_EN_GPIO_Port, BUCK12_EN_Pin, GPIO_PIN_RESET);
-                }
+                turnOffBAT();
+                HAL_GPIO_WritePin(LDO_EN_GPIO_Port,LDO_EN_Pin, GPIO_PIN_RESET);
             }
             default: {
                 systemState = SAFETY_ERROR; //Should never be in an unknown state

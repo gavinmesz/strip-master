@@ -5,7 +5,7 @@
       <env />
     </debugger>
     <gdbserver exe="C:\ST\STM32CubeCLT1200\STLink-gdb-server\bin\ST-LINK_gdbserver.exe" programmer="C:\ST\STM32CubeCLT1200\STM32CubeProgrammer\bin" />
-    <st-link />
+    <st-link frequency="100" />
     <device interface="SWD" />
     <connection extended-remote="false" port="61234" warmup-ms="500" />
     <swo enabled="false" port="61235" />

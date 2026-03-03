@@ -372,7 +372,7 @@ void vActuatorTask(){
                 stopAllMotors();
                 break;
             }
-            case (SAFETY_ERROR):{ //Todo: Have to make sure that the motors stop
+            case (SAFETY_ERROR):{ //Todo: Have to make sure that the motors stop IRL
                 motorStatus = IDLE;
                 stopAllMotors();
                 break;

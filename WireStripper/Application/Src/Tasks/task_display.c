@@ -150,7 +150,6 @@ void vDisplayTask()
             }
         }
 
-        //Give up task. Have not setup preemption so this can starve all tasks.
         vTaskDelay(100);
     }
 }

@@ -102,6 +102,7 @@ void Error_Handler(void);
 #define M1_MS1_GPIO_Port GPIOG
 #define M1_nFLT_Pin GPIO_PIN_7
 #define M1_nFLT_GPIO_Port GPIOE
+#define M1_nFLT_EXTI_IRQn EXTI9_5_IRQn
 #define M1_DIR_Pin GPIO_PIN_8
 #define M1_DIR_GPIO_Port GPIOE
 #define M3_STEP_Pin GPIO_PIN_9
@@ -114,6 +115,7 @@ void Error_Handler(void);
 #define M2_MS1_GPIO_Port GPIOE
 #define M2_nFLT_Pin GPIO_PIN_15
 #define M2_nFLT_GPIO_Port GPIOE
+#define M2_nFLT_EXTI_IRQn EXTI15_10_IRQn
 #define M2_DIR_Pin GPIO_PIN_13
 #define M2_DIR_GPIO_Port GPIOB
 #define M3_RST_Pin GPIO_PIN_15
@@ -128,8 +130,6 @@ void Error_Handler(void);
 #define ENC2_B_GPIO_Port GPIOD
 #define M3_SM0_Pin GPIO_PIN_14
 #define M3_SM0_GPIO_Port GPIOD
-#define M3_nFLT_Pin GPIO_PIN_15
-#define M3_nFLT_GPIO_Port GPIOD
 #define M3_DIR_Pin GPIO_PIN_2
 #define M3_DIR_GPIO_Port GPIOG
 #define M3_nHOME_Pin GPIO_PIN_3
@@ -150,6 +150,7 @@ void Error_Handler(void);
 #define BMS_PMO_GPIO_Port GPIOA
 #define BMS_INT_Pin GPIO_PIN_9
 #define BMS_INT_GPIO_Port GPIOA
+#define BMS_INT_EXTI_IRQn EXTI9_5_IRQn
 #define USB_DM_Pin GPIO_PIN_11
 #define USB_DM_GPIO_Port GPIOA
 #define USB_DP_Pin GPIO_PIN_12

@@ -72,7 +72,7 @@ void vStateMachineTask() {
             *  If these aren't true, something is wrong, SAFETY ERROR
             */
                 turnOnBAT();
-                vTaskDelay(250); // Wait some time to start, allow for any safety signals to get sent.
+                vTaskDelay(250); // Wait for safety checks to run and for system to turn on.
                 if (safetyOK && wirePresent(*WIRE_IN_DETECT)) {
                     systemState = NONE;
                 } else {
@@ -139,10 +139,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(GPIO_Pin);
-    if (GPIO_Pin == BMS_INT_Pin) {
+    if (GPIO_Pin == BMS_INT_Pin || GPIO_Pin == M2_nFLT_Pin || GPIO_Pin == M1_nFLT_Pin) {
         safetyOK = 0;
     }
-    /* NOTE: This function Should not be modified, when the callback is needed,
-             the HAL_GPIO_EXTI_Callback could be implemented in the user file
-     */
 }

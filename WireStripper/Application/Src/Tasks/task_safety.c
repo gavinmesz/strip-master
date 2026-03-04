@@ -76,7 +76,7 @@ uint8_t M2nFault;
 uint8_t M3nFault;
 
 static uint8_t checkSafety()  {
-    // HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET); //Debugging
+    HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET); //Debugging
     BMS.Vcell[0] = getCellVoltage(&BMS, 12 + VC1_HI); //~1ms
     BMS.Vcell[1] = getCellVoltage(&BMS, 12 + VC2_HI); //~1ms
     BMS.Vcell[2] = getCellVoltage(&BMS, 12 + VC3_HI); //~1ms
@@ -86,13 +86,11 @@ static uint8_t checkSafety()  {
     PackCurrent = getCurrent(&BMS); // in mA requires 2 bytes register read. ~1ms
     BMS.SOC = SOCPack(&BMS, PackCurrent, BMS.Vpack);
     SOH = SOHPack(&BMS);
-    // HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET); //Debugging
+    HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET); //Debugging
 
-    uint8_t result = 0;
-    result = HAL_GPIO_ReadPin(BUCK12_PG_GPIO_Port, BUCK12_PG_Pin) && M1nFault && M2nFault && M3nFault;
-    //Motors fault = 0
-    //Todo: Result bad when M1, M2, M3 fault (EXT interrupts)
-
+    uint8_t result = 1;
+    result = HAL_GPIO_ReadPin(BUCK12_PG_GPIO_Port, BUCK12_PG_Pin);
+    // && HAL_GPIO_ReadPin(M3_nFLT_GPIO_Port,M3_nFLT_Pin);
     return result;
 }
 

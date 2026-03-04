@@ -1,4 +1,4 @@
-#define TEST 0
+#define TEST 1
 
 //Tasks included
 #include "task_manager.h"
@@ -10,8 +10,6 @@
 #include "C:\Users\Admin\Desktop\4A\MTE481\strip-master\WireStripper\Drivers\BMS\Inc\BQ7692006PWR.h"
 
 #include "FreeRTOSConfig.h"
-
-#define TEST 1
 
 TaskHandle_t xDisplayTaskHandle = NULL;
 TaskHandle_t xActuatorTaskHandle = NULL;
@@ -49,6 +47,9 @@ void TaskManager_CreateAllTasks(void)
         // xReturned = xTaskCreate(vMotorTestTask, "MotorTest", 512, NULL, configMAX_PRIORITIES-3, &xMotorTestHandle);
         xReturned = xTaskCreate(vSafetyTask, "Safety",   512, NULL, configMAX_PRIORITIES-1, &xSafetyTaskHandle);
 
+        configASSERT(xReturned == pdPASS);
+
+        xReturned = xTaskCreate(vStateMachineTask, "StateMachine",   512, NULL, configMAX_PRIORITIES-2, &xStateMachineTaskHandle);
 
         configASSERT(xReturned == pdPASS);
     } else {

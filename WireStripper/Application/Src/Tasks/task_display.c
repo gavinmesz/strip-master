@@ -27,9 +27,10 @@ int quantity;
 int length;
 int stripLength;
 int stripCut; //Strip or strip and cut (1=Strip and cut)
-uint32_t adcVals1[2];
-uint32_t adcVals2[1];
-uint32_t adcVals3[2];
+int colour;
+uint32_t adcVals1[2]; //gauge in, UX pot, cut pot
+uint32_t adcVals2[1]; //vbat ADC
+uint32_t adcVals3[2]; //Lights
 
 /*
  * OLED_Update:
@@ -118,11 +119,26 @@ int initDisplay(){
     return 1;
 }
 
+void updateValues() {
+    quantity = __HAL_TIM_GET_COUNTER(&htim2);
+    length = __HAL_TIM_GET_COUNTER(&htim5);
+    HAL_ADC_PollForConversion(&hadc2, 1);
+    stripLength = HAL_ADC_GetValue(&hadc2);
+}
+
+void drawScreen() {
+    //Paint functions from GUIPaint.c if the values are different
+    Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
+    Paint_DrawString_EN(10, 17, "hello world", &Font8, WHITE, BLACK);
+    Paint_DrawNum(10, 30, stripLength, &Font8, 4, WHITE, BLACK);
+    Paint_DrawNum(10, 43, quantity, &Font12, 2, BLACK, WHITE);
+}
+
 //Main display task. Infinite loop will run.
 void vDisplayTask()
 {
     //Colour is just a number for what I was testing, it's not a colour.
-    int colour = 0;
+    colour = 0;
     quantity = 10;
     Paint_SelectImage(ImgBuffer);
     Paint_Clear(BLACK);
@@ -131,17 +147,8 @@ void vDisplayTask()
 
         switch (systemState) {
             default: {
-                //Global config variables held in task_stateMachine.c
-                //High priority is to save time for other tasks as much as possible. Be mindful of unnecessary tasks (ie don't Update the OLED if ADC/encoder values have not changed).
-                quantity = __HAL_TIM_GET_COUNTER(&htim2);
-                HAL_ADC_PollForConversion(&hadc2, 1);
-                int sensorVal = HAL_ADC_GetValue(&hadc2);
-
-                //Paint functions from GUIPaint.c if the values are different
-                Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
-                Paint_DrawString_EN(10, 17, "hello world", &Font8, WHITE, BLACK);
-                Paint_DrawNum(10, 30, adcVals1[1], &Font8, 4, WHITE, BLACK);
-                Paint_DrawNum(10, 43, quantity, &Font12, 2, BLACK, WHITE);
+                updateValues();
+                drawScreen();
 
                 //Update OLED.
                 if (!OLED_Update(ImgBuffer)) {

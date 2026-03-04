@@ -354,9 +354,9 @@ void vActuatorTask(){
     };
 
     //Initialize microstepping configurations
-    microSet(0, Motor1);
-    microSet(0, Motor2);
-    microSet(0, Motor3);
+    microSet(2, Motor1); // quarter step
+    microSet(2, Motor2); // quarter step
+    microSet(0, Motor3); // full step
 
     //Startup routines (when ready)
     //M1 and M2

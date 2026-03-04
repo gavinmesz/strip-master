@@ -73,11 +73,12 @@ void vStateMachineTask() {
             */
                 turnOnBAT();
                 vTaskDelay(250); // Wait for safety checks to run and for system to turn on.
-                if (safetyOK && wirePresent(*WIRE_IN_DETECT)) {
+                if (safetyOK) {
                     systemState = NONE;
                 } else {
                     systemState = SAFETY_ERROR;
                 }
+                break;
             }
             case NONE: {
             /* 1. Stay NONE while waiting for interrupt flags
@@ -91,11 +92,13 @@ void vStateMachineTask() {
                 else if (wirePresent(*WIRE_IN_DETECT)) {
                     systemState = ENGAGE;
                 }
+                break;
             }
             case DISENGAGE: {
                 if (job_finish) {
                     systemState = NONE;
                 }
+                break;
             }
             case ENGAGED: {
                 /*
@@ -110,6 +113,7 @@ void vStateMachineTask() {
                 } else if (stop_button) {
                     systemState = DISENGAGE;
                 }
+                break;
             }
             case JOB_RUNNING: {
                 /*
@@ -121,17 +125,20 @@ void vStateMachineTask() {
                 if (!safetyOK || stop_button) {
                     systemState = SAFETY_ERROR;
                 }
+                break;
             }
             case SAFETY_ERROR: {
                 //Here forever, shut down power
                 turnOffBAT();
                 HAL_GPIO_WritePin(LDO_EN_GPIO_Port,LDO_EN_Pin, GPIO_PIN_RESET);
+                break;
             }
             default: {
                 systemState = SAFETY_ERROR; //Should never be in an unknown state
+                break;
             }
         }
-        vTaskDelay(20);
+        vTaskDelay(100);
     }
 }
 
@@ -139,7 +146,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     /* Prevent unused argument(s) compilation warning */
     UNUSED(GPIO_Pin);
-    if (GPIO_Pin == BMS_INT_Pin || GPIO_Pin == M2_nFLT_Pin || GPIO_Pin == M1_nFLT_Pin) {
-        safetyOK = 0;
-    }
+    // if (GPIO_Pin == BMS_INT_Pin || GPIO_Pin == M2_nFLT_Pin || GPIO_Pin == M1_nFLT_Pin) {
+    //     safetyOK = 0;
+    // }
 }

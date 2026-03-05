@@ -479,6 +479,11 @@
 			},
 			{
 				"backtrace" : 2,
+				"fragment" : "-u_printf_float",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 2,
 				"fragment" : "-g",
 				"role" : "flags"
 			},

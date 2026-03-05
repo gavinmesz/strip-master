@@ -99,6 +99,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 target_link_options(${PROJECT_NAME} PRIVATE
         ${MCU_FLAGS}
         -Wl,--gc-sections
+        "-u_printf_float"
         $<$<CONFIG:Debug>:-g>
 )
 

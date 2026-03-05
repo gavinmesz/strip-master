@@ -7,6 +7,7 @@
 #include "BQ7692006PWR.h"
 
 extern BQ76920_t BMS;
+extern float packCurrent;
 
 void vSafetyTask();
 

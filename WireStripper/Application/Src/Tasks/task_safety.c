@@ -69,7 +69,7 @@
 #include "task_stateMachine.h"
 
 BQ76920_t BMS;
-float PackCurrent;
+float packCurrent;
 float SOH;
 uint8_t M1nFault;
 uint8_t M2nFault;
@@ -77,14 +77,14 @@ uint8_t M3nFault;
 
 static uint8_t checkSafety()  {
     HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET); //Debugging
-    BMS.Vcell[0] = getCellVoltage(&BMS, 12 + VC1_HI); //~1ms
-    BMS.Vcell[1] = getCellVoltage(&BMS, 12 + VC2_HI); //~1ms
-    BMS.Vcell[2] = getCellVoltage(&BMS, 12 + VC3_HI); //~1ms
-    BMS.Vcell[3] = getCellVoltage(&BMS, 12 + VC5_HI); //~1ms
+    BMS.Vcell[0] = getCellVoltage(&BMS, VC1_HI); //~1ms
+    BMS.Vcell[1] = getCellVoltage(&BMS, VC2_HI); //~1ms
+    BMS.Vcell[2] = getCellVoltage(&BMS, VC3_HI); //~1ms
+    BMS.Vcell[3] = getCellVoltage(&BMS, VC5_HI); //~1ms
 
     BMS.Vpack = getPackVoltage(&BMS); // Get V pack requires 2 bytes register read. ~1ms
-    PackCurrent = getCurrent(&BMS); // in mA requires 2 bytes register read. ~1ms
-    BMS.SOC = SOCPack(&BMS, PackCurrent, BMS.Vpack);
+    packCurrent = getCurrent(&BMS); // in mA requires 2 bytes register read. ~1ms
+    BMS.SOC = SOCPack(&BMS, packCurrent, BMS.Vpack);
     SOH = SOHPack(&BMS);
     HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET); //Debugging
 

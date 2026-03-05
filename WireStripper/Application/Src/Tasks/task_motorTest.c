@@ -6,6 +6,7 @@
 #include "task_actuatorControl.h"
 #include "task_motorTest.h"
 #include "task_manager.h"
+#include "task_safety.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,10 +47,39 @@ void print_logo() {
 
 void print_help() {
     printf("\r\n--- SPWL TEST COMMANDS ---");
-    printf("\r\nstatus                : Show encoders");
+    printf("\r\nstatus                : Show encoders and BMS status");
+    printf("\r\npins                  : Show status of all motor GPIO pins");
+    printf("\r\nsetpin m[1-3] [pin] [val] : Set GPIO pin. Pins: en, dir, ms1, ms2, nslp, nrst");
     printf("\r\njog                   : Enter Real-time control mode");
     printf("\r\nstep m[1-3] [s] [pps] : Move motor (use - for reverse, e.g., step m1 -500 200)");
     printf("\r\nhelp                  : Show this menu\r\n");
+}
+
+void print_motor_pins() {
+    printf("\r\n------ MOTOR PIN STATUS ------\r\n");
+    printf("M1: EN=%d DIR=%d MS1=%d MS2=%d nSLP=%d nFLT=%d\r\n",
+           HAL_GPIO_ReadPin(M1_EN_GPIO_Port, M1_EN_Pin),
+           HAL_GPIO_ReadPin(M1_DIR_GPIO_Port, M1_DIR_Pin),
+           HAL_GPIO_ReadPin(M1_MS1_GPIO_Port, M1_MS1_Pin),
+           HAL_GPIO_ReadPin(M1_MS2_GPIO_Port, M1_MS2_Pin),
+           HAL_GPIO_ReadPin(M1_nSLP_GPIO_Port, M1_nSLP_Pin),
+           HAL_GPIO_ReadPin(M1_nFLT_GPIO_Port, M1_nFLT_Pin));
+
+    printf("M2: EN=%d DIR=%d MS1=%d MS2=%d nSLP=%d nFLT=%d\r\n",
+           HAL_GPIO_ReadPin(M2_EN_GPIO_Port, M2_EN_Pin),
+           HAL_GPIO_ReadPin(M2_DIR_GPIO_Port, M2_DIR_Pin),
+           HAL_GPIO_ReadPin(M2_MS1_GPIO_Port, M2_MS1_Pin),
+           HAL_GPIO_ReadPin(M2_MS2_GPIO_Port, M2_MS2_Pin),
+           HAL_GPIO_ReadPin(M2_nSLP_GPIO_Port, M2_nSLP_Pin),
+           HAL_GPIO_ReadPin(M2_nFLT_GPIO_Port, M2_nFLT_Pin));
+
+    printf("M3: nEN=%d DIR=%d SM0=%d SM1=%d nRST=%d nFLT=%d\r\n>",
+           HAL_GPIO_ReadPin(M3_nEN_GPIO_Port, M3_nEN_Pin),
+           HAL_GPIO_ReadPin(M3_DIR_GPIO_Port, M3_DIR_Pin),
+           HAL_GPIO_ReadPin(M3_SM0_GPIO_Port, M3_SM0_Pin),
+           HAL_GPIO_ReadPin(M3_SM1_GPIO_Port, M3_SM1_Pin),
+           HAL_GPIO_ReadPin(M3_RST_GPIO_Port, M3_RST_Pin),
+           HAL_GPIO_ReadPin(M3_nFLT_GPIO_Port, M3_nFLT_Pin));
 }
 
 void vMotorTestTask(void *argument) {
@@ -76,6 +106,9 @@ void vMotorTestTask(void *argument) {
     microSet(0, Motor1);
     microSet(0, Motor2);
     microSet(0, Motor3);
+
+    HAL_GPIO_WritePin(M1_nSLP_GPIO_Port, M1_nSLP_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(M2_nSLP_GPIO_Port, M2_nSLP_Pin, GPIO_PIN_RESET);
 
     print_logo();
     print_help();
@@ -116,7 +149,59 @@ void vMotorTestTask(void *argument) {
                     }
                     else if (strcmp(cmd_buffer, "status") == 0) {
                         printf("\r\n------ STATUS ------\r\n");
-                        printf("Enc1: %d | Enc2: %d\r\n>", encoder1, encoder2);
+                        printf("Enc1: %d | Enc2: %d\r\n", encoder1, encoder2);
+                        printf("Pack Current: %.2f mA\r\n", packCurrent);
+                        printf("Pack Voltage: %.2f V\r\n", BMS.Vpack);
+                        printf("Cell Voltages: %.2fV, %.2fV, %.2fV, %.2fV \r\n>", BMS.Vcell[0], BMS.Vcell[1], BMS.Vcell[2], BMS.Vcell[3]);
+                    }
+                    else if (strcmp(cmd_buffer, "pins") == 0) {
+                        print_motor_pins();
+                    }
+                    else if (strncmp(cmd_buffer, "setpin", 6) == 0) {
+                        int m_num = 0, val = 0;
+                        char pin_name[10];
+
+                        if (sscanf(cmd_buffer, "setpin m%d %9s %d", &m_num, pin_name, &val) == 3) {
+                            GPIO_TypeDef* port = NULL;
+                            uint16_t pin = 0;
+                            int valid = 1;
+
+                            // Map the pin strings to the hardware macros
+                            if (m_num == 1) {
+                                if (strcmp(pin_name, "en") == 0) { port = M1_EN_GPIO_Port; pin = M1_EN_Pin; }
+                                else if (strcmp(pin_name, "dir") == 0) { port = M1_DIR_GPIO_Port; pin = M1_DIR_Pin; }
+                                else if (strcmp(pin_name, "ms1") == 0) { port = M1_MS1_GPIO_Port; pin = M1_MS1_Pin; }
+                                else if (strcmp(pin_name, "ms2") == 0) { port = M1_MS2_GPIO_Port; pin = M1_MS2_Pin; }
+                                else if (strcmp(pin_name, "nslp") == 0 || strcmp(pin_name, "slp") == 0) { port = M1_nSLP_GPIO_Port; pin = M1_nSLP_Pin; }
+                                else valid = 0;
+                            } else if (m_num == 2) {
+                                if (strcmp(pin_name, "en") == 0) { port = M2_EN_GPIO_Port; pin = M2_EN_Pin; }
+                                else if (strcmp(pin_name, "dir") == 0) { port = M2_DIR_GPIO_Port; pin = M2_DIR_Pin; }
+                                else if (strcmp(pin_name, "ms1") == 0) { port = M2_MS1_GPIO_Port; pin = M2_MS1_Pin; }
+                                else if (strcmp(pin_name, "ms2") == 0) { port = M2_MS2_GPIO_Port; pin = M2_MS2_Pin; }
+                                else if (strcmp(pin_name, "nslp") == 0 || strcmp(pin_name, "slp") == 0) { port = M2_nSLP_GPIO_Port; pin = M2_nSLP_Pin; }
+                                else valid = 0;
+                            } else if (m_num == 3) {
+                                // M3 has slightly different pin nomenclature (nEN, SM0, SM1, nRST). Handled gracefully:
+                                if (strcmp(pin_name, "en") == 0 || strcmp(pin_name, "nen") == 0) { port = M3_nEN_GPIO_Port; pin = M3_nEN_Pin; }
+                                else if (strcmp(pin_name, "dir") == 0) { port = M3_DIR_GPIO_Port; pin = M3_DIR_Pin; }
+                                else if (strcmp(pin_name, "ms1") == 0 || strcmp(pin_name, "sm0") == 0) { port = M3_SM0_GPIO_Port; pin = M3_SM0_Pin; }
+                                else if (strcmp(pin_name, "ms2") == 0 || strcmp(pin_name, "sm1") == 0) { port = M3_SM1_GPIO_Port; pin = M3_SM1_Pin; }
+                                else if (strcmp(pin_name, "nrst") == 0 || strcmp(pin_name, "rst") == 0) { port = M3_RST_GPIO_Port; pin = M3_RST_Pin; }
+                                else valid = 0;
+                            } else {
+                                valid = 0;
+                            }
+
+                            if (valid && port != NULL) {
+                                HAL_GPIO_WritePin(port, pin, val ? GPIO_PIN_SET : GPIO_PIN_RESET);
+                                printf("M%d %s set to %d\r\n>", m_num, pin_name, val ? 1 : 0);
+                            } else {
+                                printf("Invalid motor or pin name. Try: en, dir, ms1, ms2, nslp, nrst\r\n>");
+                            }
+                        } else {
+                            printf("Usage: setpin m[1-3] [pin] [0|1]\r\n>");
+                        }
                     }
                     else if (strncmp(cmd_buffer, "step", 4) == 0) {
                         int m_num = 0, move_steps = 0, pps = 0;

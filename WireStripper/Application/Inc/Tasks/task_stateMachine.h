@@ -24,7 +24,7 @@ typedef enum {
     SAFETY_ERROR
 } SystemStatus;
 
-extern SystemStatus systemState;
+extern volatile SystemStatus systemState;
 extern volatile uint8_t stop_button;
 extern volatile uint8_t go_button;
 extern volatile uint8_t safetyOK;

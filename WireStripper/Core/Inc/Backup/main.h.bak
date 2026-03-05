@@ -130,6 +130,8 @@ void Error_Handler(void);
 #define ENC2_B_GPIO_Port GPIOD
 #define M3_SM0_Pin GPIO_PIN_14
 #define M3_SM0_GPIO_Port GPIOD
+#define M3_nFLT_Pin GPIO_PIN_15
+#define M3_nFLT_GPIO_Port GPIOD
 #define M3_DIR_Pin GPIO_PIN_2
 #define M3_DIR_GPIO_Port GPIOG
 #define M3_nHOME_Pin GPIO_PIN_3

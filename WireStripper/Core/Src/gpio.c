@@ -186,8 +186,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(M3_nFLT_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BUCK12_PG_Pin STOP_BUT_Pin GO_BUT_Pin UX_SW_Pin */
-  GPIO_InitStruct.Pin = BUCK12_PG_Pin|STOP_BUT_Pin|GO_BUT_Pin|UX_SW_Pin;
+  /*Configure GPIO pins : BUCK12_PG_Pin UX_SW_Pin */
+  GPIO_InitStruct.Pin = BUCK12_PG_Pin|UX_SW_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
@@ -209,6 +209,12 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : STOP_BUT_Pin GO_BUT_Pin */
+  GPIO_InitStruct.Pin = STOP_BUT_Pin|GO_BUT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);

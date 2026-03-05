@@ -186,7 +186,7 @@ uint8_t stripWire() {
     //Todo: move M3, stop and back off when detected
 }
 
-uint8_t encoderMove(int length, float const speed, uint32_t OG_Reading) {
+uint8_t encoderMove(int length, int const speed, uint32_t OG_Reading) {
     uint32_t enc = __HAL_TIM_GET_COUNTER(&htim3);
     if (OG_Reading-enc<length_to_steps(length, microStep1)) {
         speedMove(speed, &Motor1); //Move motor at speed
@@ -281,8 +281,12 @@ void runJob() {
                 finishedWires++;
                 motorStatus = START;
             }
+            break;
         }
-        default: {systemState = SAFETY_ERROR;}
+        default: {
+            systemState = SAFETY_ERROR;
+            break;
+        }
     }
 }
 

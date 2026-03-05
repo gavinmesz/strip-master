@@ -8,15 +8,16 @@
 //task specific includes
 #include "task_stateMachine.h"
 
+#include <limits.h>
 #include <stdlib.h>
-
 #include "BQ7692006PWR.h"
 #include "main.h"
 #include "stm32f4xx_hal_gpio.h"
+#include "FreeRTOS.h"
 #include "task_display.h"
 #include "task_safety.h"
 
-SystemStatus systemState;
+volatile SystemStatus systemState;
 
 /*
  * 0. Startup checks. All should be true before moving on.
@@ -37,10 +38,12 @@ SystemStatus systemState;
  *  c. Job finished -> Disable HV Power. Move to ENGAGED.
  */
 
-volatile uint8_t stop_button;
-volatile uint8_t go_button;
+#define GO_BUTTON (1<<0)
+#define STOP_BUTTON (1<<1)
+
 volatile uint8_t safetyOK;
 volatile uint8_t job_finish;
+uint32_t ulNotifiedValue;
 
 //Is the wire detected? 0 for no, 1 for yes
 uint8_t wirePresent(float adc){
@@ -62,8 +65,13 @@ void turnOnBAT() {
 
 void vStateMachineTask() {
     systemState = CHECKS;
+    uint32_t ulNotifiedValue;
 
     for (;;) {
+        if (!safetyOK) { //Must poll before every cycle
+            systemState = SAFETY_ERROR;
+        }
+
         switch (systemState) {
             case CHECKS: {
             /*
@@ -73,11 +81,7 @@ void vStateMachineTask() {
             */
                 turnOnBAT();
                 vTaskDelay(250); // Wait for safety checks to run and for system to turn on.
-                if (safetyOK) {
-                    systemState = NONE;
-                } else {
-                    systemState = SAFETY_ERROR;
-                }
+                systemState = NONE;
                 break;
             }
             case NONE: {
@@ -86,10 +90,7 @@ void vStateMachineTask() {
              *  a. Wire detected -> Feed wire in until wire detect 2. ENGAGE..., WAIT_FOR_USER.
              *  b. Safety flag -> Disable HV power. Require restart to move on. Display?. POWER_ERROR.
              */
-                if (!safetyOK) {
-                    systemState = SAFETY_ERROR;
-                }
-                else if (wirePresent(*WIRE_IN_DETECT)) {
+                if (wirePresent(*WIRE_IN_DETECT)) {
                     systemState = ENGAGE;
                 }
                 break;
@@ -106,12 +107,15 @@ void vStateMachineTask() {
                 *  b. GO -> Send "start job" to actuator control. JOB_RUNNING
                 *  c. Power safety Flag -> Disable HV Power. Require restart to move on. Display? POWER_ERROR.
                 */
-                if (!safetyOK) {
-                    systemState = SAFETY_ERROR;
-                } else if (go_button) {
-                    systemState = JOB_RUNNING;
-                } else if (stop_button) {
-                    systemState = DISENGAGE;
+                BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, pdMS_TO_TICKS(100));
+
+                if (result == pdTRUE) {
+                    if (ulNotifiedValue & STOP_BUTTON) {
+                        systemState = DISENGAGE;
+                    }
+                    if (ulNotifiedValue & GO_BUTTON) {
+                        systemState = JOB_RUNNING;
+                    }
                 }
                 break;
             }
@@ -122,8 +126,12 @@ void vStateMachineTask() {
                 *  b. Power safety Flag -> Disable HV Power. Require restart to move on. Display? POWER_ERROR.
                 *  c. Job finished -> Actuator task will set JOB_RUNNING to Done
                 */
-                if (!safetyOK || stop_button) {
-                    systemState = SAFETY_ERROR;
+                BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, 0);
+
+                if (result == pdTRUE) {
+                    if (ulNotifiedValue & STOP_BUTTON) {
+                        systemState = SAFETY_ERROR;
+                    }
                 }
                 break;
             }
@@ -134,7 +142,7 @@ void vStateMachineTask() {
                 break;
             }
             default: {
-                systemState = SAFETY_ERROR; //Should never be in an unknown state
+                //When in "ENGAGING" or "DISENGAGING" State
                 break;
             }
         }
@@ -144,9 +152,17 @@ void vStateMachineTask() {
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     /* Prevent unused argument(s) compilation warning */
     UNUSED(GPIO_Pin);
     // if (GPIO_Pin == BMS_INT_Pin || GPIO_Pin == M2_nFLT_Pin || GPIO_Pin == M1_nFLT_Pin) {
     //     safetyOK = 0;
     // }
+
+    if (GPIO_Pin == STOP_BUT_Pin && (systemState == ENGAGED || systemState == JOB_RUNNING)) {
+        xTaskNotifyFromISR(xStateMachineTaskHandle, STOP_BUTTON, eSetBits, &xHigherPriorityTaskWoken);
+    }
+    if (GPIO_Pin == GO_BUT_Pin && systemState == ENGAGED) {
+        xTaskNotifyFromISR(xStateMachineTaskHandle, GO_BUTTON, eSetBits, &xHigherPriorityTaskWoken);
+    }
 }

@@ -171,8 +171,10 @@ void Error_Handler(void);
 #define LED1_GPIO_Port GPIOG
 #define STOP_BUT_Pin GPIO_PIN_10
 #define STOP_BUT_GPIO_Port GPIOG
+#define STOP_BUT_EXTI_IRQn EXTI15_10_IRQn
 #define GO_BUT_Pin GPIO_PIN_11
 #define GO_BUT_GPIO_Port GPIOG
+#define GO_BUT_EXTI_IRQn EXTI15_10_IRQn
 #define UX_SW_Pin GPIO_PIN_12
 #define UX_SW_GPIO_Port GPIOG
 #define ENC1_A_Pin GPIO_PIN_4

@@ -103,12 +103,13 @@ void vMotorTestTask(void *argument) {
                        M3_SM0_GPIO_Port, M3_SM0_Pin, M3_SM1_GPIO_Port, M3_SM1_Pin,
                        M3_nFLT_GPIO_Port, M3_nFLT_Pin, 1 };
 
-    microSet(0, Motor1);
-    microSet(0, Motor2);
+    microSet(2, Motor1);
+    microSet(2, Motor2);
     microSet(0, Motor3);
 
     HAL_GPIO_WritePin(M1_nSLP_GPIO_Port, M1_nSLP_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(M2_nSLP_GPIO_Port, M2_nSLP_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(M3_nEN_GPIO_Port, M3_nEN_Pin, GPIO_PIN_SET);
 
     print_logo();
     print_help();

@@ -29,9 +29,13 @@ int length;
 int stripLength;
 int stripCut; //Strip or strip and cut (1=Strip and cut)
 int colour;
-uint32_t adcVals1[2]; //gauge in, UX pot, cut pot
+uint32_t adcVals1[1]; //UX pot, cut pot
 uint32_t adcVals2[1]; //vbat ADC
-uint32_t adcVals3[2]; //Lights
+uint32_t adcVals3[2]; //Light1, Light2
+
+#define PD1 adcVals3[0] //photodiode 1
+#define PD2 adcVals3[1] //photodiode 2
+#define UX_POT adcVals1[0] //UX potentiometer
 
 /*
  * OLED_Update:
@@ -40,6 +44,12 @@ uint32_t adcVals3[2]; //Lights
  * - Return 1 if DMA SPI transfer has not finished (reset in DMA callback later in this task).
  * - Return 0 if DMA SPI transfer was initiated.
  */
+
+//Testing
+int knob1;
+int knob2;
+int motorenc1;
+int motorenc2;
 
 int OLED_Update(const UBYTE * Img) {
     int status = 1;
@@ -121,28 +131,76 @@ int initDisplay(){
 }
 
 void updateValues() {
-    quantity = __HAL_TIM_GET_COUNTER(&htim2);
-    length = __HAL_TIM_GET_COUNTER(&htim5);
+    knob1 = __HAL_TIM_GET_COUNTER(&htim2); //knob 1
+    knob2 = __HAL_TIM_GET_COUNTER(&htim5); //knob 2
+    motorenc1 = __HAL_TIM_GET_COUNTER(&htim3);
+    motorenc2 = __HAL_TIM_GET_COUNTER(&htim4);
+    //tim3 is motor encoder 1
+    //tim4 is motor encoder 2
     HAL_ADC_PollForConversion(&hadc2, 1);
     stripLength = HAL_ADC_GetValue(&hadc2);
 }
 
 void drawScreen() {
     //Paint functions from GUIPaint.c if the values are different
-    Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
-    Paint_DrawNum(10, 17, quantity, &Font8, 2, BLACK, WHITE);
-    Paint_DrawNum(10, 30, BMS.Vpack, &Font8, 4, WHITE, BLACK);
-    Paint_DrawNum(10, 43, packCurrent, &Font12, 2, BLACK, WHITE);
+    Paint_DrawNum(10, 0, knob1, &Font8, 2, WHITE, BLACK); //FAIL
+    Paint_DrawNum(60, 0, knob2, &Font8, 2, WHITE, BLACK); //WORKS, 2 per detent
+    uint8_t result = 0;
+    if (HAL_GPIO_ReadPin(UX_KNOB1_BUT_GPIO_Port, UX_KNOB1_BUT_Pin)) {
+        result += 1;
+    }
+    if (HAL_GPIO_ReadPin(UX_KNOB2_BUT_GPIO_Port, UX_KNOB2_BUT_Pin)) {
+        result += 1;
+    }
+    Paint_DrawNum(90, 0, result, &Font8, 2, WHITE, BLACK); //WORKS: Pull up MCU side
+
+    Paint_DrawNum(10, 13, motorenc1, &Font8, 2, BLACK, WHITE); //UNKNOWN
+    Paint_DrawNum(60, 13, motorenc2, &Font8, 2, BLACK, WHITE); //UNKNOWN
+
+    Paint_DrawNum(10, 26, adcVals3[0], &Font8, 2, WHITE, BLACK); // WORKS: ADC data width set to word + circular
+    Paint_DrawNum(80, 26, adcVals3[1], &Font8, 2, WHITE, BLACK); // WORKS: ADC data width set to word + circular
+
+    Paint_DrawNum(10, 39, UX_POT, &Font8, 2, BLACK, WHITE); //WORKS
+    Paint_DrawNum(90, 39, packCurrent, &Font8, 2, BLACK, WHITE); //WORKS
+
+    result = 0;
+    if (HAL_GPIO_ReadPin(GAUGE_IN_GPIO_Port, GAUGE_IN_Pin)) {
+        result += 1;
+    }
+    Paint_DrawNum(10, 52, result, &Font8, 2, BLACK, WHITE); //WORKS
+    result = 0;
+    if (HAL_GPIO_ReadPin(UX_SW_GPIO_Port, UX_SW_Pin)) {
+        result += 1;
+    }
+    Paint_DrawNum(60, 52, result, &Font8, 2, BLACK, WHITE); //WORKS
+    result = 0;
+    if (HAL_GPIO_ReadPin(STOP_BUT_GPIO_Port, STOP_BUT_Pin)) {
+        result+=1;
+    }
+    if (HAL_GPIO_ReadPin(GO_BUT_GPIO_Port, GO_BUT_Pin)) {
+        result+=1;
+    }
+    Paint_DrawNum(90, 52, result, &Font8, 2, WHITE, BLACK); //WORKS
+
+
 }
 
 //Main display task. Infinite loop will run.
 void vDisplayTask()
 {
+    HAL_GPIO_WritePin(LIGHT_ON1_GPIO_Port, LIGHT_ON1_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(LIGHT_ON2_GPIO_Port, LIGHT_ON2_Pin, GPIO_PIN_SET);
     //Colour is just a number for what I was testing, it's not a colour.
     colour = 0;
     quantity = 10;
     Paint_SelectImage(ImgBuffer);
     Paint_Clear(BLACK);
+
+    //Testing
+    knob1 = 0;
+    knob2 = 0;
+    motorenc1 = 0;
+    motorenc2 = 0;
 
     for(;;){
 

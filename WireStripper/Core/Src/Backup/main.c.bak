@@ -117,13 +117,13 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   //Starting encoders
-  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
-  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
-  HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
-  HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); //knob 1
+  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); //tim3 is motor encoder 1
+  HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL); //tim4 is motor encoder 2
+  HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL); //knob 2
 
   //Starting ADC
-  HAL_ADC_Start_DMA(&hadc1, adcVals1, 3); //UX pot, cut pot
+  HAL_ADC_Start_DMA(&hadc1, adcVals1, 1); //UX pot
   HAL_ADC_Start(&hadc2); //vbat ADC
   HAL_ADC_Start_DMA(&hadc3, adcVals3, 2);  //Lights
 

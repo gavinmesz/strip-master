@@ -70,8 +70,8 @@
 
 #define grossOV					4.20	// HARD in V
 #define netOV					4.15	// VVirtual Full V
-#define netUV					3.30	// Virtual Empty V
-#define grossUV					3.00	// HARD in V
+#define netUV					3.40	// Virtual Empty V
+#define grossUV					3.30	// HARD in V
 
 #define grossCapacity			850	// in mAh | Gavin - capacity in datasheet
 #define netCapacity				720	// in mAh

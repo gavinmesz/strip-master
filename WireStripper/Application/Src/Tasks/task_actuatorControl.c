@@ -14,19 +14,28 @@
 #include "stm32f4xx_ll_tim.h"
 #include "task_display.h"
 #include "task_stateMachine.h"
+#include <limits.h>
 
-#define WHEEL_RADIUS 1
-#define BASE_STEPS_PER_REV 200
-#define FEED_SPEED 100
-#define CUT_SPEED 100
-#define STRIP_SPEED 50
-#define PEEL_SPEED 100
+#define WHEEL_RADIUS 4.7625
+#define BASE_STEPS_PER_REV 200.0
+#define FEED_SPEED 1000
+#define CUT_SPEED 200
+#define STRIP_SPEED 200
+#define PEEL_SPEED 200
 
 #define M1_TO_CUT_DIST 10
-#define M2_TO_CUT_DIST 10
+#define M2_TO_CUT_DIST 38
+//~65mm from in light to cut
+//~39mm from M1 to cut
 #define TOLERANCE_STEP 5
-#define SPIT_STEPS 200 + M2_TO_CUT_DIST
+#define SPIT_STEPS 500 + M2_TO_CUT_DIST
 #define CUT_BACK_OFF 2
+
+#define GAUGE_IN (1<<2)
+
+#define M1_MICRO 0
+#define M2_MICRO 0
+#define M3_MICRO 0
 
 MotorStatus motorStatus;
 
@@ -44,15 +53,11 @@ static uint32_t dcDMA1;
 static uint32_t dcDMA2;
 static uint32_t dcDMA3;
 
-//Microstep values
-static uint8_t microStep1;
-static uint8_t microStep2;
-
 //Finished wires
 int finishedWires;
 
-static int length_to_steps(int const length_mm, uint8_t const microStep) {
-    return (length_mm/(2*3.14159*WHEEL_RADIUS))*BASE_STEPS_PER_REV*microStep;
+static int length_to_steps(float const length_mm, float const microStep) {
+    return (length_mm/(2.0*3.14159*WHEEL_RADIUS))*BASE_STEPS_PER_REV*microStep;
 }
 
 
@@ -182,13 +187,21 @@ void stopAllMotors() {
 }
 
 uint8_t stripWire() {
+    //Wait for core detect event
+    BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, 100);
 
-    //Todo: move M3, stop and back off when detected
+    if (result == pdTRUE) {
+        if (ulNotifiedValue & GAUGE_IN) {
+            stopAllMotors();
+            return 1;
+        }
+    }
+    return 0;
 }
 
 uint8_t encoderMove(int length, int const speed, uint32_t OG_Reading) {
     uint32_t enc = __HAL_TIM_GET_COUNTER(&htim3);
-    if (OG_Reading-enc<length_to_steps(length, microStep1)) {
+    if (OG_Reading-enc<length_to_steps(length, M1_MICRO)) {
         speedMove(speed, &Motor1); //Move motor at speed
         speedMove(speed, &Motor2); //Move motor at speed
         return 0;
@@ -210,20 +223,31 @@ void runJob() {
                 motorStatus = IDLE;
                 systemState = ENGAGED;
             } else { //Feed new wire one strip length + distance from light to cutter (dead reckoning)
-                if (stepMove(length_to_steps(stripLength+M1_TO_CUT_DIST, microStep1), FEED_SPEED, &Motor1)) {motorStatus = STRIP_ENGAGE1;}
+                if (HAL_GPIO_ReadPin(UX_SW_GPIO_Port,UX_SW_Pin)) { //If we are doing cut or strip/cut. HIGH = CUT
+                    if (stepMove(length_to_steps(M1_TO_CUT_DIST, M1_MICRO), FEED_SPEED, &Motor1)) {
+                        motorStatus = M1_FULL_LENGTH_FEED;
+                    }
+                } else { // LOW = strip/cut
+                    if (stepMove(length_to_steps(stripLength+M1_TO_CUT_DIST, M1_MICRO), FEED_SPEED, &Motor1)) {
+                        motorStatus = STRIP_ENGAGE1;
+                    }
+                }
             }
             break;
         }
         case (STRIP_ENGAGE1): { //Engage the cutters once the previous move is finished.
             if (Motor1.motorDone == 1) {
-                if (stripWire()) { //Engages M3 then backs off a lil
-                    motorStatus = M1_PEEL;
+                if (stripWire()) { //Engages M3 until core hit
+                    if (stepMove(-TOLERANCE_STEP, CUT_SPEED, &Motor3)){motorStatus = M1_PEEL;}
+                    else {
+                        systemState = SAFETY_ERROR;
+                    }
                 }
             }
             break;
         }
         case (M1_PEEL): { //use motor 1 to peel the insulation off
-            if (stepMove(-(length_to_steps(stripLength, microStep1)+TOLERANCE_STEP), PEEL_SPEED, &Motor1)) {
+            if (stepMove(-(length_to_steps(stripLength, M1_MICRO)), PEEL_SPEED, &Motor1)) {
                 motorStatus = M1_FULL_LENGTH_FEED;
                 encoder1 = __HAL_TIM_GET_COUNTER(&htim3);
                 encoder2 = __HAL_TIM_GET_COUNTER(&htim4);
@@ -233,17 +257,22 @@ void runJob() {
         }
         case (M1_FULL_LENGTH_FEED): { // Move the full length
             if (Motor1.motorDone == 1) { //Motor finished, start full length move
-                if (encoderMove(length+TOLERANCE_STEP, FEED_SPEED, encoder1)) {motorStatus = CUT;}
+                if (encoderMove(length, FEED_SPEED, encoder1)) {motorStatus = CUT;}
             }
             break;
         }
         case (CUT): { //Cut the wire
-            if (stepMove(BASE_STEPS_PER_REV, CUT_SPEED, &Motor3)) {motorStatus = CALIBRATE_AND_M2_STRIP;}
+            if (stepMove(BASE_STEPS_PER_REV, CUT_SPEED, &Motor3)) {
+                motorStatus = CALIBRATE_AND_M2_STRIP;
+            }
             break;
         }
         case (CALIBRATE_AND_M2_STRIP): { //Feed M1 to light to recalibrate, feed M2 one strip length
             if (Motor3.motorDone == 1) {
-                if (stepMove(-length_to_steps(stripLength, microStep2), FEED_SPEED, &Motor2)) {
+                if (HAL_GPIO_ReadPin(UX_SW_GPIO_Port, UX_SW_Pin)) { // If we are in CUT mode, skip to spit
+                    motorStatus = SPIT;
+                }
+                if (stepMove(-length_to_steps(stripLength, M2_MICRO), FEED_SPEED, &Motor2)) {
                     if (speedMove(-FEED_SPEED, &Motor1)) {
                         while (wirePresent(*WIRE_END_DETECT)) { //Poll while wire is present
                             vTaskDelay(10);
@@ -259,13 +288,16 @@ void runJob() {
         case (STRIP_ENGAGE2): {
             if (Motor2.motorDone == 1 && Motor1.motorDone == 1) {
                 if (stripWire()) { //engage teeth again
-                    motorStatus = M2_PEEL;
+                    if (stepMove(-TOLERANCE_STEP, CUT_SPEED, &Motor3)){motorStatus = M2_PEEL;}
+                    else {
+                        systemState = SAFETY_ERROR;
+                    }
                 }
             }
             break;
         }
         case (M2_PEEL): { //Spit out wire with M2
-            if (stepMove((length_to_steps(stripLength, microStep1)+TOLERANCE_STEP), PEEL_SPEED, &Motor2)) {
+            if (stepMove((length_to_steps(stripLength, M1_MICRO)), PEEL_SPEED, &Motor2)) {
                 motorStatus = SPIT;
             }
             break;
@@ -358,9 +390,9 @@ void vActuatorTask(){
     };
 
     //Initialize microstepping configurations
-    microSet(2, Motor1); // quarter step
-    microSet(2, Motor2); // quarter step
-    microSet(0, Motor3); // full step
+    microSet(M1_MICRO, Motor1); // quarter step
+    microSet(M2_MICRO, Motor2); // quarter step
+    microSet(M3_MICRO, Motor3); // full step
 
     //Startup routines (when ready)
     //M1 and M2

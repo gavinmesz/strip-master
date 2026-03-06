@@ -29,6 +29,7 @@ extern volatile uint8_t stop_button;
 extern volatile uint8_t go_button;
 extern volatile uint8_t safetyOK;
 extern volatile uint8_t job_finish;
+extern uint32_t ulNotifiedValue;
 
 uint8_t wirePresent(float adc);
 

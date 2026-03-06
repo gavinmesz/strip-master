@@ -80,6 +80,7 @@ void Error_Handler(void);
 #define UX_KNOB2_BUT_GPIO_Port GPIOA
 #define GAUGE_IN_Pin GPIO_PIN_4
 #define GAUGE_IN_GPIO_Port GPIOA
+#define GAUGE_IN_EXTI_IRQn EXTI4_IRQn
 #define UX_POT_Pin GPIO_PIN_5
 #define UX_POT_GPIO_Port GPIOA
 #define VBAT_ADC_Pin GPIO_PIN_6

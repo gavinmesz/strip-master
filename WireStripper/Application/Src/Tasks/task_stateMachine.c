@@ -14,6 +14,7 @@
 #include "main.h"
 #include "stm32f4xx_hal_gpio.h"
 #include "FreeRTOS.h"
+#include "task_actuatorControl.h"
 #include "task_display.h"
 #include "task_safety.h"
 
@@ -40,6 +41,7 @@ volatile SystemStatus systemState;
 
 #define GO_BUTTON (1<<0)
 #define STOP_BUTTON (1<<1)
+#define GAUGE_IN (1<<2)
 
 volatile uint8_t safetyOK;
 volatile uint8_t job_finish;
@@ -63,9 +65,10 @@ void turnOnBAT() {
     turnCHGOn(&BMS);
 }
 
+uint32_t ulNotifiedValue;
+
 void vStateMachineTask() {
     systemState = CHECKS;
-    uint32_t ulNotifiedValue;
 
     for (;;) {
         if (!safetyOK) { //Must poll before every cycle
@@ -81,7 +84,9 @@ void vStateMachineTask() {
             */
                 turnOnBAT();
                 vTaskDelay(250); // Wait for safety checks to run and for system to turn on.
-                systemState = NONE;
+                if (safetyOK) {
+                    systemState = NONE;
+                }
                 break;
             }
             case NONE: {
@@ -159,10 +164,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     //     safetyOK = 0;
     // }
 
-    if (GPIO_Pin == STOP_BUT_Pin && (systemState == ENGAGED || systemState == JOB_RUNNING)) {
+    if (GPIO_Pin == STOP_BUT_Pin && (systemState == ENGAGED || systemState == JOB_RUNNING)) { // Detect falling edge
         xTaskNotifyFromISR(xStateMachineTaskHandle, STOP_BUTTON, eSetBits, &xHigherPriorityTaskWoken);
     }
-    if (GPIO_Pin == GO_BUT_Pin && systemState == ENGAGED) {
+    if (GPIO_Pin == GO_BUT_Pin && systemState == ENGAGED) { //Detect falling edge
         xTaskNotifyFromISR(xStateMachineTaskHandle, GO_BUTTON, eSetBits, &xHigherPriorityTaskWoken);
+    }
+    if (GPIO_Pin == GAUGE_IN_Pin && (motorStatus == STRIP_ENGAGE1 || motorStatus == STRIP_ENGAGE2)) { //Detect 3V3 rising edge
+        xTaskNotifyFromISR(xActuatorTaskHandle, GAUGE_IN, eSetBits, &xHigherPriorityTaskWoken);
     }
 }

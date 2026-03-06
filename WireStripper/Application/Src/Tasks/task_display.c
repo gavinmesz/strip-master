@@ -13,6 +13,7 @@
 
 #include "adc.h"
 #include "spi.h"
+#include "task_safety.h"
 #include "tim.h"
 #include "../User/OLED/OLED_2in42.h"
 #include "../GUI/GUI_Paint.h"
@@ -129,9 +130,9 @@ void updateValues() {
 void drawScreen() {
     //Paint functions from GUIPaint.c if the values are different
     Paint_DrawString_EN(10, 0, "waveshare", &Font16, WHITE, BLACK);
-    Paint_DrawString_EN(10, 17, "hello world", &Font8, WHITE, BLACK);
-    Paint_DrawNum(10, 30, stripLength, &Font8, 4, WHITE, BLACK);
-    Paint_DrawNum(10, 43, quantity, &Font12, 2, BLACK, WHITE);
+    Paint_DrawNum(10, 17, quantity, &Font8, 2, BLACK, WHITE);
+    Paint_DrawNum(10, 30, BMS.Vpack, &Font8, 4, WHITE, BLACK);
+    Paint_DrawNum(10, 43, packCurrent, &Font12, 2, BLACK, WHITE);
 }
 
 //Main display task. Infinite loop will run.

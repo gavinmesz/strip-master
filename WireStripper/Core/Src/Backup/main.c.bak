@@ -123,7 +123,7 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
 
   //Starting ADC
-  HAL_ADC_Start_DMA(&hadc1, adcVals1, 3); //gauge in, UX pot, cut pot
+  HAL_ADC_Start_DMA(&hadc1, adcVals1, 3); //UX pot, cut pot
   HAL_ADC_Start(&hadc2); //vbat ADC
   HAL_ADC_Start_DMA(&hadc3, adcVals3, 2);  //Lights
 

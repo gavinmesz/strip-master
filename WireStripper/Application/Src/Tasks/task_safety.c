@@ -67,13 +67,11 @@
 #include "task_safety.h"
 #include "BQ7692006PWR.h"
 #include "task_stateMachine.h"
+#include "task_display.h"
 
 BQ76920_t BMS;
 float packCurrent;
 float SOH;
-uint8_t M1nFault;
-uint8_t M2nFault;
-uint8_t M3nFault;
 
 static uint8_t checkSafety()  {
     HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET); //Debugging
@@ -84,8 +82,10 @@ static uint8_t checkSafety()  {
 
     BMS.Vpack = getPackVoltage(&BMS); // Get V pack requires 2 bytes register read. ~1ms
     packCurrent = getCurrent(&BMS); // in mA requires 2 bytes register read. ~1ms
-    BMS.SOC = SOCPack(&BMS, packCurrent, BMS.Vpack);
-    SOH = SOHPack(&BMS);
+    if (colour%10==0) {
+        BMS.SOC = SOCPack(&BMS, packCurrent, BMS.Vpack);
+        SOH = SOHPack(&BMS);
+    }
     HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET); //Debugging
 
     uint8_t result = 1;

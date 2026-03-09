@@ -143,8 +143,8 @@ void updateValues() {
 
 void drawScreen() {
     //Paint functions from GUIPaint.c if the values are different
-    Paint_DrawNum(10, 0, knob1, &Font8, 2, WHITE, BLACK); //FAIL
-    Paint_DrawNum(60, 0, knob2, &Font8, 2, WHITE, BLACK); //WORKS, 2 per detent
+    Paint_DrawNum(10, 0, knob2, &Font8, 2, WHITE, BLACK); //FAIL
+    Paint_DrawNum(60, 0, knob1, &Font8, 2, WHITE, BLACK); //WORKS, 2 per detent
     uint8_t result = 0;
     if (HAL_GPIO_ReadPin(UX_KNOB1_BUT_GPIO_Port, UX_KNOB1_BUT_Pin)) {
         result += 1;

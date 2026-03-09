@@ -33,6 +33,8 @@ uint32_t adcVals1[1]; //UX pot, cut pot
 uint32_t adcVals2[1]; //vbat ADC
 uint32_t adcVals3[2]; //Light1, Light2
 
+uint8_t test = 1;//1 for Gavin, 0 for Will's cool breakthrough UI
+
 #define PD1 adcVals3[0] //photodiode 1
 #define PD2 adcVals3[1] //photodiode 2
 #define UX_POT adcVals1[0] //UX potentiometer
@@ -137,12 +139,19 @@ void updateValues() {
     motorenc2 = __HAL_TIM_GET_COUNTER(&htim4);
     //tim3 is motor encoder 1
     //tim4 is motor encoder 2
-    HAL_ADC_PollForConversion(&hadc2, 1);
+    HAL_ADC_PollForConversion(&hadc2, 1);//potentiometer
     stripLength = HAL_ADC_GetValue(&hadc2);
+    if (test == 1) {
+        //Gavin's dumbass crap 
+    } else {
+        //cool stuff 
+    }
 }
 
 void drawScreen() {
-    //Paint functions from GUIPaint.c if the values are different
+    if (test == 1) {
+        //Gavin's dumbass crap 
+        //Paint functions from GUIPaint.c if the values are different
     Paint_DrawNum(10, 0, knob2, &Font8, 2, WHITE, BLACK); //FAIL
     Paint_DrawNum(60, 0, knob1, &Font8, 2, WHITE, BLACK); //WORKS, 2 per detent
     uint8_t result = 0;
@@ -181,6 +190,10 @@ void drawScreen() {
         result+=1;
     }
     Paint_DrawNum(90, 52, result, &Font8, 2, WHITE, BLACK); //WORKS
+    } else {
+        //cool stuff 
+    }
+    
 
 
 }

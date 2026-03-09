@@ -10,6 +10,13 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
+
+#include "task_display.h"
+
+#ifndef GAUGE_IN
+#define GAUGE_IN (1<<2)
+#endif
 
 extern UART_HandleTypeDef huart2;
 
@@ -52,6 +59,7 @@ void print_help() {
     printf("\r\nsetpin m[1-3] [pin] [val] : Set GPIO pin. Pins: en, dir, ms1, ms2, nslp, nrst");
     printf("\r\njog                   : Enter Real-time control mode");
     printf("\r\nstep m[1-3] [s] [pps] : Move motor (use - for reverse, e.g., step m1 -500 200)");
+    printf("\r\nstrip                 : Run M2 until gauge triggers, then back off");
     printf("\r\nhelp                  : Show this menu\r\n");
 }
 
@@ -150,7 +158,7 @@ void vMotorTestTask(void *argument) {
                     }
                     else if (strcmp(cmd_buffer, "status") == 0) {
                         printf("\r\n------ STATUS ------\r\n");
-                        printf("Enc1: %d | Enc2: %d\r\n", encoder1, encoder2);
+                        printf("Enc1: %d | Enc2: %d\r\n", adcVals3[0], adcVals3[1]);
                         printf("Pack Current: %.2f mA\r\n", packCurrent);
                         printf("Pack Voltage: %.2f V\r\n", BMS.Vpack);
                         printf("Cell Voltages: %.2fV, %.2fV, %.2fV, %.2fV \r\n>", BMS.Vcell[0], BMS.Vcell[1], BMS.Vcell[2], BMS.Vcell[3]);
@@ -223,6 +231,43 @@ void vMotorTestTask(void *argument) {
                             }
                         } else {
                             printf("Usage: step m[1-3] [steps] [pps]\r\n>");
+                        }
+                    }
+                    else if (strcmp(cmd_buffer, "strip") == 0) {
+                        printf("M2 stripping (waiting for GAUGE_IN). Press 'q' to cancel...\r\n");
+
+                        // 'h' direction maps to negative speed
+                        if (speedMove(-jog_speed, &Motor2)) {
+                            uint8_t gauge_hit = 0;
+                            uint32_t notifiedValue = 0;
+
+                            while (!gauge_hit) {
+                                // Bailout condition to prevent endless spinning
+                                if (HAL_UART_Receive(&huart2, &rx_char, 1, 0) == HAL_OK && (rx_char == 'q' || rx_char == 'Q')) {
+                                    printf("\r\nStrip test cancelled.\r\n>");
+                                    break;
+                                }
+
+                                // Poll for the FreeRTOS task notification (10ms timeout per loop)
+                                if (xTaskNotifyWait(0x00, ULONG_MAX, &notifiedValue, pdMS_TO_TICKS(10)) == pdTRUE) {
+                                    if (notifiedValue & GAUGE_IN) {
+                                        gauge_hit = 1;
+                                    }
+                                }
+                            }
+
+                            stopMotor(&Motor2);
+
+                            if (gauge_hit) {
+                                printf("\r\nGAUGE_IN detected! Backing off 100 steps...\r\n>");
+
+                                // Back off in the opposite direction (positive steps)
+                                if (stepMove(100, (float)jog_speed, &Motor2)) {
+                                    step_requested[2] = 1; // Flag so the main loop prints when the backoff finishes
+                                }
+                            }
+                        } else {
+                            printf("M2 is currently BUSY.\r\n>");
                         }
                     }
                     else {

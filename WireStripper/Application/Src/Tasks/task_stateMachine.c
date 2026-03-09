@@ -68,89 +68,89 @@ void turnOnBAT() {
 uint32_t ulNotifiedValue;
 
 void vStateMachineTask() {
-    systemState = CHECKS;
-
+    // systemState = CHECKS;
+    //
     for (;;) {
-        if (!safetyOK) { //Must poll before every cycle
-            systemState = SAFETY_ERROR;
-        }
-
-        switch (systemState) {
-            case CHECKS: {
-            /*
-            *  a. Power OK?
-            *  b. wire not detected at #2? Make sure wire not jammed in already
-            *  If these aren't true, something is wrong, SAFETY ERROR
-            */
-                turnOnBAT();
-                vTaskDelay(250); // Wait for safety checks to run and for system to turn on.
-                if (safetyOK) {
-                    systemState = NONE;
-                }
-                break;
-            }
-            case NONE: {
-            /* 1. Stay NONE while waiting for interrupt flags
-             * 2. Deal with interrupt flags
-             *  a. Wire detected -> Feed wire in until wire detect 2. ENGAGE..., WAIT_FOR_USER.
-             *  b. Safety flag -> Disable HV power. Require restart to move on. Display?. POWER_ERROR.
-             */
-                if (wirePresent(*WIRE_IN_DETECT)) {
-                    systemState = ENGAGE;
-                }
-                break;
-            }
-            case DISENGAGE: {
-                if (job_finish) {
-                    systemState = NONE;
-                }
-                break;
-            }
-            case ENGAGED: {
-                /*
-                *  a. STOP -> Disengage wire job to actuator control, stepMove. DISENGAGING... Return to NONE.
-                *  b. GO -> Send "start job" to actuator control. JOB_RUNNING
-                *  c. Power safety Flag -> Disable HV Power. Require restart to move on. Display? POWER_ERROR.
-                */
-                BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, pdMS_TO_TICKS(100));
-
-                if (result == pdTRUE) {
-                    if (ulNotifiedValue & STOP_BUTTON) {
-                        systemState = DISENGAGE;
-                    }
-                    if (ulNotifiedValue & GO_BUTTON) {
-                        systemState = JOB_RUNNING;
-                    }
-                }
-                break;
-            }
-            case JOB_RUNNING: {
-                /*
-                * 4. Job is running, interrupt flags
-                *  a. STOP -> E-stop. Disable HV Power. Require restart to move on. Display? E-STOP.
-                *  b. Power safety Flag -> Disable HV Power. Require restart to move on. Display? POWER_ERROR.
-                *  c. Job finished -> Actuator task will set JOB_RUNNING to Done
-                */
-                BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, 0);
-
-                if (result == pdTRUE) {
-                    if (ulNotifiedValue & STOP_BUTTON) {
-                        systemState = SAFETY_ERROR;
-                    }
-                }
-                break;
-            }
-            case SAFETY_ERROR: {
-                //Here forever, shut down power
-                turnOffBAT();
-                HAL_GPIO_WritePin(LDO_EN_GPIO_Port,LDO_EN_Pin, GPIO_PIN_RESET);
-                break;
-            }
-            default: {
-                //When in "ENGAGING" or "DISENGAGING" State
-                break;
-            }
-        }
+    //     if (!safetyOK) { //Must poll before every cycle
+    //         systemState = SAFETY_ERROR;
+    //     }
+    //
+    //     switch (systemState) {
+    //         case CHECKS: {
+    //         /*
+    //         *  a. Power OK?
+    //         *  b. wire not detected at #2? Make sure wire not jammed in already
+    //         *  If these aren't true, something is wrong, SAFETY ERROR
+    //         */
+    //             turnOnBAT();
+    //             vTaskDelay(250); // Wait for safety checks to run and for system to turn on.
+    //             if (safetyOK) {
+    //                 systemState = NONE;
+    //             }
+    //             break;
+    //         }
+    //         case NONE: {
+    //         /* 1. Stay NONE while waiting for interrupt flags
+    //          * 2. Deal with interrupt flags
+    //          *  a. Wire detected -> Feed wire in until wire detect 2. ENGAGE..., WAIT_FOR_USER.
+    //          *  b. Safety flag -> Disable HV power. Require restart to move on. Display?. POWER_ERROR.
+    //          */
+    //             if (wirePresent(*WIRE_IN_DETECT)) {
+    //                 systemState = ENGAGE;
+    //             }
+    //             break;
+    //         }
+    //         case DISENGAGE: {
+    //             if (job_finish) {
+    //                 systemState = NONE;
+    //             }
+    //             break;
+    //         }
+    //         case ENGAGED: {
+    //             /*
+    //             *  a. STOP -> Disengage wire job to actuator control, stepMove. DISENGAGING... Return to NONE.
+    //             *  b. GO -> Send "start job" to actuator control. JOB_RUNNING
+    //             *  c. Power safety Flag -> Disable HV Power. Require restart to move on. Display? POWER_ERROR.
+    //             */
+    //             BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, pdMS_TO_TICKS(100));
+    //
+    //             if (result == pdTRUE) {
+    //                 if (ulNotifiedValue & STOP_BUTTON) {
+    //                     systemState = DISENGAGE;
+    //                 }
+    //                 if (ulNotifiedValue & GO_BUTTON) {
+    //                     systemState = JOB_RUNNING;
+    //                 }
+    //             }
+    //             break;
+    //         }
+    //         case JOB_RUNNING: {
+    //             /*
+    //             * 4. Job is running, interrupt flags
+    //             *  a. STOP -> E-stop. Disable HV Power. Require restart to move on. Display? E-STOP.
+    //             *  b. Power safety Flag -> Disable HV Power. Require restart to move on. Display? POWER_ERROR.
+    //             *  c. Job finished -> Actuator task will set JOB_RUNNING to Done
+    //             */
+    //             BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, 0);
+    //
+    //             if (result == pdTRUE) {
+    //                 if (ulNotifiedValue & STOP_BUTTON) {
+    //                     systemState = SAFETY_ERROR;
+    //                 }
+    //             }
+    //             break;
+    //         }
+    //         case SAFETY_ERROR: {
+    //             //Here forever, shut down power
+    //             turnOffBAT();
+    //             HAL_GPIO_WritePin(LDO_EN_GPIO_Port,LDO_EN_Pin, GPIO_PIN_RESET);
+    //             break;
+    //         }
+    //         default: {
+    //             //When in "ENGAGING" or "DISENGAGING" State
+    //             break;
+    //         }
+    //     }
         vTaskDelay(100);
     }
 }

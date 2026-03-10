@@ -112,7 +112,7 @@ void MX_TIM2_Init(void)
   htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim2.Init.Period = 1000;
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV2;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   sConfig.EncoderMode = TIM_ENCODERMODE_TI1;
   sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
@@ -244,7 +244,7 @@ void MX_TIM5_Init(void)
   htim5.Init.Prescaler = 0;
   htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim5.Init.Period = 1000;
-  htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV2;
   htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   sConfig.EncoderMode = TIM_ENCODERMODE_TI1;
   sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
@@ -447,7 +447,7 @@ void HAL_TIM_Encoder_MspInit(TIM_HandleTypeDef* tim_encoderHandle)
     __HAL_RCC_GPIOB_CLK_ENABLE();
     /**TIM2 GPIO Configuration
     PA15     ------> TIM2_CH1
-    PB9     ------> TIM2_CH2
+    PB3     ------> TIM2_CH2
     */
     GPIO_InitStruct.Pin = UX_KNOB1_A_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -652,7 +652,7 @@ void HAL_TIM_Encoder_MspDeInit(TIM_HandleTypeDef* tim_encoderHandle)
 
     /**TIM2 GPIO Configuration
     PA15     ------> TIM2_CH1
-    PB9     ------> TIM2_CH2
+    PB3     ------> TIM2_CH2
     */
     HAL_GPIO_DeInit(UX_KNOB1_A_GPIO_Port, UX_KNOB1_A_Pin);
 

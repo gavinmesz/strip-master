@@ -176,6 +176,8 @@ void Error_Handler(void);
 #define GO_BUT_EXTI_IRQn EXTI15_10_IRQn
 #define UX_SW_Pin GPIO_PIN_12
 #define UX_SW_GPIO_Port GPIOG
+#define UX_KNOB1_B_Pin GPIO_PIN_3
+#define UX_KNOB1_B_GPIO_Port GPIOB
 #define ENC1_A_Pin GPIO_PIN_4
 #define ENC1_A_GPIO_Port GPIOB
 #define OLED_CS_Pin GPIO_PIN_5
@@ -184,8 +186,6 @@ void Error_Handler(void);
 #define OLED_DC_GPIO_Port GPIOB
 #define OLED_RST_Pin GPIO_PIN_7
 #define OLED_RST_GPIO_Port GPIOB
-#define UX_KNOB1_B_Pin GPIO_PIN_9
-#define UX_KNOB1_B_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

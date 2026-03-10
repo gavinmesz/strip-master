@@ -8,6 +8,7 @@ extern TaskHandle_t xDisplayTaskHandle;
 extern TaskHandle_t xActuatorTaskHandle;
 extern TaskHandle_t xSafetyTaskHandle;
 extern TaskHandle_t xStateMachineTaskHandle;
+extern TaskHandle_t xMotorTestHandle;
 
 void TaskManager_InitTasks(void);
 void TaskManager_CreateAllTasks(void);

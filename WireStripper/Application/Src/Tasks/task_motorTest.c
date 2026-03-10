@@ -119,8 +119,9 @@ void vMotorTestTask(void *argument) {
     microSet(2, Motor2);
     microSet(0, Motor3);
 
-    HAL_GPIO_WritePin(M1_nSLP_GPIO_Port, M1_nSLP_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(M2_nSLP_GPIO_Port, M2_nSLP_Pin, GPIO_PIN_RESET);
+    wakeMotor(0, Motor1);
+    wakeMotor(0, Motor2);
+
     HAL_GPIO_WritePin(M3_nEN_GPIO_Port, M3_nEN_Pin, GPIO_PIN_SET);
 
     print_logo();

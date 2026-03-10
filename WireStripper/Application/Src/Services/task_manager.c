@@ -18,13 +18,13 @@ TaskHandle_t xStateMachineTaskHandle = NULL;
 TaskHandle_t xMotorTestHandle = NULL;
 int counterVar;
 
+
 void TaskManager_InitTasks(void){
     //Display
     if (initDisplay() != 1) {
         configASSERT(0);
     }
 
-    //Motor actuators
 
     //Safety/Power
     BMS.i2cHandle = &hi2c2;
@@ -45,36 +45,27 @@ void TaskManager_CreateAllTasks(void)
     if ( TEST ) {
         //Testing Task
         xReturned = xTaskCreate(vMotorTestTask, "MotorTest", 512, NULL, configMAX_PRIORITIES-3, &xMotorTestHandle);
-        xReturned = xTaskCreate(vSafetyTask, "Safety",   512, NULL, configMAX_PRIORITIES-1, &xSafetyTaskHandle);
-        xReturned = xTaskCreate(vDisplayTask, "Display",  2048, NULL, configMAX_PRIORITIES-4, &xDisplayTaskHandle);
-        xReturned = xTaskCreate(vStateMachineTask, "StateMachine",   512, NULL, configMAX_PRIORITIES-2, &xStateMachineTaskHandle);
-
-
         configASSERT(xReturned == pdPASS);
-
+        xReturned = xTaskCreate(vSafetyTask, "Safety",   512, NULL, configMAX_PRIORITIES-1, &xSafetyTaskHandle);
+        configASSERT(xReturned == pdPASS);
+        xReturned = xTaskCreate(vDisplayTask, "Display",  2048, NULL, configMAX_PRIORITIES-4, &xDisplayTaskHandle);
+        configASSERT(xReturned == pdPASS);
         // xReturned = xTaskCreate(vStateMachineTask, "StateMachine",   512, NULL, configMAX_PRIORITIES-2, &xStateMachineTaskHandle);
-        //
         // configASSERT(xReturned == pdPASS);
+
     } else {
 
         //Actuator Task
         xReturned = xTaskCreate(vActuatorTask, "Actuator", 512, NULL, configMAX_PRIORITIES-3, &xActuatorTaskHandle);
-
         configASSERT(xReturned == pdPASS);
-
         //Display Task: stack should be >1024 due to display buffer size
         xReturned = xTaskCreate(vDisplayTask, "Display",  2048, NULL, configMAX_PRIORITIES-4, &xDisplayTaskHandle);
-
         configASSERT(xReturned == pdPASS);
-
         // Safety Poll Task: Make sure all bucks present power good
         xReturned = xTaskCreate(vSafetyTask, "Safety",   512, NULL, configMAX_PRIORITIES-1, &xSafetyTaskHandle);
-
         configASSERT(xReturned == pdPASS);
-
         // State Machine Task: Monitor events and produce motor setpoints
         xReturned = xTaskCreate(vStateMachineTask, "StateMachine",   512, NULL, configMAX_PRIORITIES-2, &xStateMachineTaskHandle);
-
         configASSERT(xReturned == pdPASS);
     }
 }

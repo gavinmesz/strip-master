@@ -62,8 +62,10 @@ typedef enum {
     M1_FULL_LENGTH_FEED,
     CUT,
     CALIBRATE_AND_M2_STRIP,
+    WAITING_FOR_WIRE_RESET,
     STRIP_ENGAGE2,
     M2_PEEL,
+    BACK_UP_CUTTER,
     SPIT,
     RESTART,
     IDLE // Added to match your vActuatorTask initialization

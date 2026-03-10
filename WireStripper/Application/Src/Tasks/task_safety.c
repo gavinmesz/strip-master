@@ -90,7 +90,7 @@ static uint8_t checkSafety()  {
 
     uint8_t result = 1;
     result = HAL_GPIO_ReadPin(BUCK12_PG_GPIO_Port, BUCK12_PG_Pin);
-    // && HAL_GPIO_ReadPin(M3_nFLT_GPIO_Port,M3_nFLT_Pin);
+    //Todo: Check for motor faults
     return result;
 }
 

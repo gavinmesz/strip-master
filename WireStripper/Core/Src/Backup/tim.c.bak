@@ -447,7 +447,7 @@ void HAL_TIM_Encoder_MspInit(TIM_HandleTypeDef* tim_encoderHandle)
     __HAL_RCC_GPIOB_CLK_ENABLE();
     /**TIM2 GPIO Configuration
     PA15     ------> TIM2_CH1
-    PB9     ------> TIM2_CH2
+    PB3     ------> TIM2_CH2
     */
     GPIO_InitStruct.Pin = UX_KNOB1_A_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -652,7 +652,7 @@ void HAL_TIM_Encoder_MspDeInit(TIM_HandleTypeDef* tim_encoderHandle)
 
     /**TIM2 GPIO Configuration
     PA15     ------> TIM2_CH1
-    PB9     ------> TIM2_CH2
+    PB3     ------> TIM2_CH2
     */
     HAL_GPIO_DeInit(UX_KNOB1_A_GPIO_Port, UX_KNOB1_A_Pin);
 

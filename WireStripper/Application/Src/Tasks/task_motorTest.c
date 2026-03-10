@@ -57,6 +57,7 @@ void print_help() {
     printf("\r\nstatus                : Show encoders and BMS status");
     printf("\r\npins                  : Show status of all motor GPIO pins");
     printf("\r\nsetpin m[1-3] [pin] [val] : Set GPIO pin. Pins: en, dir, ms1, ms2, nslp, nrst");
+    printf("\r\nsetpin buck12 [val]   : Set BUCK12_EN pin (1=ON, 0=OFF)");
     printf("\r\njog                   : Enter Real-time control mode");
     printf("\r\nstep m[1-3] [s] [pps] : Move motor (use - for reverse, e.g., step m1 -500 200)");
     printf("\r\nstrip                 : Run M2 until gauge triggers, then back off");
@@ -81,13 +82,16 @@ void print_motor_pins() {
            HAL_GPIO_ReadPin(M2_nSLP_GPIO_Port, M2_nSLP_Pin),
            HAL_GPIO_ReadPin(M2_nFLT_GPIO_Port, M2_nFLT_Pin));
 
-    printf("M3: nEN=%d DIR=%d SM0=%d SM1=%d nRST=%d nFLT=%d\r\n>",
+    printf("M3: nEN=%d DIR=%d SM0=%d SM1=%d nRST=%d nFLT=%d\r\n",
            HAL_GPIO_ReadPin(M3_nEN_GPIO_Port, M3_nEN_Pin),
            HAL_GPIO_ReadPin(M3_DIR_GPIO_Port, M3_DIR_Pin),
            HAL_GPIO_ReadPin(M3_SM0_GPIO_Port, M3_SM0_Pin),
            HAL_GPIO_ReadPin(M3_SM1_GPIO_Port, M3_SM1_Pin),
            HAL_GPIO_ReadPin(M3_RST_GPIO_Port, M3_RST_Pin),
            HAL_GPIO_ReadPin(M3_nFLT_GPIO_Port, M3_nFLT_Pin));
+
+    printf("BUCK12: EN=%d\r\n>",
+           HAL_GPIO_ReadPin(BUCK12_EN_GPIO_Port, BUCK12_EN_Pin));
 }
 
 void vMotorTestTask(void *argument) {
@@ -208,8 +212,15 @@ void vMotorTestTask(void *argument) {
                             } else {
                                 printf("Invalid motor or pin name. Try: en, dir, ms1, ms2, nslp, nrst\r\n>");
                             }
-                        } else {
-                            printf("Usage: setpin m[1-3] [pin] [0|1]\r\n>");
+                        }
+                        // --- NEW BLOCK FOR BUCK12_EN ---
+                        else if (sscanf(cmd_buffer, "setpin buck12 %d", &val) == 1) {
+                            HAL_GPIO_WritePin(BUCK12_EN_GPIO_Port, BUCK12_EN_Pin, val ? GPIO_PIN_SET : GPIO_PIN_RESET);
+                            printf("BUCK12_EN set to %d\r\n>", val ? 1 : 0);
+                        }
+                        // -------------------------------
+                        else {
+                            printf("Usage: setpin m[1-3] [pin] [0|1] OR setpin buck12 [0|1]\r\n>");
                         }
                     }
                     else if (strncmp(cmd_buffer, "step", 4) == 0) {

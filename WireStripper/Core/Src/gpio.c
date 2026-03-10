@@ -68,7 +68,8 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOG, M1_MS2_Pin|M1_MS1_Pin|M3_DIR_Pin|M3_nHOME_Pin
-                          |LDO_EN_Pin|ST_5V_Pin|ST_3V3_Pin|LED1_Pin, GPIO_PIN_RESET);
+                          |LDO_EN_Pin|BUCK12_EN_Pin|ST_5V_Pin|ST_3V3_Pin
+                          |LED1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, M1_DIR_Pin|M2_EN_Pin|M2_MS2_Pin|M2_MS1_Pin, GPIO_PIN_RESET);
@@ -155,9 +156,11 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /*Configure GPIO pins : M1_MS2_Pin M1_MS1_Pin M3_DIR_Pin M3_nHOME_Pin
-                           LDO_EN_Pin ST_5V_Pin ST_3V3_Pin LED1_Pin */
+                           LDO_EN_Pin BUCK12_EN_Pin ST_5V_Pin ST_3V3_Pin
+                           LED1_Pin */
   GPIO_InitStruct.Pin = M1_MS2_Pin|M1_MS1_Pin|M3_DIR_Pin|M3_nHOME_Pin
-                          |LDO_EN_Pin|ST_5V_Pin|ST_3V3_Pin|LED1_Pin;
+                          |LDO_EN_Pin|BUCK12_EN_Pin|ST_5V_Pin|ST_3V3_Pin
+                          |LED1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -205,12 +208,6 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PG6 PG13 PG14 PG15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
-
   /*Configure GPIO pin : BMS_PMO_Pin */
   GPIO_InitStruct.Pin = BMS_PMO_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
@@ -227,6 +224,12 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = STOP_BUT_Pin|GO_BUT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PG13 PG14 PG15 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/

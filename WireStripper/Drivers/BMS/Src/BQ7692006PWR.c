@@ -39,7 +39,8 @@ void BQ76920_Initialize(BQ76920_t *BMS, I2C_HandleTypeDef *i2cHandle) {
 
 	// Set SYS_STAT to 0xff
 	uint8_t SYS_STAT_VAL = 0xff;
-	BQ76920_WriteRegister(BMS, SYS_STAT, &SYS_STAT_VAL);
+	while (HAL_I2C_Mem_Write(BMS->i2cHandle, BQ76920_ADDRESS, SYS_STAT,
+	I2C_MEMADD_SIZE_8BIT, &SYS_STAT_VAL, 1, 200) != 0x00U){}
 
 	// Set CC_CFG to 0x19
 	uint8_t CC_CFG_REG = 0x19;
@@ -396,6 +397,5 @@ void BQ76920_ReadRegister(BQ76920_t *BMS, uint8_t reg, uint8_t *data) {
 }
 
 void BQ76920_WriteRegister(BQ76920_t *BMS, uint8_t reg, uint8_t *data) {
-	HAL_I2C_Mem_Write(BMS->i2cHandle, BQ76920_ADDRESS, reg,
-	I2C_MEMADD_SIZE_8BIT, data, 1, 200);
+	HAL_I2C_Mem_Write(BMS->i2cHandle, BQ76920_ADDRESS, reg, I2C_MEMADD_SIZE_8BIT, data, 1, 200);
 }

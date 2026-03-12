@@ -214,7 +214,7 @@ void drawScreen() {
         Paint_DrawNum(4*fontWidth,0,knob1,&Font8,2,WHITE,BLACK);
 
         //MODE READOUT
-        Paint_DrawString_EN(7*fontWidth,0,"MODE:",&Font8,WHITE,BLACK);
+        Paint_DrawString_EN(12*fontWidth,0,"MODE:",&Font8,WHITE,BLACK);
         Paint_DrawNum(12*fontWidth,0,stripCut,&Font8,2,WHITE,BLACK);
 
         //LEN READOUT (font size 8 )

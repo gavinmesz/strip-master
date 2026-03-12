@@ -1,4 +1,4 @@
-#define TEST 1
+#define TEST 0
 
 //Tasks included
 #include "task_manager.h"
@@ -25,7 +25,6 @@ void TaskManager_InitTasks(void){
         configASSERT(0);
     }
 
-
     //Safety/Power
     BMS.i2cHandle = &hi2c2;
     BQ76920_Initialize(&BMS, &hi2c2); // Init BMS
@@ -43,18 +42,17 @@ void TaskManager_CreateAllTasks(void)
 {
     BaseType_t xReturned;
     if ( TEST ) {
-        //Testing Task
-        xReturned = xTaskCreate(vMotorTestTask, "MotorTest", 512, NULL, configMAX_PRIORITIES-3, &xMotorTestHandle);
-        configASSERT(xReturned == pdPASS);
-        xReturned = xTaskCreate(vSafetyTask, "Safety",   512, NULL, configMAX_PRIORITIES-1, &xSafetyTaskHandle);
-        configASSERT(xReturned == pdPASS);
-        xReturned = xTaskCreate(vDisplayTask, "Display",  2048, NULL, configMAX_PRIORITIES-4, &xDisplayTaskHandle);
-        configASSERT(xReturned == pdPASS);
-        xReturned = xTaskCreate(vStateMachineTask, "StateMachine",   512, NULL, configMAX_PRIORITIES-2, &xStateMachineTaskHandle);
-        configASSERT(xReturned == pdPASS);
+        // //Testing Task
+        // xReturned = xTaskCreate(vMotorTestTask, "MotorTest", 512, NULL, configMAX_PRIORITIES-3, &xMotorTestHandle);
+        // configASSERT(xReturned == pdPASS);
+        // xReturned = xTaskCreate(vSafetyTask, "Safety",   512, NULL, configMAX_PRIORITIES-1, &xSafetyTaskHandle);
+        // configASSERT(xReturned == pdPASS);
+        // xReturned = xTaskCreate(vDisplayTask, "Display",  2048, NULL, configMAX_PRIORITIES-4, &xDisplayTaskHandle);
+        // configASSERT(xReturned == pdPASS);
+        // xReturned = xTaskCreate(vStateMachineTask, "StateMachine",   512, NULL, configMAX_PRIORITIES-2, &xStateMachineTaskHandle);
+        // configASSERT(xReturned == pdPASS);
 
     } else {
-
         //Actuator Task
         xReturned = xTaskCreate(vActuatorTask, "Actuator", 512, NULL, configMAX_PRIORITIES-3, &xActuatorTaskHandle);
         configASSERT(xReturned == pdPASS);

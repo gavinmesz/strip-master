@@ -23,6 +23,7 @@ extern UART_HandleTypeDef huart2;
 // Jog state variables
 static int jog_speed = 100;
 static uint8_t hold_to_run_active = 0; // 0 = Continuous, 1 = Hold-to-Run
+uint8_t gauge_detect;
 
 // Independent timeouts for each motor
 static uint32_t last_m1_tick = 0;
@@ -252,6 +253,7 @@ void vMotorTestTask(void *argument) {
                             uint32_t notifiedValue = 0;
 
                             while (!gauge_hit) {
+                                gauge_detect = 1;
                                 // Bailout condition to prevent endless spinning
                                 if (HAL_UART_Receive(&huart2, &rx_char, 1, 0) == HAL_OK && (rx_char == 'q' || rx_char == 'Q')) {
                                     printf("\r\nStrip test cancelled.\r\n>");
@@ -265,14 +267,15 @@ void vMotorTestTask(void *argument) {
                                     }
                                 }
                             }
+                            gauge_detect = 0;
 
-                            stopMotor(&Motor2);
+                            stopMotor(&Motor3);
 
                             if (gauge_hit) {
                                 printf("\r\nGAUGE_IN detected! Backing off 100 steps...\r\n>");
 
                                 // Back off in the opposite direction (positive steps)
-                                if (stepMove(-100, (float)100, &Motor3)) {
+                                if (stepMove(-200, (float)100, &Motor3)) {
                                     step_requested[2] = 1; // Flag so the main loop prints when the backoff finishes
                                 }
                             }

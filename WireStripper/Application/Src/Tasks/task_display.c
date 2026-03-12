@@ -143,7 +143,10 @@ void updateValues() {
     HAL_ADC_PollForConversion(&hadc2, 1);//potentiometer
     stripLength = HAL_ADC_GetValue(&hadc2);
     if (test == 1) {
-        //Gavin's dumbass crap 
+        //Gavin's dumbass crap
+        length = 150;
+        stripLength = 8;
+        stripCut=0;
     } else {
         //cool stuff 
     }
@@ -203,24 +206,20 @@ void drawScreen() {
 
 
         //QUANTITY READOUT
-        Paint_DrawChar(0,0,'QTY:',&Font8,WHITE,BLACK);
+        Paint_DrawString_EN(0,0,"QTY:",&Font8,WHITE,BLACK);
         Paint_DrawNum(4*fontWidth,0,quantity,&Font8,2,WHITE,BLACK);
 
         //MODE READOUT
-        Paint_DrawChar(7*fontWidth,0,'MODE:',&Font8,WHITE,BLACK);
+        Paint_DrawString_EN(7*fontWidth,0,"MODE:",&Font8,WHITE,BLACK);
         Paint_DrawNum(12*fontWidth,0,stripCut,&Font8,2,WHITE,BLACK);
 
         //LEN READOUT (font size 8 )
-        Paint_DrawChar(0,bottomOffset,'CUTLEN:',&Font8,WHITE,BLACK);
+        Paint_DrawString_EN(0,bottomOffset,"CUTLEN:",&Font8,WHITE,BLACK);
         Paint_DrawNum(7*fontWidth,bottomOffset,length,&Font8,2,WHITE,BLACK);
 
         //STRIP READOUT
-        Paint_DrawChar(12*fontWidth,bottomOffset,'STRIPLEN:',&Font8,WHITE,BLACK);
-        Paint_DrawNum((12+9)*fontWidth,bottomOffset,length,&Font8,2,WHITE,BLACK);
-
-
-
-
+        Paint_DrawString_EN(12*fontWidth,bottomOffset,"STRIPLEN:",&Font8,WHITE,BLACK);
+        Paint_DrawNum((12+9)*fontWidth,bottomOffset,stripLength,&Font8,2,WHITE,BLACK);
 
     }
     

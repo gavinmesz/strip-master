@@ -13,4 +13,6 @@ typedef enum {
     MODE_JOG
 } CLIMode;
 
+extern uint8_t gauge_detect;
+
 #endif //WIRESTRIPPER_TASK_MOTORTEST_H

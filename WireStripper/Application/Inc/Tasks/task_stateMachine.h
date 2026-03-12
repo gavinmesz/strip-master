@@ -7,7 +7,7 @@
 
 #define WIRE_IN_DETECT &adcVals3[0]
 #define WIRE_END_DETECT &adcVals3[1]
-#define WIRE_DETECT_THRES 3700 //Todo: Requires confirmation
+#define WIRE_DETECT_THRES 3920 //Todo: Requires confirmation
 
 void vStateMachineTask();
 
@@ -30,6 +30,6 @@ extern volatile uint8_t safetyOK;
 extern volatile uint8_t job_finish;
 extern uint32_t ulNotifiedValue;
 
-uint8_t wirePresent(float adc);
+uint8_t wirePresent(uint32_t adc);
 
 #endif //WIRESTRIPPER_TASK_STATEMACHINE_H

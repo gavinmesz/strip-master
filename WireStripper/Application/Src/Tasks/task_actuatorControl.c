@@ -18,10 +18,10 @@
 
 #define WHEEL_RADIUS 4.7625
 #define BASE_STEPS_PER_REV 200.0
-#define FEED_SPEED 1000
-#define CUT_SPEED 200
-#define STRIP_SPEED 200
-#define PEEL_SPEED 200
+#define FEED_SPEED 400
+#define CUT_SPEED 50
+#define STRIP_SPEED 50
+#define PEEL_SPEED 400
 
 #define M1_TO_CUT_DIST 10
 #define M2_TO_CUT_DIST 38
@@ -172,11 +172,20 @@ uint8_t stepMove(int const step, float const speed, Motor* motor) {
 uint8_t speedMove(int speed, Motor* motor) {
     int dir;
     int speedtemp = speed;
-    if (speed<0){
-        dir = TO_FRONT;
-        speedtemp *= -1;
+    if (motor == &Motor3) { //-ve speed is the correct way
+        if (speed<0){
+            dir = DOWN;
+            speedtemp *= -1;
+        } else {
+            dir = UP;
+        }
     } else {
-        dir = TO_BACK;
+        if (speed<0){
+            dir = TO_FRONT;
+            speedtemp *= -1;
+        } else {
+            dir = TO_BACK;
+        }
     }
     if (motor->motorDone) {
         changeSpeed(speedtemp, dir, motor);
@@ -202,10 +211,11 @@ uint8_t stripWire() {
     //Wait for core detect event
     speedMove(STRIP_SPEED, &Motor3);
 
-    BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, 0);
+    uint32_t localNotifyVal = 0;
+    BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &localNotifyVal, 0);
 
     if (result == pdTRUE) {
-        if (ulNotifiedValue & GAUGE_IN) {
+        if (localNotifyVal & GAUGE_IN) {
             stopAllMotors();
             return 1;
         }
@@ -236,7 +246,8 @@ void runJob() {
             break;
         }
         case (START): { //Check if we met our goal
-            if (finishedWires >= quantity){ //Return to IDLE state
+            if (finishedWires >= 1){ //Return to IDLE state
+                stopAllMotors();
                 motorStatus = IDLE;
                 systemState = ENGAGED;
             } else { //Feed new wire one strip length + distance from light to cutter (dead reckoning)
@@ -315,7 +326,7 @@ void runJob() {
             break;
         }
         case (WAITING_FOR_WIRE_RESET): {
-            if (!wirePresent(*WIRE_END_DETECT)) {
+            if (!wirePresent(adcVals3[0])) {
                 //Poll while wire is present
                 stopMotor(&Motor1); //Stop when the wire is not detected anymore
                 stepMove(TOLERANCE_STEP, FEED_SPEED, &Motor1);// Move forward a lil
@@ -450,14 +461,14 @@ void vActuatorTask(){
 
     //Startup routines (when ready)
     //M1 and M2
-    wakeMotor(1, Motor1);
-    wakeMotor(1, Motor2);
-    enableMotor(1, Motor1);
-    enableMotor(1, Motor2);
+    HAL_GPIO_WritePin(Motor1.EN_Port, Motor1.EN_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(Motor2.EN_Port, Motor2.EN_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(M1_nSLP_GPIO_Port, M1_nSLP_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(M2_nSLP_GPIO_Port, M2_nSLP_Pin, GPIO_PIN_SET);
 
     //Wakeup, enable, set microstep, no faults
     //M3
-    enableMotor(1, Motor3);
+    HAL_GPIO_WritePin(M3_nEN_GPIO_Port, M3_nEN_Pin, GPIO_PIN_RESET);
     //nEnable, reset if you need to home, no faults
 
     for(;;){
@@ -465,7 +476,10 @@ void vActuatorTask(){
         switch (systemState) {
             case (NONE): {
                 motorStatus = IDLE;
-                stopAllMotors();
+                break;
+            }
+            case (CHECKS): {
+                motorStatus = IDLE;
                 break;
             }
             case (SAFETY_ERROR):{ //Todo: Have to make sure that the motors stop IRL
@@ -483,29 +497,29 @@ void vActuatorTask(){
             //Engage action
             case (ENGAGE): {
                 //Move wire feed until LIGHT_IN1 hit
-                speedMove(100, &Motor1);
+                speedMove(300, &Motor1);
                 systemState = ENGAGING;
                 break;
             }
             case (ENGAGING): {
-                if (wirePresent(*WIRE_END_DETECT)) {
+                if (adcVals3[0]<3980) {
+                    stopMotor(&Motor1);
                     systemState = ENGAGED;
                 }
                 break;
             }
             case (ENGAGED): {
-                stopMotor(&Motor1);
                 break;
             }
 
             //Disengage Action
             case (DISENGAGE): {
-                speedMove(-100, &Motor1);
+                stepMove(-500, FEED_SPEED, &Motor1);
                 systemState = DISENGAGING;
                 break;
             }
             case (DISENGAGING): {
-                if (!wirePresent(*WIRE_IN_DETECT)) {
+                if (Motor1.motorDone && !wirePresent(adcVals3[1])) {
                     systemState = NONE;
                 }
                 break;

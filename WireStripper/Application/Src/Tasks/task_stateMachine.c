@@ -83,9 +83,10 @@ void vStateMachineTask() {
     *  b. wire not detected at #2? Make sure wire not jammed in already
     *  If these aren't true, something is wrong, SAFETY ERROR
     */
-        HAL_GPIO_WritePin(BUCK12_EN_GPIO_Port, BUCK12_EN_Pin, GPIO_PIN_SET);
+        turnOnBAT();
         vTaskDelay(250); // Wait for safety checks to run and for system to turn on.
         if (safetyOK) {
+            HAL_GPIO_WritePin(BUCK12_EN_GPIO_Port, BUCK12_EN_Pin, GPIO_PIN_SET);
             systemState = NONE;
         }
         break;
@@ -113,14 +114,15 @@ void vStateMachineTask() {
         *  b. GO -> Send "start job" to actuator control. JOB_RUNNING
         *  c. Power safety Flag -> Disable HV Power. Require restart to move on. Display? POWER_ERROR.
         */
+        uint32_t localNotifyVal = 0;
 
-        BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, 0);
+        BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &localNotifyVal, 0);
 
         if (result == pdTRUE) {
-            if (ulNotifiedValue & STOP_BUTTON) {
+            if (localNotifyVal & STOP_BUTTON) {
                 systemState = DISENGAGE;
             }
-            if (ulNotifiedValue & GO_BUTTON) {
+            if (localNotifyVal & GO_BUTTON) {
                 systemState = JOB_RUNNING;
             }
         }
@@ -133,10 +135,12 @@ void vStateMachineTask() {
         *  b. Power safety Flag -> Disable HV Power. Require restart to move on. Display? POWER_ERROR.
         *  c. Job finished -> Actuator task will set JOB_RUNNING to Done
         */
-        BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, 0);
+
+        uint32_t localNotifyVal = 0;
+        BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &localNotifyVal, 0);
 
         if (result == pdTRUE) {
-            if (ulNotifiedValue & STOP_BUTTON) {
+            if (localNotifyVal & STOP_BUTTON) {
                 systemState = SAFETY_ERROR;
             }
         }

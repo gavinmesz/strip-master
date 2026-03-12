@@ -21,7 +21,7 @@ int counterVar;
 
 void TaskManager_InitTasks(void){
     //Display
-    if (initDisplay() != 1) {
+    while (initDisplay() != 1) {
         configASSERT(0);
     }
 

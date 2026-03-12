@@ -33,7 +33,7 @@ uint32_t adcVals1[1]; //UX pot, cut pot
 uint32_t adcVals2[1]; //vbat ADC
 uint32_t adcVals3[2]; //Light1, Light2
 
-uint8_t test = 1;//1 for Gavin, 0 for Will's cool breakthrough UI
+uint8_t test = 0;//1 for Gavin, 0 for Will's cool breakthrough UI
 
 #define PD1 adcVals3[0] //photodiode 1
 #define PD2 adcVals3[1] //photodiode 2
@@ -132,21 +132,25 @@ int initDisplay(){
     return 1;
 }
 
+uint32_t tempADCpot;
+
 void updateValues() {
     //this function just updates all of the values read from the UI and encoders.
-    knob1 = __HAL_TIM_GET_COUNTER(&htim2); //knob 1
-    knob2 = __HAL_TIM_GET_COUNTER(&htim5); //knob 2
+    knob1 = __HAL_TIM_GET_COUNTER(&htim2)/2; //knob 1
+    knob2 = __HAL_TIM_GET_COUNTER(&htim5)/2; //knob 2
     motorenc1 = __HAL_TIM_GET_COUNTER(&htim3);
     motorenc2 = __HAL_TIM_GET_COUNTER(&htim4);
     //tim3 is motor encoder 1
     //tim4 is motor encoder 2
     HAL_ADC_PollForConversion(&hadc2, 1);//potentiometer
-    stripLength = HAL_ADC_GetValue(&hadc2);
+    tempADCpot = HAL_ADC_GetValue(&hadc2);
+
     if (test == 1) {
         //Gavin's dumbass crap
         length = 150;
         stripLength = 8;
         stripCut=0;
+        quantity = 1;
     } else {
         //cool stuff 
     }
@@ -198,7 +202,7 @@ void drawScreen() {
         //cool stuff 
         int wireEndCoord = (UX_POT/4000)*56+32;// the end x coordinate for the wire enclosure when drawn
 
-        Paint_DrawRectangle(32,24,wireEndCoord,40,WHITE,2,0);//the "sheathed" part of the wire 
+        Paint_DrawRectangle(32,24,wireEndCoord,40,WHITE,2,0);//the "sheathed" part of the wire
         Paint_DrawRectangle(wireEndCoord,27,56,37,WHITE,2,1);//the exposed part of the wire
 
         int fontWidth = 5;//5 for 8, 7 for 12
@@ -207,7 +211,7 @@ void drawScreen() {
 
         //QUANTITY READOUT
         Paint_DrawString_EN(0,0,"QTY:",&Font8,WHITE,BLACK);
-        Paint_DrawNum(4*fontWidth,0,quantity,&Font8,2,WHITE,BLACK);
+        Paint_DrawNum(4*fontWidth,0,knob1,&Font8,2,WHITE,BLACK);
 
         //MODE READOUT
         Paint_DrawString_EN(7*fontWidth,0,"MODE:",&Font8,WHITE,BLACK);
@@ -215,11 +219,11 @@ void drawScreen() {
 
         //LEN READOUT (font size 8 )
         Paint_DrawString_EN(0,bottomOffset,"CUTLEN:",&Font8,WHITE,BLACK);
-        Paint_DrawNum(7*fontWidth,bottomOffset,length,&Font8,2,WHITE,BLACK);
+        Paint_DrawNum(7*fontWidth,bottomOffset,knob2,&Font8,2,WHITE,BLACK);
 
         //STRIP READOUT
         Paint_DrawString_EN(12*fontWidth,bottomOffset,"STRIPLEN:",&Font8,WHITE,BLACK);
-        Paint_DrawNum((12+9)*fontWidth,bottomOffset,stripLength,&Font8,2,WHITE,BLACK);
+        Paint_DrawNum((12+9)*fontWidth,bottomOffset,tempADCpot,&Font8,2,WHITE,BLACK);
 
     }
     

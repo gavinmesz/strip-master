@@ -144,11 +144,20 @@ void changeSpeed(float const speed, uint8_t const dir, Motor *motor) {
 uint8_t stepMove(int const step, float const speed, Motor* motor) {
     int dir;
     int steptemp = step;
-    if (step<0){
-        dir = TO_FRONT;
-        steptemp *= -1;
+    if (motor == &Motor3) { //-ve speed is the correct way
+        if (step<0){
+            dir = DOWN;
+            steptemp *= -1;
+        } else {
+            dir = UP;
+        }
     } else {
-        dir = TO_BACK;
+        if (step<0){
+            dir = TO_FRONT;
+            steptemp *= -1;
+        } else {
+            dir = TO_BACK;
+        }
     }
     if (motor->motorDone) {
         changeSpeed(speed, dir, motor);

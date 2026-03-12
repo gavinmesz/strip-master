@@ -139,6 +139,8 @@ void Error_Handler(void);
 #define LDO_EN_GPIO_Port GPIOG
 #define BUCK12_PG_Pin GPIO_PIN_5
 #define BUCK12_PG_GPIO_Port GPIOG
+#define BUCK12_EN_Pin GPIO_PIN_6
+#define BUCK12_EN_GPIO_Port GPIOG
 #define ST_5V_Pin GPIO_PIN_7
 #define ST_5V_GPIO_Port GPIOG
 #define ST_3V3_Pin GPIO_PIN_8

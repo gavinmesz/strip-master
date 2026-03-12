@@ -18,8 +18,8 @@
 #define M3_CHANNEL TIM_CHANNEL_1
 
 //Direction pins for motor control
-#define TO_FRONT GPIO_PIN_SET
-#define TO_BACK GPIO_PIN_RESET
+#define TO_FRONT GPIO_PIN_RESET
+#define TO_BACK GPIO_PIN_SET
 #define UP GPIO_PIN_SET
 #define DOWN GPIO_PIN_RESET
 

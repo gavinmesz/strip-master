@@ -50,8 +50,8 @@ void TaskManager_CreateAllTasks(void)
         configASSERT(xReturned == pdPASS);
         xReturned = xTaskCreate(vDisplayTask, "Display",  2048, NULL, configMAX_PRIORITIES-4, &xDisplayTaskHandle);
         configASSERT(xReturned == pdPASS);
-        // xReturned = xTaskCreate(vStateMachineTask, "StateMachine",   512, NULL, configMAX_PRIORITIES-2, &xStateMachineTaskHandle);
-        // configASSERT(xReturned == pdPASS);
+        xReturned = xTaskCreate(vStateMachineTask, "StateMachine",   512, NULL, configMAX_PRIORITIES-2, &xStateMachineTaskHandle);
+        configASSERT(xReturned == pdPASS);
 
     } else {
 

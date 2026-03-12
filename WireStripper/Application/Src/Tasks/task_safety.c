@@ -3,6 +3,8 @@
  * Absolutely must run periodically. Make sure that all PG pins are OK. Send status.
  */
 
+#define CELL_SHUT_DOWN 3.5
+
 /*
          * Notes on the BMS
          * When entering into normal from ship mode: 250ms
@@ -89,13 +91,19 @@ static uint8_t checkSafety()  {
     HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET); //Debugging
 
     uint8_t result = 1;
-    result = HAL_GPIO_ReadPin(BUCK12_PG_GPIO_Port, BUCK12_PG_Pin);
+    // if (!HAL_GPIO_ReadPin(BUCK12_PG_GPIO_Port, BUCK12_PG_Pin)) {
+    //     result = 0;
+    // }
+
+    if (BMS.Vcell[0]<CELL_SHUT_DOWN || BMS.Vcell[1]<CELL_SHUT_DOWN || BMS.Vcell[2]<CELL_SHUT_DOWN || BMS.Vcell[3]<CELL_SHUT_DOWN) {
+        result = 0;
+    }
     //Todo: Check for motor faults
     return result;
 }
 
 void vSafetyTask() {
-
+    safetyOK = 1;
     for (;;) {
         switch (systemState) {
             case SAFETY_ERROR: {

@@ -122,8 +122,6 @@ void vMotorTestTask(void *argument) {
     wakeMotor(0, Motor1);
     wakeMotor(0, Motor2);
 
-    HAL_GPIO_WritePin(M3_nEN_GPIO_Port, M3_nEN_Pin, GPIO_PIN_SET);
-
     print_logo();
     print_help();
     printf(">");
@@ -249,7 +247,7 @@ void vMotorTestTask(void *argument) {
                         printf("M2 stripping (waiting for GAUGE_IN). Press 'q' to cancel...\r\n");
 
                         // 'h' direction maps to negative speed
-                        if (speedMove(-jog_speed, &Motor2)) {
+                        if (speedMove(30, &Motor3)) {
                             uint8_t gauge_hit = 0;
                             uint32_t notifiedValue = 0;
 
@@ -274,7 +272,7 @@ void vMotorTestTask(void *argument) {
                                 printf("\r\nGAUGE_IN detected! Backing off 100 steps...\r\n>");
 
                                 // Back off in the opposite direction (positive steps)
-                                if (stepMove(100, (float)jog_speed, &Motor2)) {
+                                if (stepMove(-100, (float)100, &Motor3)) {
                                     step_requested[2] = 1; // Flag so the main loop prints when the backoff finishes
                                 }
                             }
@@ -313,32 +311,32 @@ void vMotorTestTask(void *argument) {
                     step_requested[1] = step_requested[2] = step_requested[3] = 0;
                     printf("\r\n[HALT]");
                 } else if (rx_char == '+' || rx_char == '=') {
-                    jog_speed += 50;
+                    jog_speed += 10;
                     printf("\r\nSpeed: %d pps", jog_speed);
                 } else if (rx_char == '-' || rx_char == '_') {
-                    if (jog_speed > 50) jog_speed -= 50;
+                    if (jog_speed > 10) jog_speed -= 10;
                     printf("\r\nSpeed: %d pps", jog_speed);
                 } else {
                     // Route the keypress to the correct motor and update its specific timeout tick
-                    if (rx_char == 'a' || rx_char == 'A') { last_m1_tick = HAL_GetTick(); speedMove(jog_speed,  &Motor1); }
-                    if (rx_char == 'd' || rx_char == 'D') { last_m1_tick = HAL_GetTick(); speedMove(-jog_speed, &Motor1); }
-                    if (rx_char == 'f' || rx_char == 'F') { last_m2_tick = HAL_GetTick(); speedMove(jog_speed,  &Motor2); }
-                    if (rx_char == 'h' || rx_char == 'H') { last_m2_tick = HAL_GetTick(); speedMove(-jog_speed, &Motor2); }
-                    if (rx_char == 'j' || rx_char == 'J') { last_m3_tick = HAL_GetTick(); speedMove(jog_speed,  &Motor3); }
-                    if (rx_char == 'l' || rx_char == 'L') { last_m3_tick = HAL_GetTick(); speedMove(-jog_speed, &Motor3); }
+                    if (rx_char == 'a' || rx_char == 'A') { last_m1_tick = HAL_GetTick(); speedMove(-jog_speed,  &Motor1); }
+                    if (rx_char == 'd' || rx_char == 'D') { last_m1_tick = HAL_GetTick(); speedMove(jog_speed, &Motor1); }
+                    if (rx_char == 'f' || rx_char == 'F') { last_m2_tick = HAL_GetTick(); speedMove(-jog_speed,  &Motor2); }
+                    if (rx_char == 'h' || rx_char == 'H') { last_m2_tick = HAL_GetTick(); speedMove(jog_speed, &Motor2); }
+                    if (rx_char == 'j' || rx_char == 'J') { last_m3_tick = HAL_GetTick(); speedMove(-jog_speed,  &Motor3); }
+                    if (rx_char == 'l' || rx_char == 'L') { last_m3_tick = HAL_GetTick(); speedMove(jog_speed, &Motor3); }
 
                     // Composite Controls: M1 & M2 Simultaneous
                     if (rx_char == 'c' || rx_char == 'C') {
                         last_m1_tick = HAL_GetTick();
                         last_m2_tick = HAL_GetTick();
-                        speedMove(jog_speed, &Motor1);
-                        speedMove(jog_speed, &Motor2);
+                        speedMove(-jog_speed, &Motor1);
+                        speedMove(-jog_speed, &Motor2);
                     }
                     if (rx_char == 'b' || rx_char == 'B') {
                         last_m1_tick = HAL_GetTick();
                         last_m2_tick = HAL_GetTick();
-                        speedMove(-jog_speed, &Motor1);
-                        speedMove(-jog_speed, &Motor2);
+                        speedMove(jog_speed, &Motor1);
+                        speedMove(jog_speed, &Motor2);
                     }
                 }
             }

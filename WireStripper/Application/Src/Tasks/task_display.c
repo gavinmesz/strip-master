@@ -133,6 +133,7 @@ int initDisplay(){
 }
 
 void updateValues() {
+    //this function just updates all of the values read from the UI and encoders.
     knob1 = __HAL_TIM_GET_COUNTER(&htim2); //knob 1
     knob2 = __HAL_TIM_GET_COUNTER(&htim5); //knob 2
     motorenc1 = __HAL_TIM_GET_COUNTER(&htim3);
@@ -152,46 +153,75 @@ void drawScreen() {
     if (test == 1) {
         //Gavin's dumbass crap 
         //Paint functions from GUIPaint.c if the values are different
-    Paint_DrawNum(10, 0, knob2, &Font8, 2, WHITE, BLACK); //FAIL
-    Paint_DrawNum(60, 0, knob1, &Font8, 2, WHITE, BLACK); //WORKS, 2 per detent
-    uint8_t result = 0;
-    if (HAL_GPIO_ReadPin(UX_KNOB1_BUT_GPIO_Port, UX_KNOB1_BUT_Pin)) {
-        result += 1;
-    }
-    if (HAL_GPIO_ReadPin(UX_KNOB2_BUT_GPIO_Port, UX_KNOB2_BUT_Pin)) {
-        result += 1;
-    }
-    Paint_DrawNum(90, 0, result, &Font8, 2, WHITE, BLACK); //WORKS: Pull up MCU side
+        Paint_DrawNum(10, 0, knob2, &Font8, 2, WHITE, BLACK); //WORKS
+        Paint_DrawNum(60, 0, knob1, &Font8, 2, WHITE, BLACK); //WORKS, 2 per detent
+        uint8_t result = 0;
+        if (HAL_GPIO_ReadPin(UX_KNOB1_BUT_GPIO_Port, UX_KNOB1_BUT_Pin)) {
+            result += 1;
+        }
+        if (HAL_GPIO_ReadPin(UX_KNOB2_BUT_GPIO_Port, UX_KNOB2_BUT_Pin)) {
+            result += 1;
+        }
+        Paint_DrawNum(90, 0, result, &Font8, 2, WHITE, BLACK); //WORKS: Pull up MCU side
 
-    Paint_DrawNum(10, 13, motorenc1, &Font8, 2, BLACK, WHITE); //UNKNOWN
-    Paint_DrawNum(60, 13, motorenc2, &Font8, 2, BLACK, WHITE); //UNKNOWN
+        Paint_DrawNum(10, 13, motorenc1, &Font8, 2, BLACK, WHITE); //UNKNOWN
+        Paint_DrawNum(60, 13, motorenc2, &Font8, 2, BLACK, WHITE); //UNKNOWN
 
-    Paint_DrawNum(10, 26, adcVals3[0], &Font8, 2, WHITE, BLACK); // WORKS: ADC data width set to word + circular
-    Paint_DrawNum(80, 26, adcVals3[1], &Font8, 2, WHITE, BLACK); // WORKS: ADC data width set to word + circular
+        Paint_DrawNum(10, 26, adcVals3[0], &Font8, 2, WHITE, BLACK); // WORKS: ADC data width set to word + circular
+        Paint_DrawNum(80, 26, adcVals3[1], &Font8, 2, WHITE, BLACK); // WORKS: ADC data width set to word + circular
 
-    Paint_DrawNum(10, 39, UX_POT, &Font8, 2, BLACK, WHITE); //WORKS
-    Paint_DrawNum(90, 39, packCurrent, &Font8, 2, BLACK, WHITE); //WORKS
+        Paint_DrawNum(10, 39, UX_POT, &Font8, 2, BLACK, WHITE); //WORKS
+        Paint_DrawNum(90, 39, packCurrent, &Font8, 2, BLACK, WHITE); //WORKS
 
-    result = 0;
-    if (HAL_GPIO_ReadPin(GAUGE_IN_GPIO_Port, GAUGE_IN_Pin)) {
-        result += 1;
-    }
-    Paint_DrawNum(10, 52, result, &Font8, 2, BLACK, WHITE); //WORKS
-    result = 0;
-    if (HAL_GPIO_ReadPin(UX_SW_GPIO_Port, UX_SW_Pin)) {
-        result += 1;
-    }
-    Paint_DrawNum(60, 52, result, &Font8, 2, BLACK, WHITE); //WORKS
-    result = 0;
-    if (HAL_GPIO_ReadPin(STOP_BUT_GPIO_Port, STOP_BUT_Pin)) {
-        result+=1;
-    }
-    if (HAL_GPIO_ReadPin(GO_BUT_GPIO_Port, GO_BUT_Pin)) {
-        result+=1;
-    }
-    Paint_DrawNum(90, 52, result, &Font8, 2, WHITE, BLACK); //WORKS
+        result = 0;
+        if (HAL_GPIO_ReadPin(GAUGE_IN_GPIO_Port, GAUGE_IN_Pin)) {
+            result += 1;
+        }
+        Paint_DrawNum(10, 52, result, &Font8, 2, BLACK, WHITE); //WORKS
+        result = 0;
+        if (HAL_GPIO_ReadPin(UX_SW_GPIO_Port, UX_SW_Pin)) {
+            result += 1;
+        }
+        Paint_DrawNum(60, 52, result, &Font8, 2, BLACK, WHITE); //WORKS
+        result = 0;
+        if (HAL_GPIO_ReadPin(STOP_BUT_GPIO_Port, STOP_BUT_Pin)) {
+            result+=1;
+        }
+        if (HAL_GPIO_ReadPin(GO_BUT_GPIO_Port, GO_BUT_Pin)) {
+            result+=1;
+        }
+        Paint_DrawNum(90, 52, result, &Font8, 2, WHITE, BLACK); //WORKS
     } else {
         //cool stuff 
+        int wireEndCoord = (UX_POT/4000)*56+32;// the end x coordinate for the wire enclosure when drawn
+
+        Paint_DrawRectangle(32,24,wireEndCoord,40,WHITE,2,0);//the "sheathed" part of the wire 
+        Paint_DrawRectangle(wireEndCoord,27,56,37,WHITE,2,1);//the exposed part of the wire
+
+        int fontWidth = 5;//5 for 8, 7 for 12
+        int bottomOffset = 64 - 8;//8 is the fontsize
+
+
+        //QUANTITY READOUT
+        Paint_DrawChar(0,0,'QTY:',&Font8,WHITE,BLACK);
+        Paint_DrawNum(4*fontWidth,0,quantity,&Font8,2,WHITE,BLACK);
+
+        //MODE READOUT
+        Paint_DrawChar(7*fontWidth,0,'MODE:',&Font8,WHITE,BLACK);
+        Paint_DrawNum(12*fontWidth,0,stripCut,&Font8,2,WHITE,BLACK);
+
+        //LEN READOUT (font size 8 )
+        Paint_DrawChar(0,bottomOffset,'CUTLEN:',&Font8,WHITE,BLACK);
+        Paint_DrawNum(7*fontWidth,bottomOffset,length,&Font8,2,WHITE,BLACK);
+
+        //STRIP READOUT
+        Paint_DrawChar(12*fontWidth,bottomOffset,'STRIPLEN:',&Font8,WHITE,BLACK);
+        Paint_DrawNum((12+9)*fontWidth,bottomOffset,length,&Font8,2,WHITE,BLACK);
+
+
+
+
+
     }
     
 

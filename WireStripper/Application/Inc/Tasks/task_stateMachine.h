@@ -7,7 +7,7 @@
 
 #define WIRE_IN_DETECT &adcVals3[0]
 #define WIRE_END_DETECT &adcVals3[1]
-#define WIRE_DETECT_THRES 3920 //Todo: Requires confirmation
+#define WIRE_DETECT_THRES 3900 //Todo: Requires confirmation
 
 void vStateMachineTask();
 

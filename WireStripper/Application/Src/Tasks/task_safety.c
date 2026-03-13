@@ -68,6 +68,7 @@
 //task specific includes
 #include "task_safety.h"
 #include "BQ7692006PWR.h"
+#include "task_actuatorControl.h"
 #include "task_stateMachine.h"
 #include "task_display.h"
 

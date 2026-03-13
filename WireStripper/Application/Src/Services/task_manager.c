@@ -1,4 +1,4 @@
-#define TEST 1
+#define TEST 0
 
 //Tasks included
 #include "task_manager.h"

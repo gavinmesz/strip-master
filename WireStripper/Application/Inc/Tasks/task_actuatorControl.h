@@ -20,8 +20,8 @@
 //Direction pins for motor control
 #define TO_FRONT GPIO_PIN_RESET
 #define TO_BACK GPIO_PIN_SET
-#define UP GPIO_PIN_SET
-#define DOWN GPIO_PIN_RESET
+#define UP GPIO_PIN_RESET
+#define DOWN GPIO_PIN_SET
 
 #define ENABLE 1
 #define DISABLE 0

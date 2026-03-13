@@ -33,7 +33,7 @@ uint32_t adcVals1[1]; //UX pot, cut pot
 uint32_t adcVals2[1]; //vbat ADC
 uint32_t adcVals3[2]; //Light1, Light2
 
-uint8_t test = 0;//1 for Gavin, 0 for Will's cool breakthrough UI
+uint8_t test = 1;//1 for Gavin, 0 for Will's cool breakthrough UI
 
 #define PD1 adcVals3[0] //photodiode 1
 #define PD2 adcVals3[1] //photodiode 2

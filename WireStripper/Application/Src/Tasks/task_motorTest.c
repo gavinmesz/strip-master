@@ -61,7 +61,7 @@ void print_help() {
     printf("\r\nsetpin buck12 [val]   : Set BUCK12_EN pin (1=ON, 0=OFF)");
     printf("\r\njog                   : Enter Real-time control mode");
     printf("\r\nstep m[1-3] [s] [pps] : Move motor (use - for reverse, e.g., step m1 -500 200)");
-    printf("\r\nstrip                 : Run M2 until gauge triggers, then back off");
+    printf("\r\nstrip                 : Run M1 (Cutter) until gauge triggers, then back off");
     printf("\r\nhelp                  : Show this menu\r\n");
 }
 
@@ -116,10 +116,15 @@ void vMotorTestTask(void *argument) {
                        M3_SM0_GPIO_Port, M3_SM0_Pin, M3_SM1_GPIO_Port, M3_SM1_Pin,
                        M3_nFLT_GPIO_Port, M3_nFLT_Pin, 1 };
 
+    // --- MICROSTEPPING ---
+    // M1 (Cutter)   = Quarter Step
+    // M2 (Outlet)   = Quarter Step
+    // M3 (Inlet)    = Full Step
     microSet(2, Motor1);
     microSet(2, Motor2);
     microSet(0, Motor3);
 
+    // Bipolar motors (M1 and M2) get woken up
     wakeMotor(0, Motor1);
     wakeMotor(0, Motor2);
 
@@ -157,7 +162,7 @@ void vMotorTestTask(void *argument) {
                     else if (strcmp(cmd_buffer, "jog") == 0) {
                         currentMode = MODE_JOG;
                         printf("!!! JOG MODE ACTIVE !!!\r\n");
-                        printf("M1:A/D | M2:F/H | M1+M2:C/B | M3:J/L | Spd:+/- | Mode: M | [SPACE]:Stop | [Q]:Exit\r\n");
+                        printf("M3(Inlet):A/D | M2(Outlet):F/H | Feed Sync:C/B | M1(Cutter):J/L | Spd:+/- | Mode: M | [SPACE]:Stop | [Q]:Exit\r\n");
                         printf("Speed: %d pps | Mode: %s\r\n>", jog_speed, hold_to_run_active ? "Hold-to-Run" : "Continuous");
                     }
                     else if (strcmp(cmd_buffer, "status") == 0) {
@@ -179,7 +184,6 @@ void vMotorTestTask(void *argument) {
                             uint16_t pin = 0;
                             int valid = 1;
 
-                            // Map the pin strings to the hardware macros
                             if (m_num == 1) {
                                 if (strcmp(pin_name, "en") == 0) { port = M1_EN_GPIO_Port; pin = M1_EN_Pin; }
                                 else if (strcmp(pin_name, "dir") == 0) { port = M1_DIR_GPIO_Port; pin = M1_DIR_Pin; }
@@ -195,7 +199,6 @@ void vMotorTestTask(void *argument) {
                                 else if (strcmp(pin_name, "nslp") == 0 || strcmp(pin_name, "slp") == 0) { port = M2_nSLP_GPIO_Port; pin = M2_nSLP_Pin; }
                                 else valid = 0;
                             } else if (m_num == 3) {
-                                // M3 has slightly different pin nomenclature (nEN, SM0, SM1, nRST). Handled gracefully:
                                 if (strcmp(pin_name, "en") == 0 || strcmp(pin_name, "nen") == 0) { port = M3_nEN_GPIO_Port; pin = M3_nEN_Pin; }
                                 else if (strcmp(pin_name, "dir") == 0) { port = M3_DIR_GPIO_Port; pin = M3_DIR_Pin; }
                                 else if (strcmp(pin_name, "ms1") == 0 || strcmp(pin_name, "sm0") == 0) { port = M3_SM0_GPIO_Port; pin = M3_SM0_Pin; }
@@ -213,12 +216,10 @@ void vMotorTestTask(void *argument) {
                                 printf("Invalid motor or pin name. Try: en, dir, ms1, ms2, nslp, nrst\r\n>");
                             }
                         }
-                        // --- NEW BLOCK FOR BUCK12_EN ---
                         else if (sscanf(cmd_buffer, "setpin buck12 %d", &val) == 1) {
                             HAL_GPIO_WritePin(BUCK12_EN_GPIO_Port, BUCK12_EN_Pin, val ? GPIO_PIN_SET : GPIO_PIN_RESET);
                             printf("BUCK12_EN set to %d\r\n>", val ? 1 : 0);
                         }
-                        // -------------------------------
                         else {
                             printf("Usage: setpin m[1-3] [pin] [0|1] OR setpin buck12 [0|1]\r\n>");
                         }
@@ -245,22 +246,20 @@ void vMotorTestTask(void *argument) {
                         }
                     }
                     else if (strcmp(cmd_buffer, "strip") == 0) {
-                        printf("M2 stripping (waiting for GAUGE_IN). Press 'q' to cancel...\r\n");
+                        printf("M1 (Cutter) stripping (waiting for GAUGE_IN). Press 'q' to cancel...\r\n");
 
-                        // 'h' direction maps to negative speed
-                        if (speedMove(30, &Motor3)) {
+                        // Reversed direction for the gauge approach (was 30, now -30)
+                        if (speedMove(-30, &Motor1)) {
                             uint8_t gauge_hit = 0;
                             uint32_t notifiedValue = 0;
 
                             while (!gauge_hit) {
                                 gauge_detect = 1;
-                                // Bailout condition to prevent endless spinning
                                 if (HAL_UART_Receive(&huart2, &rx_char, 1, 0) == HAL_OK && (rx_char == 'q' || rx_char == 'Q')) {
                                     printf("\r\nStrip test cancelled.\r\n>");
                                     break;
                                 }
 
-                                // Poll for the FreeRTOS task notification (10ms timeout per loop)
                                 if (xTaskNotifyWait(0x00, ULONG_MAX, &notifiedValue, pdMS_TO_TICKS(10)) == pdTRUE) {
                                     if (notifiedValue & GAUGE_IN) {
                                         gauge_hit = 1;
@@ -269,18 +268,18 @@ void vMotorTestTask(void *argument) {
                             }
                             gauge_detect = 0;
 
-                            stopMotor(&Motor3);
+                            stopMotor(&Motor1);
 
                             if (gauge_hit) {
                                 printf("\r\nGAUGE_IN detected! Backing off 100 steps...\r\n>");
 
-                                // Back off in the opposite direction (positive steps)
-                                if (stepMove(-200, (float)100, &Motor3)) {
-                                    step_requested[2] = 1; // Flag so the main loop prints when the backoff finishes
+                                // Reversed direction for the backoff (was -200, now 200)
+                                if (stepMove(200, (float)100, &Motor1)) {
+                                    step_requested[1] = 1; // Flag M1
                                 }
                             }
                         } else {
-                            printf("M2 is currently BUSY.\r\n>");
+                            printf("M1 is currently BUSY.\r\n>");
                         }
                     }
                     else {
@@ -320,26 +319,30 @@ void vMotorTestTask(void *argument) {
                     if (jog_speed > 10) jog_speed -= 10;
                     printf("\r\nSpeed: %d pps", jog_speed);
                 } else {
-                    // Route the keypress to the correct motor and update its specific timeout tick
-                    if (rx_char == 'a' || rx_char == 'A') { last_m1_tick = HAL_GetTick(); speedMove(-jog_speed,  &Motor1); }
-                    if (rx_char == 'd' || rx_char == 'D') { last_m1_tick = HAL_GetTick(); speedMove(jog_speed, &Motor1); }
+                    // M3 (Inlet / Feed In) - Reversed Polarity & 1/4th Speed
+                    if (rx_char == 'a' || rx_char == 'A') { last_m3_tick = HAL_GetTick(); speedMove(jog_speed / 4,  &Motor3); }
+                    if (rx_char == 'd' || rx_char == 'D') { last_m3_tick = HAL_GetTick(); speedMove(-(jog_speed / 4), &Motor3); }
+
+                    // M2 (Outlet / Feed Out) - Standard Polarity & Full Speed
                     if (rx_char == 'f' || rx_char == 'F') { last_m2_tick = HAL_GetTick(); speedMove(-jog_speed,  &Motor2); }
                     if (rx_char == 'h' || rx_char == 'H') { last_m2_tick = HAL_GetTick(); speedMove(jog_speed, &Motor2); }
-                    if (rx_char == 'j' || rx_char == 'J') { last_m3_tick = HAL_GetTick(); speedMove(-jog_speed,  &Motor3); }
-                    if (rx_char == 'l' || rx_char == 'L') { last_m3_tick = HAL_GetTick(); speedMove(jog_speed, &Motor3); }
 
-                    // Composite Controls: M1 & M2 Simultaneous
-                    if (rx_char == 'c' || rx_char == 'C') {
-                        last_m1_tick = HAL_GetTick();
+                    // M1 (Cutter) - Reversed Polarity
+                    if (rx_char == 'j' || rx_char == 'J') { last_m1_tick = HAL_GetTick(); speedMove(jog_speed,  &Motor1); }
+                    if (rx_char == 'l' || rx_char == 'L') { last_m1_tick = HAL_GetTick(); speedMove(-jog_speed, &Motor1); }
+
+                    // Composite Controls: Inlet (M3) + Outlet (M2) Simultaneous
+                    if (rx_char == 'c' || rx_char == 'C') { // Backward Sync (Matches 'A' and 'F')
                         last_m2_tick = HAL_GetTick();
-                        speedMove(-jog_speed, &Motor1);
+                        last_m3_tick = HAL_GetTick();
                         speedMove(-jog_speed, &Motor2);
+                        speedMove(jog_speed / 4, &Motor3);
                     }
-                    if (rx_char == 'b' || rx_char == 'B') {
-                        last_m1_tick = HAL_GetTick();
+                    if (rx_char == 'b' || rx_char == 'B') { // Forward Sync (Matches 'D' and 'H')
                         last_m2_tick = HAL_GetTick();
-                        speedMove(jog_speed, &Motor1);
+                        last_m3_tick = HAL_GetTick();
                         speedMove(jog_speed, &Motor2);
+                        speedMove(-(jog_speed / 4), &Motor3);
                     }
                 }
             }
@@ -349,15 +352,9 @@ void vMotorTestTask(void *argument) {
         if (currentMode == MODE_JOG && hold_to_run_active) {
             uint32_t current_tick = HAL_GetTick();
 
-            if (!Motor1.motorDone && (current_tick - last_m1_tick) > JOG_TIMEOUT_MS) {
-                stopMotor(&Motor1);
-            }
-            if (!Motor2.motorDone && (current_tick - last_m2_tick) > JOG_TIMEOUT_MS) {
-                stopMotor(&Motor2);
-            }
-            if (!Motor3.motorDone && (current_tick - last_m3_tick) > JOG_TIMEOUT_MS) {
-                stopMotor(&Motor3);
-            }
+            if (!Motor1.motorDone && (current_tick - last_m1_tick) > JOG_TIMEOUT_MS) stopMotor(&Motor1);
+            if (!Motor2.motorDone && (current_tick - last_m2_tick) > JOG_TIMEOUT_MS) stopMotor(&Motor2);
+            if (!Motor3.motorDone && (current_tick - last_m3_tick) > JOG_TIMEOUT_MS) stopMotor(&Motor3);
         }
 
         vTaskDelay(pdMS_TO_TICKS(10));

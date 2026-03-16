@@ -18,6 +18,8 @@
 
 #define WHEEL_RADIUS 4.7625
 #define BASE_STEPS_PER_REV 200.0
+#define STEP_GEAR_RATIO 1.416
+#define STEPS_PER_REV (WHEEL_RADIUS/STEP_GEAR_RATIO)
 #define FEED_SPEED 800
 #define CUT_SPEED 500
 #define STRIP_SPEED 250
@@ -61,7 +63,7 @@ static uint32_t dcDMA3;
 int finishedWires;
 
 static int length_to_steps(float const length_mm, int const microStep) {
-    return (length_mm/(2.0*3.14159*WHEEL_RADIUS))*BASE_STEPS_PER_REV*(1 << microStep);
+    return (length_mm/(2.0*3.14159*WHEEL_RADIUS)*STEPS_PER_REV)*(1 << microStep);
 }
 
 
@@ -141,36 +143,37 @@ void changeSpeed(float const speed, uint8_t const dir, Motor *motor) {
 
 //Movement of x steps in one direction at speed.
 //Return 0 if the step move has not finished yet. Return 1 if the DMA was started.
-uint8_t stepMove(int const step, float speed, Motor* motor) {
+uint8_t stepMove(int const step, float const speed, Motor* motor) {
     int dir;
     int steptemp = step;
+    int speedtemp = speed;
     if (motor == &Motor1) { //-ve speed is the correct way
         if (step<0){
             dir = DOWN;
-            steptemp *= -1;
+            steptemp*=-1;
         } else {
             dir = UP;
         }
-    } else {
-        if (motor == &Motor3) {
-            speed /= (1<<M2_MICRO);
-            if (step<0){
-                dir = TO_BACK;
-                steptemp *= -1;
-            } else {
-                dir = TO_FRONT;
-            }
+    } else if (motor == &Motor3) { //Motor 3
+        speedtemp /= (1<<M2_MICRO);
+        if (step<0){
+            dir = TO_BACK;
+            steptemp*=-1;
         } else {
-            if (step<0){
-                dir = TO_FRONT;
-                steptemp *= -1;
-            } else {
-                dir = TO_BACK;
-            }
+            dir = TO_FRONT;
+        }
+    } else { //Motor 2
+        steptemp*=(1<<M2_MICRO);
+        if (step<0){
+            dir = TO_FRONT;
+            steptemp*=-1;
+        } else {
+            dir = TO_BACK;
         }
     }
+
     if (motor->motorDone) {
-        changeSpeed(speed, dir, motor);
+        changeSpeed(speedtemp, dir, motor);
         HAL_TIM_PWM_Start_DMA(motor->htim, motor->channel, &motor->ccr, steptemp);
         motor->motorDone=0;
         return 1;
@@ -189,22 +192,20 @@ uint8_t speedMove(int speed, Motor* motor) {
         } else {
             dir = UP;
         }
-    } else {
-        if (motor == &Motor3) {
-            speedtemp /= (1<<M2_MICRO);
-            if (speed<0){
-                dir = TO_BACK;
-                speedtemp *= -1;
-            } else {
-                dir = TO_FRONT;
-            }
+    } else if (motor == &Motor3) { //Motor 3
+        speedtemp /= (1<<M2_MICRO);
+        if (speed<0){
+            dir = TO_BACK;
+            speedtemp *= -1;
         } else {
-            if (speed<0){
-                dir = TO_FRONT;
-                speedtemp *= -1;
-            } else {
-                dir = TO_BACK;
-            }
+            dir = TO_FRONT;
+        }
+    } else { //Motor 2
+        if (speed<0){
+            dir = TO_FRONT;
+            speedtemp *= -1;
+        } else {
+            dir = TO_BACK;
         }
     }
     if (motor->motorDone) {
@@ -321,8 +322,8 @@ void runJob() {
                 if (ENCODER_PRESENT) {
                     if (encoderMove(length, FEED_SPEED, encoder1)) {motorStatus = CUT;}
                 } else {
-                    stepMove(length_to_steps(length, M3_MICRO), FEED_SPEED, &Motor3); //Assume this works
-                    stepMove(length_to_steps(length, M2_MICRO), FEED_SPEED, &Motor2); //Assume this works
+                    stepMove(length_to_steps(length, 0), FEED_SPEED, &Motor3); //Assume this works
+                    stepMove(length_to_steps(length, 0), FEED_SPEED, &Motor2); //Assume this works
                     motorStatus = CUT;
                     vTaskDelay(1000);
                 }
@@ -330,11 +331,11 @@ void runJob() {
             break;
         }
         case (CUT): { //Cut the wire
-            // if (Motor2.motorDone == 1 && Motor3.motorDone == 1) {
-            //     if (stepMove(BASE_STEPS_PER_REV*(1<<M1_MICRO), CUT_SPEED, &Motor1)) {
-            //         motorStatus = CALIBRATE_AND_M2_STRIP;
-            //     }
-            // }
+            if (Motor2.motorDone == 1 && Motor3.motorDone == 1) {
+                if (stepMove(STEPS_PER_REV*(1<<M1_MICRO), CUT_SPEED, &Motor1)) {
+                    motorStatus = CALIBRATE_AND_M2_STRIP;
+                }
+            }
             break;
         }
         case (CALIBRATE_AND_M2_STRIP): {
@@ -393,7 +394,7 @@ void runJob() {
         }
         case (SPIT): {  //Spit out the wire
             if (Motor1.motorDone) {
-                if (stepMove(SPIT_STEPS, PEEL_SPEED, &Motor2)) {
+                if (stepMove(SPIT_STEPS, FEED_SPEED, &Motor2)) {
                     motorStatus = RESTART;
                 }
             }
@@ -541,6 +542,7 @@ void vActuatorTask(){
             //Disengage Action
             case (DISENGAGE): {
                 stepMove(-500, FEED_SPEED, &Motor3);
+                stepMove(-500, FEED_SPEED, &Motor2);
                 vTaskDelay(2000);
                 systemState = DISENGAGING;
                 break;

@@ -174,7 +174,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     if (GPIO_Pin == STOP_BUT_Pin && (systemState == ENGAGED || systemState == JOB_RUNNING)) { // Detect falling edge
         xTaskNotifyFromISR(xStateMachineTaskHandle, STOP_BUTTON, eSetBits, &xHigherPriorityTaskWoken);
     }
-    if (GPIO_Pin == GO_BUT_Pin && systemState == ENGAGED) { //Detect falling edge
+    if (GPIO_Pin == GO_BUT_Pin && systemState == ENGAGED && length>=10 && quantity>0) { //Detect falling edge
         xTaskNotifyFromISR(xStateMachineTaskHandle, GO_BUTTON, eSetBits, &xHigherPriorityTaskWoken);
     }
     if (GPIO_Pin == GAUGE_IN_Pin && !TEST && (motorStatus == STRIP_ENGAGE1 || motorStatus == STRIP_ENGAGE2)) { //Detect 3V3 rising edge

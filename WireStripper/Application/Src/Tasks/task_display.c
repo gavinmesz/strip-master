@@ -132,6 +132,10 @@ int initDisplay(){
     return 1;
 }
 
+static int adc_to_length(int adc) {
+    return ((10-5)*(adc/4050));
+}
+
 uint32_t tempADCpot;
 
 void updateValues() {
@@ -152,7 +156,13 @@ void updateValues() {
         stripCut=0;
         quantity = 1;
     } else {
-        //cool stuff 
+        //cool stuff
+        if (systemState!=JOB_RUNNING) {
+            length = knob1*10;
+            quantity = knob2;
+            stripLength = adc_to_length(tempADCpot);
+            stripCut = HAL_GPIO_ReadPin(UX_SW_GPIO_Port, UX_SW_Pin);
+        }
     }
 }
 
@@ -211,7 +221,7 @@ void drawScreen() {
 
         //QUANTITY READOUT
         Paint_DrawString_EN(0,0,"QTY:",&Font8,WHITE,BLACK);
-        Paint_DrawNum(4*fontWidth,0,knob1,&Font8,2,WHITE,BLACK);
+        Paint_DrawNum(4*fontWidth,0,quantity,&Font8,2,WHITE,BLACK);
 
         //MODE READOUT
         Paint_DrawString_EN(12*fontWidth,0,"MODE:",&Font8,WHITE,BLACK);
@@ -219,11 +229,11 @@ void drawScreen() {
 
         //LEN READOUT (font size 8 )
         Paint_DrawString_EN(0,bottomOffset,"CUTLEN:",&Font8,WHITE,BLACK);
-        Paint_DrawNum(7*fontWidth,bottomOffset,knob2,&Font8,2,WHITE,BLACK);
+        Paint_DrawNum(7*fontWidth,bottomOffset,length,&Font8,2,WHITE,BLACK);
 
         //STRIP READOUT
         Paint_DrawString_EN(12*fontWidth,bottomOffset,"STRIPLEN:",&Font8,WHITE,BLACK);
-        Paint_DrawNum((12+9)*fontWidth,bottomOffset,tempADCpot,&Font8,2,WHITE,BLACK);
+        Paint_DrawNum((12+9)*fontWidth,bottomOffset,stripLength,&Font8,2,WHITE,BLACK);
 
     }
     

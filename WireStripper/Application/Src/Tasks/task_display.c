@@ -33,7 +33,7 @@ uint32_t adcVals1[1]; //UX pot, cut pot
 uint32_t adcVals2[1]; //vbat ADC
 uint32_t adcVals3[2]; //Light1, Light2
 
-uint8_t test = 1;//1 for Gavin, 0 for Will's cool breakthrough UI
+#define TEST 1
 
 #define PD1 adcVals3[0] //photodiode 1
 #define PD2 adcVals3[1] //photodiode 2
@@ -149,7 +149,7 @@ void updateValues() {
     HAL_ADC_PollForConversion(&hadc2, 1);//potentiometer
     tempADCpot = HAL_ADC_GetValue(&hadc2);
 
-    if (test == 1) {
+    if (TEST) {
         //Gavin's dumbass crap
         length = 150;
         stripLength = 8;
@@ -167,7 +167,7 @@ void updateValues() {
 }
 
 void drawScreen() {
-    if (test == 1) {
+    if (TEST) {
         //Gavin's dumbass crap 
         //Paint functions from GUIPaint.c if the values are different
         Paint_DrawNum(10, 0, knob2, &Font8, 2, WHITE, BLACK); //WORKS
@@ -247,8 +247,6 @@ void vDisplayTask()
     HAL_GPIO_WritePin(LIGHT_ON1_GPIO_Port, LIGHT_ON1_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(LIGHT_ON2_GPIO_Port, LIGHT_ON2_Pin, GPIO_PIN_SET);
     //Colour is just a number for what I was testing, it's not a colour.
-    colour = 0;
-    quantity = 10;
     Paint_SelectImage(ImgBuffer);
     Paint_Clear(BLACK);
 

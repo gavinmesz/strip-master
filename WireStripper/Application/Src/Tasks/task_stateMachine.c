@@ -174,13 +174,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     if (GPIO_Pin == STOP_BUT_Pin && (systemState == ENGAGED || systemState == JOB_RUNNING)) { // Detect falling edge
         xTaskNotifyFromISR(xStateMachineTaskHandle, STOP_BUTTON, eSetBits, &xHigherPriorityTaskWoken);
     }
-    if (GPIO_Pin == GO_BUT_Pin && systemState == ENGAGED && length>=10 && quantity>0) { //Detect falling edge
+    if (GPIO_Pin == GO_BUT_Pin && systemState == ENGAGED) { //Detect falling edge
         xTaskNotifyFromISR(xStateMachineTaskHandle, GO_BUTTON, eSetBits, &xHigherPriorityTaskWoken);
     }
-    if (GPIO_Pin == GAUGE_IN_Pin && !TEST && (motorStatus == STRIP_ENGAGE1 || motorStatus == STRIP_ENGAGE2)) { //Detect 3V3 rising edge
+    if (GPIO_Pin == GAUGE_IN_Pin && TEST==0 && (motorStatus == STRIP_ENGAGE1 || motorStatus == STRIP_ENGAGE2)) { //Detect 3V3 rising edge
         xTaskNotifyFromISR(xActuatorTaskHandle, GAUGE_IN, eSetBits, &xHigherPriorityTaskWoken);
     }
-    if (GPIO_Pin == GAUGE_IN_Pin && TEST && gauge_detect) {
+    if (GPIO_Pin == GAUGE_IN_Pin && TEST==1 && gauge_detect) {
         xTaskNotifyFromISR(xMotorTestHandle, GAUGE_IN, eSetBits, &xHigherPriorityTaskWoken);
     }
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }

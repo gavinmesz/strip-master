@@ -19,7 +19,8 @@
 #define WHEEL_RADIUS 4.7625
 #define BASE_STEPS_PER_REV 200.0
 #define STEP_GEAR_RATIO 1.416
-#define STEPS_PER_REV (WHEEL_RADIUS/STEP_GEAR_RATIO)
+#define STEPS_PER_REV (BASE_STEPS_PER_REV/STEP_GEAR_RATIO)
+#define CUTTER_STEPS_PER_REV (BASE_STEPS_PER_REV*(6.0/2.4))
 #define FEED_SPEED 800
 #define CUT_SPEED 500
 #define STRIP_SPEED 250
@@ -81,7 +82,7 @@ uint8_t homeSetM3() {
 
 void enableMotor(uint8_t state, Motor const motor) {
     //Reminder M3 is nEN
-    if (motor.motor_num == M3) {state = ~state;}
+    if (motor.motor_num == M3) {state = !state;}
     HAL_GPIO_WritePin(motor.EN_Port, motor.EN_Pin, state);
 }
 
@@ -325,14 +326,14 @@ void runJob() {
                     stepMove(length_to_steps(length, 0), FEED_SPEED, &Motor3); //Assume this works
                     stepMove(length_to_steps(length, 0), FEED_SPEED, &Motor2); //Assume this works
                     motorStatus = CUT;
-                    vTaskDelay(1000);
+                    vTaskDelay(250);
                 }
             }
             break;
         }
         case (CUT): { //Cut the wire
             if (Motor2.motorDone == 1 && Motor3.motorDone == 1) {
-                if (stepMove(STEPS_PER_REV*(1<<M1_MICRO), CUT_SPEED, &Motor1)) {
+                if (stepMove(CUTTER_STEPS_PER_REV*(1<<M1_MICRO), CUT_SPEED, &Motor1)) {
                     motorStatus = CALIBRATE_AND_M2_STRIP;
                 }
             }
@@ -342,6 +343,7 @@ void runJob() {
             //Feed M1 to light to recalibrate, feed M2 one strip length
             if (Motor1.motorDone == 1) {
                 if (HAL_GPIO_ReadPin(UX_SW_GPIO_Port, UX_SW_Pin)) { // If we are in CUT mode, skip to spit
+                    vTaskDelay(500);
                     motorStatus = SPIT;
                 } else {
                     if (stepMove(-length_to_steps(stripLength, M2_MICRO), FEED_SPEED, &Motor2)) {
@@ -528,17 +530,12 @@ void vActuatorTask(){
                 //Move wire feed until LIGHT_IN1 hit
                 speedMove(300, &Motor3);
                 systemState = ENGAGING;
-                ticks = xTaskGetTickCount();
                 break;
             }
             case (ENGAGING): {
                 if (adcVals3[0]<3900) {
                     stopMotor(&Motor3);
                     systemState = ENGAGED;
-                }
-                if (xTaskGetTickCount()-ticks > 7000) { //Wait 5 seconds to stop
-                    stopMotor(&Motor3);
-                    systemState = IDLE;
                 }
                 break;
             }

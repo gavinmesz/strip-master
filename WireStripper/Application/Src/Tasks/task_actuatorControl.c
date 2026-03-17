@@ -233,7 +233,7 @@ uint8_t stripWire() {
     speedMove(STRIP_SPEED, &Motor1);
 
     uint32_t localNotifyVal = 0;
-    BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &localNotifyVal, 0);
+    BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &localNotifyVal, 10);
 
     if (result == pdTRUE) {
         if (localNotifyVal & GAUGE_IN) {
@@ -498,6 +498,8 @@ void vActuatorTask(){
     HAL_GPIO_WritePin(M3_nEN_GPIO_Port, M3_nEN_Pin, GPIO_PIN_RESET);
     //nEnable, reset if you need to home, no faults
 
+    int ticks = 0;
+
     for(;;){
         // //Acknowledge that job was received.
         switch (systemState) {
@@ -526,12 +528,17 @@ void vActuatorTask(){
                 //Move wire feed until LIGHT_IN1 hit
                 speedMove(300, &Motor3);
                 systemState = ENGAGING;
+                ticks = xTaskGetTickCount();
                 break;
             }
             case (ENGAGING): {
                 if (adcVals3[0]<3900) {
                     stopMotor(&Motor3);
                     systemState = ENGAGED;
+                }
+                if (xTaskGetTickCount()-ticks > 7000) { //Wait 5 seconds to stop
+                    stopMotor(&Motor3);
+                    systemState = IDLE;
                 }
                 break;
             }

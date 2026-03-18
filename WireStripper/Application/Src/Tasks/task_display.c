@@ -151,10 +151,10 @@ void updateValues() {
 
     if (TEST) {
         //Gavin's dumbass crap
-        length = 150;
-        stripLength = 8;
-        stripCut=0;
-        quantity = 1;
+        length = 100;
+        stripLength = 16;
+        stripCut = 1;
+        quantity = 2;
     } else {
         //cool stuff
         if (systemState!=JOB_RUNNING) {

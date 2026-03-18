@@ -92,14 +92,14 @@ static uint8_t checkSafety()  {
     HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET); //Heartbeat
 
     uint8_t result = 1;
-    if (!HAL_GPIO_ReadPin(BUCK12_PG_GPIO_Port, BUCK12_PG_Pin) && HAL_GPIO_ReadPin(BUCK12_EN_GPIO_Port, BUCK12_EN_Pin)) {
-        result = 0;
-    }
-
-    if (BMS.Vcell[0]<CELL_SHUT_DOWN || BMS.Vcell[1]<CELL_SHUT_DOWN || BMS.Vcell[2]<CELL_SHUT_DOWN || BMS.Vcell[3]<CELL_SHUT_DOWN) {
-        result = 0;
-    }
-
+    // if (!HAL_GPIO_ReadPin(BUCK12_PG_GPIO_Port, BUCK12_PG_Pin) && HAL_GPIO_ReadPin(BUCK12_EN_GPIO_Port, BUCK12_EN_Pin)) {
+    //     result = 0;
+    // }
+    //
+    // if (BMS.Vcell[0]<CELL_SHUT_DOWN || BMS.Vcell[1]<CELL_SHUT_DOWN || BMS.Vcell[2]<CELL_SHUT_DOWN || BMS.Vcell[3]<CELL_SHUT_DOWN) {
+    //     result = 0;
+    // }
+    //
     // if (!HAL_GPIO_ReadPin(M1_nFLT_GPIO_Port,M1_nFLT_Pin) || !HAL_GPIO_ReadPin(M2_nFLT_GPIO_Port, M2_nFLT_Pin) || !HAL_GPIO_ReadPin(M3_nFLT_GPIO_Port, M3_nFLT_Pin)) {
     //     result = 0;
     // }

@@ -169,7 +169,7 @@ void MX_GPIO_Init(void)
   /*Configure GPIO pins : M1_nFLT_Pin M2_nFLT_Pin */
   GPIO_InitStruct.Pin = M1_nFLT_Pin|M2_nFLT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pins : M1_DIR_Pin M2_EN_Pin M2_MS2_Pin M2_MS1_Pin */

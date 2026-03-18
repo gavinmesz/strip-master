@@ -42,13 +42,13 @@ volatile SystemStatus systemState;
  *  c. Job finished -> Disable HV Power. Move to ENGAGED.
  */
 
+//ISR Flags for Events
 #define GO_BUTTON (1<<0)
 #define STOP_BUTTON (1<<1)
 #define GAUGE_IN (1<<2)
 
 volatile uint8_t safetyOK;
 volatile uint8_t job_finish;
-uint32_t ulNotifiedValue;
 
 //Is the wire detected? 0 for no, 1 for yes
 uint8_t wirePresent(uint32_t adc){
@@ -97,7 +97,7 @@ void vStateMachineTask() {
      *  a. Wire detected -> Feed wire in until wire detect 2. ENGAGE..., WAIT_FOR_USER.
      *  b. Safety flag -> Disable HV power. Require restart to move on. Display?. POWER_ERROR.
      */
-        if (wirePresent(adcVals3[1])) {
+        if (wirePresent(adcVals3[INLET])) {
             systemState = ENGAGE;
         }
         break;
@@ -141,7 +141,7 @@ void vStateMachineTask() {
 
         if (result == pdTRUE) {
             if (localNotifyVal & STOP_BUTTON) {
-                // systemState = SAFETY_ERROR;
+                systemState = SAFETY_ERROR;
             }
         }
         break;
@@ -149,12 +149,20 @@ void vStateMachineTask() {
     case SAFETY_ERROR: {
         //Here forever, shut down power
         turnOffBAT();
-        HAL_GPIO_WritePin(BUCK12_EN_GPIO_Port, BUCK12_EN_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(LDO_EN_GPIO_Port,LDO_EN_Pin, GPIO_PIN_RESET);
         break;
     }
+    case (HALT): { //Allow for reset of the system
+        uint32_t localNotifyVal = 0;
+        BaseType_t result = xTaskNotifyWait(0x00, ULONG_MAX, &localNotifyVal, 10);
+
+        if (result == pdTRUE) {
+            if (localNotifyVal & STOP_BUTTON) {
+                NVIC_SystemReset();
+            }
+        }
+    }
         default: {
-            //When in "ENGAGING" or "DISENGAGING" State
+            //When in "ENGAGING" or "DISENGAGING" or "HALT" State
             break;
         }
     }
@@ -171,13 +179,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     //     safetyOK = 0;
     // }
 
-    if (GPIO_Pin == STOP_BUT_Pin && (systemState == ENGAGED || systemState == JOB_RUNNING)) { // Detect falling edge
+    if (GPIO_Pin == STOP_BUT_Pin && (systemState == ENGAGED || systemState == JOB_RUNNING || systemState == HALT)) { // Detect falling edge
+        xTimerStartFromISR(xStopGlitch, &xHigherPriorityTaskWoken);
         xTaskNotifyFromISR(xStateMachineTaskHandle, STOP_BUTTON, eSetBits, &xHigherPriorityTaskWoken);
     }
     if (GPIO_Pin == GO_BUT_Pin && systemState == ENGAGED) { //Detect falling edge
         xTaskNotifyFromISR(xStateMachineTaskHandle, GO_BUTTON, eSetBits, &xHigherPriorityTaskWoken);
     }
     if (GPIO_Pin == GAUGE_IN_Pin && TEST==0 && (motorStatus == STRIP_ENGAGE1 || motorStatus == STRIP_ENGAGE2)) { //Detect 3V3 rising edge
+        xTimerStartFromISR(xCoreDetectDelay, &xHigherPriorityTaskWoken);
         xTaskNotifyFromISR(xActuatorTaskHandle, GAUGE_IN, eSetBits, &xHigherPriorityTaskWoken);
     }
     if (GPIO_Pin == GAUGE_IN_Pin && TEST==1 && gauge_detect) {

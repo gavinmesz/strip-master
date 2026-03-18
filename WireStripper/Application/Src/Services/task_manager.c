@@ -8,7 +8,6 @@
 #include "task_stateMachine.h"
 #include "task_motorTest.h"
 #include "BQ7692006PWR.h"
-
 #include "FreeRTOSConfig.h"
 
 TaskHandle_t xDisplayTaskHandle = NULL;

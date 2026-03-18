@@ -20,15 +20,19 @@ typedef enum {
     DISENGAGING,
     ENGAGED,
     JOB_RUNNING,
-    SAFETY_ERROR
+    SAFETY_ERROR,
+    HALT
 } SystemStatus;
+
+//Photodiodes
+#define INLET 1
+#define OUTLET 0
 
 extern volatile SystemStatus systemState;
 extern volatile uint8_t stop_button;
 extern volatile uint8_t go_button;
 extern volatile uint8_t safetyOK;
 extern volatile uint8_t job_finish;
-extern uint32_t ulNotifiedValue;
 
 uint8_t wirePresent(uint32_t adc);
 

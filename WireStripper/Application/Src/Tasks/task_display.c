@@ -35,9 +35,15 @@ uint32_t adcVals3[2]; //Light1, Light2
 
 #define TEST 1
 
-#define PD1 adcVals3[0] //photodiode 1
-#define PD2 adcVals3[1] //photodiode 2
+#define PD1 adcVals3[INLET] //photodiode 1
+#define PD2 adcVals3[OUTLET] //photodiode 2
 #define UX_POT adcVals1[0] //UX potentiometer
+
+//Testing
+int knob1;
+int knob2;
+int motorenc1;
+int motorenc2;
 
 /*
  * OLED_Update:
@@ -46,12 +52,6 @@ uint32_t adcVals3[2]; //Light1, Light2
  * - Return 1 if DMA SPI transfer has not finished (reset in DMA callback later in this task).
  * - Return 0 if DMA SPI transfer was initiated.
  */
-
-//Testing
-int knob1;
-int knob2;
-int motorenc1;
-int motorenc2;
 
 int OLED_Update(const UBYTE * Img) {
     int status = 1;
@@ -81,7 +81,7 @@ int OLED_Update(const UBYTE * Img) {
     return status;
 }
 
-//Easy clear screen function.
+//Clear Screen
 int OLED_Clear() {
     int status = 1;
 

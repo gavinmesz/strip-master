@@ -1,6 +1,7 @@
 #ifndef TASK_WATCHDOG_H
 #define TASK_WATCHDOG_H
 #include "tim.h"
+#include "timers.h"
 
 //PULSES AT 100Hz right now
 #define CLK_SPEED 1000000.0
@@ -58,16 +59,14 @@ typedef struct {
 typedef enum {
     START,
     STRIP_ENGAGE1,
-    M1_PEEL,
     M1_FULL_LENGTH_FEED,
     CUT,
-    CALIBRATE_AND_M2_STRIP,
+    FEED_INLET_BACK,
     WAITING_FOR_WIRE_RESET,
     PRE_REDATUM_JOG,
     WAITING_FOR_REDATUM,
     STRIP_ENGAGE2,
-    M2_PEEL,
-    BACK_UP_CUTTER,
+    STRIP_LENGTH_2,
     SPIT,
     RESTART,
     IDLE // Added to match your vActuatorTask initialization
@@ -90,10 +89,12 @@ extern Motor Motor1;
 extern Motor Motor2;
 extern Motor Motor3;
 
-
 extern int encoder1;
 extern int encoder2;
 
 extern MotorStatus motorStatus;
+
+extern TimerHandle_t xStopGlitch;
+extern TimerHandle_t xCoreDetectDelay;
 
 #endif

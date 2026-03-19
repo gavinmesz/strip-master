@@ -181,14 +181,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
     if (GPIO_Pin == STOP_BUT_Pin && (systemState == ENGAGED || systemState == JOB_RUNNING || systemState == HALT)) { // Detect falling edge
         xTimerStartFromISR(xStopGlitch, &xHigherPriorityTaskWoken);
-        xTaskNotifyFromISR(xStateMachineTaskHandle, STOP_BUTTON, eSetBits, &xHigherPriorityTaskWoken);
     }
     if (GPIO_Pin == GO_BUT_Pin && systemState == ENGAGED) { //Detect falling edge
         xTaskNotifyFromISR(xStateMachineTaskHandle, GO_BUTTON, eSetBits, &xHigherPriorityTaskWoken);
     }
     if (GPIO_Pin == GAUGE_IN_Pin && TEST==0 && (motorStatus == STRIP_ENGAGE1 || motorStatus == STRIP_ENGAGE2)) { //Detect 3V3 rising edge
         xTimerStartFromISR(xCoreDetectDelay, &xHigherPriorityTaskWoken);
-        xTaskNotifyFromISR(xActuatorTaskHandle, GAUGE_IN, eSetBits, &xHigherPriorityTaskWoken);
     }
     if (GPIO_Pin == GAUGE_IN_Pin && TEST==1 && gauge_detect) {
         xTaskNotifyFromISR(xMotorTestHandle, GAUGE_IN, eSetBits, &xHigherPriorityTaskWoken);

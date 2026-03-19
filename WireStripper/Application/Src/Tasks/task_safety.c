@@ -100,9 +100,9 @@ static uint8_t checkSafety()  {
         result = 0;
     }
 
-    if (!HAL_GPIO_ReadPin(M1_nFLT_GPIO_Port,M1_nFLT_Pin) || !HAL_GPIO_ReadPin(M2_nFLT_GPIO_Port, M2_nFLT_Pin) || !HAL_GPIO_ReadPin(M3_nFLT_GPIO_Port, M3_nFLT_Pin)) {
-        result = 0;
-    }
+    // if (!HAL_GPIO_ReadPin(M1_nFLT_GPIO_Port,M1_nFLT_Pin) || !HAL_GPIO_ReadPin(M2_nFLT_GPIO_Port, M2_nFLT_Pin) || !HAL_GPIO_ReadPin(M3_nFLT_GPIO_Port, M3_nFLT_Pin)) {
+    //     result = 0;
+    // }
     return result;
 }
 

@@ -498,7 +498,7 @@ void vActuatorTask(){
 
     xStopGlitch = xTimerCreate(
        "StopGlitch",
-       pdMS_TO_TICKS(2),      // 2ms delay
+       2,      // 2ms delay
        pdFALSE,               // pdFALSE = One-shot timer (doesn't auto-reload)
        (void *)0,             // Timer ID (not needed here)
        vStopTimerCallback     // The function to call when time is up
@@ -507,7 +507,7 @@ void vActuatorTask(){
     // Create a 50ms one-shot timer for the Gauge
     xCoreDetectDelay = xTimerCreate(
         "CoreDetectDelay",
-        pdMS_TO_TICKS(50),     // 10-100ms delay
+        50,     // 10-100ms delay
         pdFALSE,
         (void *)0,
         vCoreTimerCallback

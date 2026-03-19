@@ -154,7 +154,7 @@ void updateValues() {
         length = 100;
         stripLength = 16;
         stripCut = 1;
-        quantity = 2;
+        quantity = 1;
     } else {
         //cool stuff
         if (systemState!=JOB_RUNNING) {

@@ -33,7 +33,7 @@ uint32_t adcVals1[1]; //UX pot, cut pot
 uint32_t adcVals2[1]; //vbat ADC
 uint32_t adcVals3[2]; //Light1, Light2
 
-#define TEST 1
+#define TEST 0
 
 #define PD1 adcVals3[INLET] //photodiode 1
 #define PD2 adcVals3[OUTLET] //photodiode 2
@@ -133,12 +133,14 @@ int initDisplay(){
 }
 
 static int adc_to_length(int adc) {
-    return ((10-5)*(adc/4050));
+    return (((20-3)*adc)/4050);
 }
 
 uint32_t tempADCpot;
 
 void updateValues() {
+    
+     HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET);
     //this function just updates all of the values read from the UI and encoders.
     knob1 = __HAL_TIM_GET_COUNTER(&htim2)/2; //knob 1
     knob2 = __HAL_TIM_GET_COUNTER(&htim5)/2; //knob 2
@@ -146,8 +148,8 @@ void updateValues() {
     motorenc2 = __HAL_TIM_GET_COUNTER(&htim4);
     //tim3 is motor encoder 1
     //tim4 is motor encoder 2
-    HAL_ADC_PollForConversion(&hadc2, 1);//potentiometer
-    tempADCpot = HAL_ADC_GetValue(&hadc2);
+    // HAL_ADC_PollForConversion(&hadc2, 1);//potentiometer
+    // tempADCpot = HAL_ADC_GetValue(&hadc2);
 
     if (TEST) {
         //Gavin's dumbass crap
@@ -158,20 +160,22 @@ void updateValues() {
     } else {
         //cool stuff
         if (systemState!=JOB_RUNNING) {
-            length = knob1*10;
             quantity = knob2;
-            stripLength = adc_to_length(tempADCpot);
+            length = knob1*10;
+            stripLength = adc_to_length(adcVals1[0]);
             stripCut = HAL_GPIO_ReadPin(UX_SW_GPIO_Port, UX_SW_Pin);
         }
+        HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET);
     }
 }
 
 void drawScreen() {
+    
     if (TEST) {
-        //Gavin's dumbass crap 
+        //Gavin's cool ass crap 
         //Paint functions from GUIPaint.c if the values are different
-        Paint_DrawNum(10, 0, knob2, &Font8, 2, WHITE, BLACK); //WORKS
-        Paint_DrawNum(60, 0, knob1, &Font8, 2, WHITE, BLACK); //WORKS, 2 per detent
+        Paint_DrawNum(10, 0, knob2, &Font8, 2, WHITE, BLACK); //WORKS THIS IS CUT KNOB
+        Paint_DrawNum(60, 0, knob1, &Font8, 2, WHITE, BLACK); //WORKS, 2 per detent THIS IS QTY Knob
         uint8_t result = 0;
         if (HAL_GPIO_ReadPin(UX_KNOB1_BUT_GPIO_Port, UX_KNOB1_BUT_Pin)) {
             result += 1;
@@ -187,7 +191,7 @@ void drawScreen() {
         Paint_DrawNum(10, 26, adcVals3[0], &Font8, 2, WHITE, BLACK); // WORKS: ADC data width set to word + circular
         Paint_DrawNum(80, 26, adcVals3[1], &Font8, 2, WHITE, BLACK); // WORKS: ADC data width set to word + circular
 
-        Paint_DrawNum(10, 39, UX_POT, &Font8, 2, BLACK, WHITE); //WORKS
+        Paint_DrawNum(10, 39, UX_POT, &Font8, 2, BLACK, WHITE); //WORKS STRIP KNOB
         Paint_DrawNum(90, 39, packCurrent, &Font8, 2, BLACK, WHITE); //WORKS
 
         result = 0;
@@ -199,7 +203,7 @@ void drawScreen() {
         if (HAL_GPIO_ReadPin(UX_SW_GPIO_Port, UX_SW_Pin)) {
             result += 1;
         }
-        Paint_DrawNum(60, 52, result, &Font8, 2, BLACK, WHITE); //WORKS
+        Paint_DrawNum(60, 52, result, &Font8, 2, BLACK, WHITE); //WORKS THIS IS THE STRIP+CUT switch
         result = 0;
         if (HAL_GPIO_ReadPin(STOP_BUT_GPIO_Port, STOP_BUT_Pin)) {
             result+=1;
@@ -209,24 +213,27 @@ void drawScreen() {
         }
         Paint_DrawNum(90, 52, result, &Font8, 2, WHITE, BLACK); //WORKS
     } else {
-        switch (systemState) {
-            case (JOB_RUNNING): { //parameters locked, maybe show how many wires have been processed.
+        // switch (systemState) {
+        //     case (JOB_RUNNING): { //parameters locked, maybe show how many wires have been processed.
 
-                break;
-            }
-            case (HALT): { //System faulted, require restart on stop button press
+        //         break;
+        //     }
+        //     case (HALT): { //System faulted, require restart on stop button press
+                // break;
+        //     }
+        //     default: { //Normal state, configuration
 
-            }
-            default: { //Normal state, configuration
+                // break;
+        //     }
+        // }
+        //cool swagged out UI stuff 
+        HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
+        int wireEndCoord = 32 + 7 +(3* stripLength) - 9;// the end x coordinate for the wire enclosure when drawn
 
-            }
-        }
-        //cool stuff 
-        int wireEndCoord = (UX_POT/4000)*56+32;// the end x coordinate for the wire enclosure when drawn
-
-        Paint_DrawRectangle(32,24,wireEndCoord,40,WHITE,2,0);//the "sheathed" part of the wire
-        Paint_DrawRectangle(wireEndCoord,27,56,37,WHITE,2,1);//the exposed part of the wire
-
+        Paint_DrawRectangle(30,22,98,42,BLACK,2,1);//Little Screen Wiper
+        Paint_DrawRectangle(32,27,wireEndCoord,37,WHITE,2,1);//the exposed part of the wire
+        Paint_DrawRectangle(wireEndCoord,24,96,40,WHITE,2,0);//the "sheathed" part of the wire
+        
         int fontWidth = 5;//5 for 8, 7 for 12
         int bottomOffset = 64 - 8;//8 is the fontsize
 
@@ -243,10 +250,11 @@ void drawScreen() {
         Paint_DrawString_EN(0,bottomOffset,"CUTLEN:",&Font8,WHITE,BLACK);
         Paint_DrawNum(7*fontWidth,bottomOffset,length,&Font8,2,WHITE,BLACK);
 
-        //STRIP READOUT
-        Paint_DrawString_EN(12*fontWidth,bottomOffset,"STRIPLEN:",&Font8,WHITE,BLACK);
-        Paint_DrawNum((12+9)*fontWidth,bottomOffset,stripLength,&Font8,2,WHITE,BLACK);
-
+        //STRIP Length READOUT
+        //This should probably have a range of 3 to 20mm 
+        Paint_DrawString_EN(12*fontWidth,bottomOffset," STRIP:",&Font8,WHITE,BLACK);
+        Paint_DrawNum((12+6)*fontWidth,bottomOffset,stripLength,&Font8,2,WHITE,BLACK);
+        HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
     }
     
 

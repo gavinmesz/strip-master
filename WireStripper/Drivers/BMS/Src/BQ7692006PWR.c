@@ -30,6 +30,8 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <math.h>
+#include "FreeRTOS.h"
+#include "task.h"
 
 #include "projdefs.h"
 

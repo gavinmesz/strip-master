@@ -110,7 +110,7 @@ void vSafetyTask() {
     safetyOK = 1;
     for (;;) {
         switch (systemState) {
-            case SAFETY_ERROR: {
+            case HALT: {
                 checkSafety();
                 readAlert(&BMS);
                 break;

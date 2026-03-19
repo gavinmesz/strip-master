@@ -70,7 +70,7 @@ void turnOnBAT() {
 
 void vStateMachineTask() {
     systemState = CHECKS;
-    //
+
     for (;;) {
     if (!safetyOK) { //Must poll before every cycle
         systemState = SAFETY_ERROR;
@@ -149,6 +149,7 @@ void vStateMachineTask() {
     case SAFETY_ERROR: {
         //Here forever, shut down power
         turnOffBAT();
+        vTaskDelay(1000);
         break;
     }
     case (HALT): { //Allow for reset of the system

@@ -209,6 +209,18 @@ void drawScreen() {
         }
         Paint_DrawNum(90, 52, result, &Font8, 2, WHITE, BLACK); //WORKS
     } else {
+        switch (systemState) {
+            case (JOB_RUNNING): { //parameters locked, maybe show how many wires have been processed.
+
+                break;
+            }
+            case (HALT): { //System faulted, require restart on stop button press
+
+            }
+            default: { //Normal state, configuration
+
+            }
+        }
         //cool stuff 
         int wireEndCoord = (UX_POT/4000)*56+32;// the end x coordinate for the wire enclosure when drawn
 

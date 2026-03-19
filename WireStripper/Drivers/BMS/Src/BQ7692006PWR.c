@@ -29,8 +29,9 @@
 #include "i2c.h"
 #include <stdint.h>
 #include <stdio.h>
-#include <stdbool.h>
 #include <math.h>
+
+#include "projdefs.h"
 
 void BQ76920_Initialize(BQ76920_t *BMS, I2C_HandleTypeDef *i2cHandle) {
 	// Device StartUp
@@ -40,7 +41,11 @@ void BQ76920_Initialize(BQ76920_t *BMS, I2C_HandleTypeDef *i2cHandle) {
 	// Set SYS_STAT to 0xff
 	uint8_t SYS_STAT_VAL = 0xff;
 	while (HAL_I2C_Mem_Write(BMS->i2cHandle, BQ76920_ADDRESS, SYS_STAT,
-	I2C_MEMADD_SIZE_8BIT, &SYS_STAT_VAL, 1, 200) != 0x00U){}
+	I2C_MEMADD_SIZE_8BIT, &SYS_STAT_VAL, 1, 200) != 0x00U) {
+		HAL_Delay(20); //~10ms boot up sequence max from battery on bootup. Wait double that then start the initialization
+	}
+
+	HAL_I2C_Mem_Write(BMS->i2cHandle, BQ76920_ADDRESS, SYS_STAT, I2C_MEMADD_SIZE_8BIT, &SYS_STAT_VAL, 1, 200);
 
 	// Set CC_CFG to 0x19
 	uint8_t CC_CFG_REG = 0x19;

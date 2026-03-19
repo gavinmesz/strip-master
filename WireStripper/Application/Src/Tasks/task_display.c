@@ -215,10 +215,12 @@ void drawScreen() {
                 break;
             }
             case (HALT): { //System faulted, require restart on stop button press
-
+                //Use "error_status" to determine fault cause
+                break;
             }
             default: { //Normal state, configuration
 
+                break;
             }
         }
         //cool stuff 

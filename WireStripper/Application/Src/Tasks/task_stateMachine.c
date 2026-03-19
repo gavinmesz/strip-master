@@ -141,6 +141,7 @@ void vStateMachineTask() {
 
         if (result == pdTRUE) {
             if (localNotifyVal & STOP_BUTTON) {
+                error_status = ESTOP;
                 systemState = SAFETY_ERROR;
             }
         }

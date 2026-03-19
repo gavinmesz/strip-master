@@ -24,6 +24,14 @@ typedef enum {
     HALT
 } SystemStatus;
 
+typedef enum {
+    SYSTEM_OK,
+    BATTERY_DEAD,
+    ESTOP,
+    BUCK_FAIL,
+    OTHER_ERROR
+} ErrStatus;
+
 //Photodiodes
 #define INLET 1
 #define OUTLET 0

@@ -72,7 +72,7 @@ void vStateMachineTask() {
     systemState = CHECKS;
 
     for (;;) {
-    if (!safetyOK) { //Must poll before every cycle
+    if (!safetyOK && systemState!=HALT && systemState!=SAFETY_ERROR) { //Must poll before every cycle
         systemState = SAFETY_ERROR;
     }
 
@@ -161,6 +161,7 @@ void vStateMachineTask() {
                 NVIC_SystemReset();
             }
         }
+        break;
     }
         default: {
             //When in "ENGAGING" or "DISENGAGING" or "HALT" State

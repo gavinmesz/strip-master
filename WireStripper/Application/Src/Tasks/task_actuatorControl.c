@@ -24,10 +24,10 @@
 #define M3_MICRO 0
 
 //Speeds
-#define FEED_SPEED 800
-#define CUT_SPEED 500
-#define STRIP_SPEED 250
-#define PEEL_SPEED 500
+#define FEED_SPEED 1000
+#define CUT_SPEED 700
+#define STRIP_SPEED 500
+#define PEEL_SPEED 700
 
 //Important Dimensions
 //~65mm from in light to cut
@@ -42,7 +42,7 @@
 #define STEPS_PER_REV (BASE_STEPS_PER_REV/STEP_GEAR_RATIO)
 #define CUTTER_STEPS_PER_REV (BASE_STEPS_PER_REV*(5.7/2.4))
 #define CUT_BACK_OFF (-(CUTTER_STEPS_PER_REV/2.3)*(1<<M1_MICRO))
-#define TOLERANCE_STEP 100 //Moving wire back a little more during datum step
+#define TOLERANCE_STEP 50 //Moving wire back a little more during datum step
 #define SPIT_STEPS (500 + M2_TO_CUT_DIST) //How many steps to spit out a wire
 #define LENGTH_COMPENSATION_FACTOR 1.05 //1.05 from testing, lengths were always off 1.05 from intended
 
@@ -422,7 +422,9 @@ void vStopTimerCallback() {
 }
 
 void vCoreTimerCallback(){
-    xTaskNotify(xActuatorTaskHandle, GAUGE_IN, eSetBits);
+    if (HAL_GPIO_ReadPin(GAUGE_IN_GPIO_Port, GAUGE_IN_Pin)) { //Make sure not a glitch
+        xTaskNotify(xActuatorTaskHandle, GAUGE_IN, eSetBits);
+    }
 }
 
 void vActuatorTask(){

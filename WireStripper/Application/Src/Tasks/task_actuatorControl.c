@@ -25,8 +25,8 @@
 
 //Speeds
 #define FEED_SPEED 1000
-#define CUT_SPEED 700
-#define STRIP_SPEED 500
+#define CUT_SPEED 1000
+#define STRIP_SPEED 1000
 #define PEEL_SPEED 700
 
 //Important Dimensions
@@ -35,13 +35,13 @@
 #define WHEEL_RADIUS 4.7625
 #define BASE_STEPS_PER_REV 200.0
 #define STEP_GEAR_RATIO 1.416
-#define M3_TO_CUT_DIST 17
+#define M3_TO_CUT_DIST 16
 #define M2_TO_CUT_DIST 38
 
 //Step distances - From Testing
 #define STEPS_PER_REV (BASE_STEPS_PER_REV/STEP_GEAR_RATIO)
 #define CUTTER_STEPS_PER_REV (BASE_STEPS_PER_REV*(5.7/2.4))
-#define CUT_BACK_OFF (-(CUTTER_STEPS_PER_REV/2.3)*(1<<M1_MICRO))
+#define CUT_BACK_OFF (-(CUTTER_STEPS_PER_REV/2)*(1<<M1_MICRO))
 #define TOLERANCE_STEP 50 //Moving wire back a little more during datum step
 #define SPIT_STEPS (500 + M2_TO_CUT_DIST) //How many steps to spit out a wire
 #define LENGTH_COMPENSATION_FACTOR 1.05 //1.05 from testing, lengths were always off 1.05 from intended
@@ -70,7 +70,7 @@ TimerHandle_t xStopGlitch;
 TimerHandle_t xCoreDetectDelay;
 
 static int length_to_steps(float const length_mm, int const microStep) {
-    return (length_mm/(2.0*3.14159*WHEEL_RADIUS)*STEPS_PER_REV)*(1 << microStep)*LENGTH_COMPENSATION_FACTOR;
+    return (length_mm/(2.0*3.14159*WHEEL_RADIUS)*STEPS_PER_REV)*(1 << microStep);
 }
 
 // uint8_t homeSetM3() {
@@ -287,6 +287,9 @@ void runJob() {
                     }
                 } else { // LOW = strip/cut
                     if (stepMove(length_to_steps(stripLength+M3_TO_CUT_DIST, M3_MICRO), FEED_SPEED, &Motor3)) {
+                        xTimerStop(xCoreDetectDelay, 0);
+                        __HAL_GPIO_EXTI_CLEAR_IT(GAUGE_IN_Pin);
+                        ulTaskNotifyValueClear(NULL, GAUGE_IN);
                         motorStatus = STRIP_ENGAGE1;
                         vTaskDelay(500);
                     }
@@ -319,6 +322,9 @@ void runJob() {
                     stepMove(length_to_steps(templength, 0), FEED_SPEED, &Motor3); //Assume this works
                     stepMove(length_to_steps(templength, 0), FEED_SPEED, &Motor2); //Assume this works
                     if (!HAL_GPIO_ReadPin(UX_SW_GPIO_Port, UX_SW_Pin)) { //Low = strip/cut
+                        xTimerStop(xCoreDetectDelay, 0);
+                        __HAL_GPIO_EXTI_CLEAR_IT(GAUGE_IN_Pin);
+                        ulTaskNotifyValueClear(NULL, GAUGE_IN);
                         motorStatus = STRIP_ENGAGE2;
                     } else {
                         motorStatus = CUT;
@@ -509,7 +515,7 @@ void vActuatorTask(){
     // Create a 50ms one-shot timer for the Gauge
     xCoreDetectDelay = xTimerCreate(
         "CoreDetectDelay",
-        50,     // 10-100ms delay
+        60,     // 10-100ms delay
         pdFALSE,
         (void *)0,
         vCoreTimerCallback

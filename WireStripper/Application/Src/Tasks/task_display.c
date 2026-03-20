@@ -9,6 +9,7 @@
 //specific includes
 #include "task_display.h"
 #include "task_stateMachine.h"
+#include "task_actuatorControl.h"
 #include <string.h>
 
 #include "adc.h"
@@ -27,7 +28,7 @@ int spiFlag;
 int quantity;
 int length;
 int stripLength;
-int stripCut; //Strip or strip and cut (1=Strip and cut)
+int stripCut; //Strip or strip and cut (1=cut)
 int colour;
 uint32_t adcVals1[1]; //UX pot, cut pot
 uint32_t adcVals2[1]; //vbat ADC
@@ -133,7 +134,7 @@ int initDisplay(){
 }
 
 static int adc_to_length(int adc) {
-    return (((20-3)*adc)/4050);
+    return (20-((20-3)*adc)/4050);
 }
 
 uint32_t tempADCpot;
@@ -160,10 +161,13 @@ void updateValues() {
     } else {
         //cool stuff
         if (systemState!=JOB_RUNNING) {
-            quantity = knob2;
-            length = knob1*10;
+            quantity = knob1;
+            if(quantity == 0){quantity = 1;}
+            if (knob2<=0){length = 70;}
+            else{length = 70+knob2*10;}
             stripLength = adc_to_length(adcVals1[0]);
             stripCut = HAL_GPIO_ReadPin(UX_SW_GPIO_Port, UX_SW_Pin);
+            if (stripCut){stripLength = 0;}
         }
         HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET);
     }
@@ -213,48 +217,103 @@ void drawScreen() {
         }
         Paint_DrawNum(90, 52, result, &Font8, 2, WHITE, BLACK); //WORKS
     } else {
-        // switch (systemState) {
-        //     case (JOB_RUNNING): { //parameters locked, maybe show how many wires have been processed.
-
-        //         break;
-        //     }
-        //     case (HALT): { //System faulted, require restart on stop button press
-                // break;
-        //     }
-        //     default: { //Normal state, configuration
-
-                // break;
-        //     }
-        // }
-        //cool swagged out UI stuff 
-        HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
-        int wireEndCoord = 32 + 7 +(3* stripLength) - 9;// the end x coordinate for the wire enclosure when drawn
-
-        Paint_DrawRectangle(30,22,98,42,BLACK,2,1);//Little Screen Wiper
-        Paint_DrawRectangle(32,27,wireEndCoord,37,WHITE,2,1);//the exposed part of the wire
-        Paint_DrawRectangle(wireEndCoord,24,96,40,WHITE,2,0);//the "sheathed" part of the wire
         
-        int fontWidth = 5;//5 for 8, 7 for 12
-        int bottomOffset = 64 - 8;//8 is the fontsize
+                HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
+
+                int fontWidth = 5;//5 for 8, 7 for 12
+                int bottomOffset = 64 - 8;//8 is the fontsize
+                sFONT fontsize = Font8;//8 works
 
 
-        //QUANTITY READOUT
-        Paint_DrawString_EN(0,0,"QTY:",&Font8,WHITE,BLACK);
-        Paint_DrawNum(4*fontWidth,0,quantity,&Font8,2,WHITE,BLACK);
+                //QUANTITY READOUT
+                //Paint_DrawRectangle(0,0,128,64,BLACK,2,1);//Little Screen Wiper
+                Paint_DrawString_EN(0,0,"QTY:",&fontsize,WHITE,BLACK);
+                Paint_DrawNum(4*fontWidth,0,quantity,&fontsize,1,WHITE,BLACK);
+                if ((quantity < 10) & (quantity!=100)){Paint_DrawRectangle(5*fontWidth,0,9*fontWidth,8,BLACK,1,1);}
+                else if(quantity ==100){Paint_DrawRectangle(7*fontWidth,0,9*fontWidth,8,BLACK,1,1);}
+                else{Paint_DrawRectangle(6*fontWidth,0,9*fontWidth,8,BLACK,1,1);}
 
-        //MODE READOUT
-        Paint_DrawString_EN(12*fontWidth,0,"MODE:",&Font8,WHITE,BLACK);
-        Paint_DrawNum(12*fontWidth,0,stripCut,&Font8,2,WHITE,BLACK);
+                //MODE READOUT
+                Paint_DrawString_EN(12*fontWidth,0,"STATE:",&fontsize,WHITE,BLACK);
 
-        //LEN READOUT (font size 8 )
-        Paint_DrawString_EN(0,bottomOffset,"CUTLEN:",&Font8,WHITE,BLACK);
-        Paint_DrawNum(7*fontWidth,bottomOffset,length,&Font8,2,WHITE,BLACK);
 
-        //STRIP Length READOUT
-        //This should probably have a range of 3 to 20mm 
-        Paint_DrawString_EN(12*fontWidth,bottomOffset," STRIP:",&Font8,WHITE,BLACK);
-        Paint_DrawNum((12+6)*fontWidth,bottomOffset,stripLength,&Font8,2,WHITE,BLACK);
-        HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
+                //LEN READOUT (font size 8 )
+                Paint_DrawString_EN(0,bottomOffset,"CUTLEN:",&fontsize,WHITE,BLACK);
+                Paint_DrawNum(7*fontWidth,bottomOffset,(length/10),&fontsize,2,WHITE,BLACK);
+                Paint_DrawString_EN((7+4)*fontWidth,bottomOffset,"cm",&fontsize,WHITE,BLACK);
+
+                //STRIP Length READOUT
+                //This should probably have a range of 3 to 20mm 
+                Paint_DrawString_EN(14*fontWidth,bottomOffset,"STRIP:",&fontsize,WHITE,BLACK);
+                
+
+                int wireEndCoord = 32 + 7 +(3* stripLength) - 9;// the end x coordinate for the wire enclosure when drawn
+
+                Paint_DrawRectangle(30,22,98,42,BLACK,2,1);//Little Screen Wiper
+                if (stripCut){//cut mode, no strip length required
+                    Paint_DrawRectangle(wireEndCoord,24,96,40,WHITE,2,0);//the "sheathed" part of the wire
+                    Paint_DrawString_EN((14+6)*fontWidth,bottomOffset,"N/A  ",&fontsize,WHITE,BLACK);
+                    Paint_DrawString_EN(wireEndCoord+5,26,"CUT MODE",&Font12,WHITE,BLACK);
+                }
+                else{
+                    Paint_DrawNum((14+6)*fontWidth,bottomOffset,stripLength,&fontsize,2,WHITE,BLACK);
+                    Paint_DrawString_EN((14+6+3)*fontWidth,bottomOffset,"mm",&fontsize,WHITE,BLACK);
+                    Paint_DrawRectangle(32,27,wireEndCoord,37,WHITE,2,1);//the exposed part of the wire
+                    Paint_DrawRectangle(wireEndCoord,24,96,40,WHITE,2,0);//the "sheathed" part of the wire
+                }
+                HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
+                
+
+        switch (systemState) {
+            case (JOB_RUNNING): { //parameters locked, maybe show how many wires have been processed
+                int toDo = quantity-finishedWires;
+                Paint_DrawNum((12+6)*fontWidth,0,toDo,&fontsize,2,WHITE,BLACK);        
+                Paint_DrawString_EN((12+9)*fontWidth,0,"Left",&fontsize,WHITE,BLACK);        
+
+                //update the state thing in the corner saying progress
+                break;
+            }
+            case (HALT): { //System faulted, require restart on stop button press
+                //put up a big screen displaying the error
+                switch(error_status){
+                    case (SYSTEM_OK): {
+                        Paint_DrawRectangle(0,0,128,64,BLACK,2,1);//Little Screen Wiper
+                        Paint_DrawString_EN(0,26,"ERROR: Ok?",&Font12,WHITE,BLACK); 
+                        break;                       
+                    }
+                    case (BATTERY_DEAD): {
+                        Paint_DrawRectangle(0,0,128,64,BLACK,2,1);//Little Screen Wiper
+                        Paint_DrawString_EN(0,26,"ERROR:Battery Dead",&Font12,WHITE,BLACK); 
+                        break;                       
+                    }
+                    case (ESTOP): {
+                        Paint_DrawRectangle(0,0,128,64,BLACK,2,1);//Little Screen Wiper
+                        Paint_DrawString_EN(0,26,"ERROR:EStop",&Font12,WHITE,BLACK); 
+                        break;                       
+                    }
+                    case (BUCK_FAIL): {
+                        Paint_DrawRectangle(0,0,128,64,BLACK,2,1);//Little Screen Wiper
+                        Paint_DrawString_EN(0,26,"ERROR:Buck Fail",&Font12,WHITE,BLACK); 
+                        break;                       
+                    }
+                    case (OTHER_ERROR): {
+                        Paint_DrawRectangle(0,0,128,64,BLACK,2,1);//Little Screen Wiper
+                        Paint_DrawString_EN(0,26,"ERROR: Other",&Font12,WHITE,BLACK); 
+                        break;                       
+                    }
+                }
+                break;
+            }
+            default: { //Normal state, configuration
+                Paint_DrawString_EN((12+6)*fontWidth,0,"Free",&fontsize,WHITE,BLACK);
+                
+                Paint_DrawRectangle((12+6+4)*fontWidth+1,0,(12+6+4+3)*fontWidth,8,BLACK,2,1);//clears out the "eft"
+                break;
+            }
+            
+        }
+        //cool swagged out UI stuff 
+        
     }
     
 
@@ -275,6 +334,9 @@ void vDisplayTask()
     knob2 = 0;
     motorenc1 = 0;
     motorenc2 = 0;
+
+    ((&htim2)->Instance->CNT = (0));
+    ((&htim5)->Instance->CNT = (0));
 
     for(;;){
 

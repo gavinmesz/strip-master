@@ -86,6 +86,7 @@ uint8_t cutWire(void);
 uint8_t stripWire(void);
 void stopAllMotors();
 
+extern int finishedWires;
 extern Motor Motor1;
 extern Motor Motor2;
 extern Motor Motor3;
